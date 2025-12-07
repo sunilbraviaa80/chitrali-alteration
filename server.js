@@ -1,0 +1,13 @@
+const express = require('express');
+const path = require('path');
+const multer = require('multer');
+const sqlite3 = require('sqlite3').verbose();
+const cors = require('cors');
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+const db = new sqlite3.Database('data.db');
+app.get('/api/health', (req,res)=>res.json({ok:true}));
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, ()=>console.log('Running on '+PORT));
