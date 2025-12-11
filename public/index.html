@@ -25,7 +25,6 @@
       padding: 1.2rem 0.9rem 2.5rem;
     }
 
-    /* HEADER + BRAND LAYOUT */
     header {
       display: grid;
       grid-template-columns: auto 1fr auto;
@@ -150,7 +149,6 @@
       background: #ffffff;
       box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12);
     }
-    input[type="file"] { font-size: 0.8rem; }
     textarea {
       width: 100%;
       min-height: 80px;
@@ -177,10 +175,6 @@
     .search-input-wrapper {
       min-width: 160px;
     }
-    .search-input-wrapper label {
-      margin-bottom: 0.2rem;
-    }
-
     .form-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -249,6 +243,7 @@
       color: #374151;
       margin-right: 0.4rem;
     }
+
     .login-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -306,21 +301,11 @@
         gap: 0.4rem 0.6rem;
       }
 
-      #loginBtn,
-      #workForm .btn,
-      #searchBtn,
-      #clearSearchBtn {
-        width: 100%;
-        justify-content: center;
-      }
-
       .thumb-wrapper {
         width: 64px;
         height: 64px;
       }
 
-      /* Hide less important cols on very small screens:
-         Date Assigned (5), Time (7) */
       th:nth-child(5),
       td:nth-child(5),
       th:nth-child(7),
@@ -372,7 +357,7 @@
 </head>
 <body>
 <div class="page">
-  <!-- LOGIN CARD -->
+  <!-- LOGIN -->
   <section class="card" id="loginCard">
     <div class="card-title">Login</div>
     <div class="login-grid">
@@ -412,7 +397,7 @@
       </div>
     </header>
 
-    <!-- ADD / EDIT FORM -->
+    <!-- FORM -->
     <section class="card" id="formCard">
       <div class="card-title" id="formTitle">Add New Alteration Work</div>
       <form id="workForm">
@@ -466,15 +451,21 @@
           </div>
 
           <div class="full-span section-break">
-            <label for="imageInput">Item Image</label>
-            <input type="file" id="imageInput" accept="image/*" />
+            <label for="imageUrl">Image URL</label>
+            <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;">
+              <input id="imageUrl" type="text" placeholder="https://example.com/image.jpg" />
+              <button type="button" class="btn btn-secondary btn-sm" id="uploadBtn">
+                Upload…
+              </button>
+            </div>
+            <small style="display:block;margin-top:.25rem;color:#9ca3af;font-size:.75rem;">
+              Paste an image URL, or connect an upload service to fill this field.
+            </small>
             <div style="margin-top:.4rem;">
               <div class="thumb-wrapper" id="imagePreview"><span>Preview</span></div>
             </div>
-            <small style="display:block;margin-top:.25rem;color:#9ca3af;font-size:.75rem;">
-              Image preview is local only (not uploaded yet).
-            </small>
           </div>
+
           <div class="full-span">
             <label for="notes">Notes / Measurements</label>
             <textarea id="notes" placeholder="Shorten length, adjust waist, etc."></textarea>
@@ -487,10 +478,9 @@
       </form>
     </section>
 
-    <!-- SEARCH & FILTERS -->
+    <!-- FILTERS -->
     <section class="card">
       <div class="card-title">Search & Filters</div>
-
       <div class="search-row">
         <div class="search-input-wrapper">
           <label for="searchBill">Bill Number</label>
@@ -562,6 +552,7 @@
   </div>
 </div>
 
+<!-- IMAGE MODAL -->
 <div id="imageModal" class="image-modal">
   <div class="image-modal-backdrop"></div>
   <div class="image-modal-inner">
@@ -571,7 +562,6 @@
 </div>
 
 <script>
-  // BACKEND API base
   const API_BASE = "https://chitrali-alteration-api.onrender.com";
 
   let currentUser = null;
@@ -592,14 +582,15 @@
   const workForm = document.getElementById("workForm");
   const workIdInput = document.getElementById("workId");
   const billNumberInput = document.getElementById("billNumber");
+  const itemNameInput = document.getElementById("itemName");
   const tailorSelect = document.getElementById("tailorSelect");
   const dateAssignedInput = document.getElementById("dateAssigned");
   const dateDeliveryInput = document.getElementById("dateDelivery");
   const timeDeliveryInput = document.getElementById("timeDelivery");
-  const itemNameInput = document.getElementById("itemName");
   const statusInput = document.getElementById("status");
   const packedFlagInput = document.getElementById("packedFlag");
-  const imageInput = document.getElementById("imageInput");
+  const imageUrlInput = document.getElementById("imageUrl");
+  const uploadBtn = document.getElementById("uploadBtn");
   const imagePreview = document.getElementById("imagePreview");
   const notesInput = document.getElementById("notes");
   const addWorkBtn = document.getElementById("addWorkBtn");
@@ -642,10 +633,8 @@
     return s === "IN_PROGRESS" ? "In Progress" : s === "DONE" ? "Done" : "Pending";
   }
 
-  // Apply colour coding to status <select>
   function applyStatusColor(selectEl) {
     const v = selectEl.value;
-
     let bg = "#e5e7eb";
     let color = "#111827";
 
@@ -698,10 +687,7 @@
       "Content-Type": "application/json",
       ...(options.headers || {}),
     };
-    const res = await fetch(API_BASE + path, {
-      headers,
-      ...options,
-    });
+    const res = await fetch(API_BASE + path, { headers, ...options });
     if (!res.ok) {
       let msg = "Request failed";
       try {
@@ -737,7 +723,8 @@
       dateDelivery: row.date_delivery ? row.date_delivery.slice(0, 10) : "",
       timeDelivery: row.time_delivery || "",
       status: row.status || "PENDING",
-      packed: !!row.packed
+      packed: !!row.packed,
+      imageUrl: row.image_url || "",
     };
   }
 
@@ -755,7 +742,7 @@
     const bill = searchBillInput.value.trim().toLowerCase();
     const tailor = searchTailorInput.value.trim().toLowerCase();
     const status = searchStatusSelect.value;
-    const packedVal = searchPackedSelect.value; // "", "1", "0"
+    const packedVal = searchPackedSelect.value;
     const deliveryDate = searchDateFromInput.value;
 
     return records.filter((r) => {
@@ -790,7 +777,8 @@
       dateDelivery: rec.dateDelivery,
       timeDelivery: rec.timeDelivery,
       status: newStatus,
-      packed: newPacked
+      packed: newPacked,
+      imageUrl: rec.imageUrl,
     };
 
     try {
@@ -826,10 +814,19 @@
     filtered.forEach((w) => {
       const tr = document.createElement("tr");
 
+      // IMAGE
       const tdImg = document.createElement("td");
       const wrap = document.createElement("div");
       wrap.className = "thumb-wrapper";
-      wrap.innerHTML = "No<br/>Image";
+      if (w.imageUrl) {
+        const img = document.createElement("img");
+        img.src = w.imageUrl;
+        img.style.cursor = "pointer";
+        img.onclick = () => openImageModal(w.imageUrl);
+        wrap.appendChild(img);
+      } else {
+        wrap.innerHTML = "No<br/>Image";
+      }
       tdImg.appendChild(wrap);
       tr.appendChild(tdImg);
 
@@ -857,23 +854,21 @@
       tdTime.textContent = formatTime(w.timeDelivery);
       tr.appendChild(tdTime);
 
-      // STATUS (editable, colour-coded select)
+      // STATUS select
       const tdStatus = document.createElement("td");
       const sel = document.createElement("select");
-
       ["PENDING", "IN_PROGRESS", "DONE"].forEach(val => {
         const opt = document.createElement("option");
         opt.value = val;
         opt.textContent = statusLabel(val);
         sel.appendChild(opt);
       });
-
       sel.value = w.status;
       applyStatusColor(sel);
       tdStatus.appendChild(sel);
       tr.appendChild(tdStatus);
 
-      // PACKED (editable checkbox)
+      // PACKED checkbox
       const tdPacked = document.createElement("td");
       const chk = document.createElement("input");
       chk.type = "checkbox";
@@ -881,13 +876,10 @@
       tdPacked.appendChild(chk);
       tr.appendChild(tdPacked);
 
-      // Events: change status
       sel.onchange = () => {
         applyStatusColor(sel);
         updateStatusPackedInline(w.id, sel.value, chk.checked);
       };
-
-      // Events: toggle packed -> auto status
       chk.onchange = () => {
         if (chk.checked && sel.value !== "DONE") {
           sel.value = "DONE";
@@ -913,6 +905,18 @@
     renderSummary(filtered);
   }
 
+  function updateImagePreviewFromUrl() {
+    const url = imageUrlInput.value.trim();
+    if (!url) {
+      imagePreview.innerHTML = "<span>Preview</span>";
+      return;
+    }
+    imagePreview.innerHTML = "";
+    const img = document.createElement("img");
+    img.src = url;
+    imagePreview.appendChild(img);
+  }
+
   function resetForm() {
     workForm.reset();
     workIdInput.value = "";
@@ -920,8 +924,6 @@
     addWorkBtn.textContent = "Add Work";
     formTitle.textContent = "Add New Alteration Work";
     imagePreview.innerHTML = "<span>Preview</span>";
-    imageInput.value = "";
-    notesInput.value = "";
     applyStatusColor(statusInput);
   }
 
@@ -939,11 +941,12 @@
     timeDeliveryInput.value = w.timeDelivery;
     statusInput.value = w.status;
     packedFlagInput.checked = w.packed;
+    imageUrlInput.value = w.imageUrl;
+    updateImagePreviewFromUrl();
     applyStatusColor(statusInput);
 
     addWorkBtn.textContent = "Update Work";
     formTitle.textContent = "Edit Alteration Work";
-
     window.scrollTo({ top: formCard.offsetTop - 20, behavior: "smooth" });
   }
 
@@ -958,6 +961,7 @@
     const timeDelivery = timeDeliveryInput.value;
     const status = statusInput.value;
     const packed = packedFlagInput.checked;
+    const imageUrl = imageUrlInput.value.trim();
 
     if (!billNumber || !tailorName || !itemName) {
       alert("Bill number, tailor name and item name are required.");
@@ -976,7 +980,8 @@
       dateDelivery,
       timeDelivery,
       status,
-      packed
+      packed,
+      imageUrl,
     };
 
     try {
@@ -986,7 +991,9 @@
           body: JSON.stringify(payload),
         });
         const normalized = normalizeRow(updated);
-        records = records.map((r) => (r.id === normalized.id ? normalized : r));
+        records = records.map((r) =>
+          r.id === normalized.id ? normalized : r
+        );
       } else {
         const created = await api("/alterations", {
           method: "POST",
@@ -1013,28 +1020,18 @@
     billNumberInput.focus();
   });
 
-  imageInput.addEventListener("change", () => {
-    const file = imageInput.files[0];
-    if (!file) {
-      imagePreview.innerHTML = "<span>Preview</span>";
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      imagePreview.innerHTML = "";
-      const img = document.createElement("img");
-      img.src = e.target.result;
-      imagePreview.appendChild(img);
-    };
-    reader.readAsDataURL(file);
-  });
-
+  imageUrlInput.addEventListener("input", updateImagePreviewFromUrl);
   imagePreview.addEventListener("click", () => {
     const img = imagePreview.querySelector("img");
     if (img && img.src) openImageModal(img.src);
   });
 
-  // Form status colour + packed logic
+  uploadBtn.addEventListener("click", () => {
+    alert(
+      "Hook your upload service here. After upload, set imageUrlInput.value to the uploaded image URL and call updateImagePreviewFromUrl()."
+    );
+  });
+
   statusInput.addEventListener("change", () => applyStatusColor(statusInput));
   packedFlagInput.addEventListener("change", () => {
     if (packedFlagInput.checked && statusInput.value !== "DONE") {
