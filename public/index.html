@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Alteration Work Tracker</title>
+  <title>Alteration Tracker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
@@ -450,16 +450,17 @@
             </div>
           </div>
 
+          <!-- IMAGE: camera / gallery -->
           <div class="full-span section-break">
-            <label for="imageUrl">Image URL</label>
-            <div style="display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;">
-              <input id="imageUrl" type="text" placeholder="https://example.com/image.jpg" />
-              <button type="button" class="btn btn-secondary btn-sm" id="uploadBtn">
-                Upload…
-              </button>
-            </div>
+            <label for="imageFile">Item Image (camera / gallery)</label>
+            <input
+              id="imageFile"
+              type="file"
+              accept="image/*"
+              capture="environment"
+            />
             <small style="display:block;margin-top:.25rem;color:#9ca3af;font-size:.75rem;">
-              Paste an image URL, or connect an upload service to fill this field.
+              On mobile, this can open the camera; you can also choose from gallery.
             </small>
             <div style="margin-top:.4rem;">
               <div class="thumb-wrapper" id="imagePreview"><span>Preview</span></div>
@@ -567,6 +568,7 @@
   let currentUser = null;
   let records = [];
   let editingId = null;
+  let currentImageDataUrl = ""; // holds base64 data URL
 
   const loginCard = document.getElementById("loginCard");
   const appMain = document.getElementById("appMain");
@@ -589,8 +591,7 @@
   const timeDeliveryInput = document.getElementById("timeDelivery");
   const statusInput = document.getElementById("status");
   const packedFlagInput = document.getElementById("packedFlag");
-  const imageUrlInput = document.getElementById("imageUrl");
-  const uploadBtn = document.getElementById("uploadBtn");
+  const imageFileInput = document.getElementById("imageFile");
   const imagePreview = document.getElementById("imagePreview");
   const notesInput = document.getElementById("notes");
   const addWorkBtn = document.getElementById("addWorkBtn");
@@ -778,7 +779,7 @@
       timeDelivery: rec.timeDelivery,
       status: newStatus,
       packed: newPacked,
-      imageUrl: rec.imageUrl,
+      imageUrl: rec.imageUrl, // already data URL if present
     };
 
     try {
@@ -905,17 +906,30 @@
     renderSummary(filtered);
   }
 
-  function updateImagePreviewFromUrl() {
-    const url = imageUrlInput.value.trim();
-    if (!url) {
+  // ---- IMAGE HANDLING (camera / gallery) ----
+  imageFileInput.addEventListener("change", () => {
+    const file = imageFileInput.files[0];
+    if (!file) {
+      currentImageDataUrl = "";
       imagePreview.innerHTML = "<span>Preview</span>";
       return;
     }
-    imagePreview.innerHTML = "";
-    const img = document.createElement("img");
-    img.src = url;
-    imagePreview.appendChild(img);
-  }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      currentImageDataUrl = e.target.result; // data URL
+      imagePreview.innerHTML = "";
+      const img = document.createElement("img");
+      img.src = currentImageDataUrl;
+      imagePreview.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  imagePreview.addEventListener("click", () => {
+    if (currentImageDataUrl) {
+      openImageModal(currentImageDataUrl);
+    }
+  });
 
   function resetForm() {
     workForm.reset();
@@ -924,6 +938,7 @@
     addWorkBtn.textContent = "Add Work";
     formTitle.textContent = "Add New Alteration Work";
     imagePreview.innerHTML = "<span>Preview</span>";
+    currentImageDataUrl = "";
     applyStatusColor(statusInput);
   }
 
@@ -941,9 +956,18 @@
     timeDeliveryInput.value = w.timeDelivery;
     statusInput.value = w.status;
     packedFlagInput.checked = w.packed;
-    imageUrlInput.value = w.imageUrl;
-    updateImagePreviewFromUrl();
+    notesInput.value = w.notes || "";
     applyStatusColor(statusInput);
+
+    currentImageDataUrl = w.imageUrl || "";
+    if (currentImageDataUrl) {
+      imagePreview.innerHTML = "";
+      const img = document.createElement("img");
+      img.src = currentImageDataUrl;
+      imagePreview.appendChild(img);
+    } else {
+      imagePreview.innerHTML = "<span>Preview</span>";
+    }
 
     addWorkBtn.textContent = "Update Work";
     formTitle.textContent = "Edit Alteration Work";
@@ -961,7 +985,8 @@
     const timeDelivery = timeDeliveryInput.value;
     const status = statusInput.value;
     const packed = packedFlagInput.checked;
-    const imageUrl = imageUrlInput.value.trim();
+    const imageUrl = currentImageDataUrl; // data URL (can be empty)
+    const notes = notesInput.value.trim();
 
     if (!billNumber || !tailorName || !itemName) {
       alert("Bill number, tailor name and item name are required.");
@@ -982,6 +1007,7 @@
       status,
       packed,
       imageUrl,
+      notes,
     };
 
     try {
@@ -1018,18 +1044,6 @@
   addNewWorkBtn.addEventListener("click", () => {
     window.scrollTo({ top: formCard.offsetTop - 20, behavior: "smooth" });
     billNumberInput.focus();
-  });
-
-  imageUrlInput.addEventListener("input", updateImagePreviewFromUrl);
-  imagePreview.addEventListener("click", () => {
-    const img = imagePreview.querySelector("img");
-    if (img && img.src) openImageModal(img.src);
-  });
-
-  uploadBtn.addEventListener("click", () => {
-    alert(
-      "Hook your upload service here. After upload, set imageUrlInput.value to the uploaded image URL and call updateImagePreviewFromUrl()."
-    );
   });
 
   statusInput.addEventListener("change", () => applyStatusColor(statusInput));
