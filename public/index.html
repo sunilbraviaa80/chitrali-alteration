@@ -571,6 +571,7 @@
 </div>
 
 <script>
+  // BACKEND API base
   const API_BASE = "https://chitrali-alteration-api.onrender.com";
 
   let currentUser = null;
@@ -640,6 +641,33 @@
   function statusLabel(s) {
     return s === "IN_PROGRESS" ? "In Progress" : s === "DONE" ? "Done" : "Pending";
   }
+
+  // Apply colour coding to status <select>
+  function applyStatusColor(selectEl) {
+    const v = selectEl.value;
+
+    let bg = "#e5e7eb";
+    let color = "#111827";
+
+    if (v === "PENDING") {
+      bg = "#fef3c7";
+      color = "#92400e";
+    } else if (v === "IN_PROGRESS") {
+      bg = "#dbeafe";
+      color = "#1d4ed8";
+    } else if (v === "DONE") {
+      bg = "#dcfce7";
+      color = "#065f46";
+    }
+
+    selectEl.style.backgroundColor = bg;
+    selectEl.style.color = color;
+    selectEl.style.borderRadius = "999px";
+    selectEl.style.border = "none";
+    selectEl.style.padding = "0.15rem 0.6rem";
+    selectEl.style.fontSize = ".78rem";
+  }
+
   function formatDate(d) {
     if (!d) return "-";
     const [yyyy, mm, dd] = d.split("-");
@@ -666,11 +694,12 @@
   }
 
   async function api(path, options = {}) {
+    const headers = {
+      "Content-Type": "application/json",
+      ...(options.headers || {}),
+    };
     const res = await fetch(API_BASE + path, {
-      headers: {
-        "Content-Type": "application/json",
-        ...(options.headers || {}),
-      },
+      headers,
       ...options,
     });
     if (!res.ok) {
@@ -749,6 +778,35 @@
     summaryText.textContent = `Total: ${total} | Showing: ${shown} | Open: ${open}`;
   }
 
+  async function updateStatusPackedInline(id, newStatus, newPacked) {
+    const rec = records.find(r => r.id === id);
+    if (!rec) return;
+
+    const payload = {
+      billNumber: rec.billNumber,
+      tailorName: rec.tailorName,
+      itemName: rec.itemName,
+      dateAssigned: rec.dateAssigned,
+      dateDelivery: rec.dateDelivery,
+      timeDelivery: rec.timeDelivery,
+      status: newStatus,
+      packed: newPacked
+    };
+
+    try {
+      const updated = await api(`/alterations/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(payload),
+      });
+
+      const normalized = normalizeRow(updated);
+      records = records.map(r => r.id === normalized.id ? normalized : r);
+      renderTable();
+    } catch (e) {
+      alert("Error updating status/packed: " + e.message);
+    }
+  }
+
   function renderTable() {
     workTableBody.innerHTML = "";
     const filtered = getFilteredRecords();
@@ -799,20 +857,47 @@
       tdTime.textContent = formatTime(w.timeDelivery);
       tr.appendChild(tdTime);
 
+      // STATUS (editable, colour-coded select)
       const tdStatus = document.createElement("td");
-      const span = document.createElement("span");
-      span.className = "badge";
-      span.textContent = statusLabel(w.status);
-      tdStatus.appendChild(span);
+      const sel = document.createElement("select");
+
+      ["PENDING", "IN_PROGRESS", "DONE"].forEach(val => {
+        const opt = document.createElement("option");
+        opt.value = val;
+        opt.textContent = statusLabel(val);
+        sel.appendChild(opt);
+      });
+
+      sel.value = w.status;
+      applyStatusColor(sel);
+      tdStatus.appendChild(sel);
       tr.appendChild(tdStatus);
 
+      // PACKED (editable checkbox)
       const tdPacked = document.createElement("td");
       const chk = document.createElement("input");
       chk.type = "checkbox";
       chk.checked = w.packed;
-      chk.disabled = true; // change only via Edit form
       tdPacked.appendChild(chk);
       tr.appendChild(tdPacked);
+
+      // Events: change status
+      sel.onchange = () => {
+        applyStatusColor(sel);
+        updateStatusPackedInline(w.id, sel.value, chk.checked);
+      };
+
+      // Events: toggle packed -> auto status
+      chk.onchange = () => {
+        if (chk.checked && sel.value !== "DONE") {
+          sel.value = "DONE";
+          applyStatusColor(sel);
+        } else if (!chk.checked && sel.value === "DONE") {
+          sel.value = "IN_PROGRESS";
+          applyStatusColor(sel);
+        }
+        updateStatusPackedInline(w.id, sel.value, chk.checked);
+      };
 
       const tdActions = document.createElement("td");
       const editBtn = document.createElement("button");
@@ -837,6 +922,7 @@
     imagePreview.innerHTML = "<span>Preview</span>";
     imageInput.value = "";
     notesInput.value = "";
+    applyStatusColor(statusInput);
   }
 
   function loadForEdit(id) {
@@ -853,6 +939,7 @@
     timeDeliveryInput.value = w.timeDelivery;
     statusInput.value = w.status;
     packedFlagInput.checked = w.packed;
+    applyStatusColor(statusInput);
 
     addWorkBtn.textContent = "Update Work";
     formTitle.textContent = "Edit Alteration Work";
@@ -893,20 +980,19 @@
     };
 
     try {
-      let saved;
       if (editingId) {
-        saved = await api(`/alterations/${editingId}`, {
+        const updated = await api(`/alterations/${editingId}`, {
           method: "PUT",
           body: JSON.stringify(payload),
         });
-        const normalized = normalizeRow(saved);
+        const normalized = normalizeRow(updated);
         records = records.map((r) => (r.id === normalized.id ? normalized : r));
       } else {
-        saved = await api("/alterations", {
+        const created = await api("/alterations", {
           method: "POST",
           body: JSON.stringify(payload),
         });
-        const normalized = normalizeRow(saved);
+        const normalized = normalizeRow(created);
         records.unshift(normalized);
       }
 
@@ -948,6 +1034,18 @@
     if (img && img.src) openImageModal(img.src);
   });
 
+  // Form status colour + packed logic
+  statusInput.addEventListener("change", () => applyStatusColor(statusInput));
+  packedFlagInput.addEventListener("change", () => {
+    if (packedFlagInput.checked && statusInput.value !== "DONE") {
+      statusInput.value = "DONE";
+      applyStatusColor(statusInput);
+    } else if (!packedFlagInput.checked && statusInput.value === "DONE") {
+      statusInput.value = "IN_PROGRESS";
+      applyStatusColor(statusInput);
+    }
+  });
+
   workForm.addEventListener("submit", saveWork);
   formCancelBtn.addEventListener("click", resetForm);
 
@@ -977,6 +1075,7 @@
   searchDateFromInput.addEventListener("change", renderTable);
 
   (function init() {
+    applyStatusColor(statusInput);
     if (localStorage.getItem("alteration_logged_in") === "1") {
       currentUser = { name: "Admin" };
       showApp();
