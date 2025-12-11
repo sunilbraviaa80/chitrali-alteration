@@ -1,22 +1,22 @@
 // backend/index.js
-import express from 'express';
-import cors from 'cors';
-import alterationsRouter from './routes/alterations.js';
+import express from "express";
+import cors from "cors";
+import alterationsRouter from "./routes/alterations.js";
 
 const app = express();
 
-// allow your frontend to call this API
 app.use(cors());
 app.use(express.json());
 
-app.use('/alterations', alterationsRouter);
-
-// health check
-app.get('/', (req, res) => {
-  res.send('Chitrali Alteration API is running');
+// Health check
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
 });
 
-const PORT = process.env.PORT || 3000;
+// Main API
+app.use("/alterations", alterationsRouter);
+
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-  console.log(`API running on port ${PORT}`);
+  console.log(`API listening on port ${PORT}`);
 });
