@@ -1,19 +1,21 @@
 // backend/db.js
-import pg from 'pg';
-const { Pool } = pg;
+const { Pool } = require("pg");
 
-// Render will provide DATABASE_URL in env vars
-export const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false } // needed for Render PostgreSQL
+const connectionString = process.env.DATABASE_URL;
+
+if (!connectionString) {
+  console.error("DATABASE_URL environment variable is not set.");
+  process.exit(1);
+}
+
+const pool = new Pool({
+  connectionString,
+  ssl: { rejectUnauthorized: false },
 });
 
-export async function query(sql, params) {
-  const client = await pool.connect();
-  try {
-    const result = await client.query(sql, params);
-    return result;
-  } finally {
-    client.release();
-  }
+async function query(text, params) {
+  const res = await pool.query(text, params);
+  return res;
 }
+
+module.exports = { query };
