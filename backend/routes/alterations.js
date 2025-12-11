@@ -33,20 +33,28 @@ router.post('/', async (req, res) => {
     dateAssigned,
     dateDelivery,
     timeDelivery,
-    status
+    status,
+    packed
   } = req.body;
 
   if (!billNumber || !tailorName || !itemName) {
-    return res
-      .status(400)
-      .json({ error: 'billNumber, tailorName, itemName are required' });
+    return res.status(400).json({
+      error: 'billNumber, tailorName, itemName are required'
+    });
   }
+
+  // Convert any form/JSON representation to true/false
+  const packedValue =
+    packed === true ||
+    packed === "true" ||
+    packed === 1 ||
+    packed === "1";
 
   try {
     const result = await query(
       `INSERT INTO alterations
-         (bill_number, tailor_name, item_name, date_assigned, date_delivery, time_delivery, status)
-       VALUES ($1,$2,$3,$4,$5,$6,$7)
+         (bill_number, tailor_name, item_name, date_assigned, date_delivery, time_delivery, status, packed)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
        RETURNING *`,
       [
         billNumber,
@@ -55,7 +63,8 @@ router.post('/', async (req, res) => {
         dateAssigned || null,
         dateDelivery || null,
         timeDelivery || null,
-        status || 'Pending'
+        status || 'PENDING',
+        packedValue
       ]
     );
 
@@ -80,8 +89,15 @@ router.put('/:id', async (req, res) => {
     dateAssigned,
     dateDelivery,
     timeDelivery,
-    status
+    status,
+    packed
   } = req.body;
+
+  const packedValue =
+    packed === true ||
+    packed === "true" ||
+    packed === 1 ||
+    packed === "1";
 
   try {
     const result = await query(
@@ -93,8 +109,9 @@ router.put('/:id', async (req, res) => {
              date_delivery=$5,
              time_delivery=$6,
              status=$7,
+             packed=$8,
              updated_at=NOW()
-       WHERE id=$8
+       WHERE id=$9
        RETURNING *`,
       [
         billNumber,
@@ -103,7 +120,8 @@ router.put('/:id', async (req, res) => {
         dateAssigned || null,
         dateDelivery || null,
         timeDelivery || null,
-        status || 'Pending',
+        status || 'PENDING',
+        packedValue,
         id
       ]
     );
@@ -120,3 +138,4 @@ router.put('/:id', async (req, res) => {
 });
 
 export default router;
+
