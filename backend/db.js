@@ -1,5 +1,7 @@
 // backend/db.js
-const { Pool } = require("pg");
+import pkg from "pg";
+
+const { Pool } = pkg;
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -13,9 +15,7 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false },
 });
 
-async function query(text, params) {
+export async function query(text, params) {
   const res = await pool.query(text, params);
   return res;
 }
-
-module.exports = { query };
