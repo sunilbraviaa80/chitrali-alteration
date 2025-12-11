@@ -1,9 +1,10 @@
 // backend/routes/alterations.js
-const express = require("express");
-const router = express.Router();
-const { query } = require("../db");
+import express from "express";
+import { query } from "../db.js";
 
-// GET all alterations
+const router = express.Router();
+
+// GET /alterations  – list all
 router.get("/", async (req, res) => {
   try {
     const result = await query(
@@ -17,7 +18,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// POST create alteration
+// POST /alterations – create
 router.post("/", async (req, res) => {
   const {
     billNumber,
@@ -68,7 +69,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PUT update alteration
+// PUT /alterations/:id – full update
 router.put("/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -127,4 +128,5 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+// ⬅️ THIS is what Render is expecting:
+export default router;
