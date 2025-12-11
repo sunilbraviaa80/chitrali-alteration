@@ -1,31 +1,24 @@
 // backend/routes/alterations.js
-import express from 'express';
-import { query } from '../db.js';
-
+const express = require("express");
 const router = express.Router();
+const { query } = require("../db");
 
-/**
- * GET /alterations
- * List all alteration records
- */
-router.get('/', async (req, res) => {
+// GET all alterations
+router.get("/", async (req, res) => {
   try {
     const result = await query(
-      `SELECT * FROM alterations ORDER BY created_at DESC`,
+      "SELECT * FROM alterations ORDER BY id DESC",
       []
     );
     res.json(result.rows);
   } catch (err) {
-    console.error('GET /alterations error:', err);
-    res.status(500).json({ error: 'Database error' });
+    console.error("GET /alterations error:", err);
+    res.status(500).json({ error: "Database error" });
   }
 });
 
-/**
- * POST /alterations
- * Create a new record
- */
-router.post('/', async (req, res) => {
+// POST create alteration
+router.post("/", async (req, res) => {
   const {
     billNumber,
     tailorName,
@@ -34,27 +27,26 @@ router.post('/', async (req, res) => {
     dateDelivery,
     timeDelivery,
     status,
-    packed
+    packed,
+    imageUrl,
   } = req.body;
 
   if (!billNumber || !tailorName || !itemName) {
-    return res.status(400).json({
-      error: 'billNumber, tailorName, itemName are required'
-    });
+    return res
+      .status(400)
+      .json({ error: "billNumber, tailorName, itemName are required" });
   }
 
-  // Convert any form/JSON representation to true/false
   const packedValue =
-    packed === true ||
-    packed === "true" ||
-    packed === 1 ||
-    packed === "1";
+    packed === true || packed === "true" || packed === 1 || packed === "1";
 
   try {
     const result = await query(
       `INSERT INTO alterations
-         (bill_number, tailor_name, item_name, date_assigned, date_delivery, time_delivery, status, packed)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+        (bill_number, tailor_name, item_name,
+         date_assigned, date_delivery, time_delivery,
+         status, packed, image_url)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
        RETURNING *`,
       [
         billNumber,
@@ -63,23 +55,21 @@ router.post('/', async (req, res) => {
         dateAssigned || null,
         dateDelivery || null,
         timeDelivery || null,
-        status || 'PENDING',
-        packedValue
+        status || "PENDING",
+        packedValue,
+        imageUrl || null,
       ]
     );
 
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    console.error('POST /alterations error:', err);
-    res.status(500).json({ error: 'Database error' });
+    console.error("POST /alterations error:", err);
+    res.status(500).json({ error: "Database error" });
   }
 });
 
-/**
- * PUT /alterations/:id
- * Update an existing record
- */
-router.put('/:id', async (req, res) => {
+// PUT update alteration
+router.put("/:id", async (req, res) => {
   const id = req.params.id;
 
   const {
@@ -90,28 +80,27 @@ router.put('/:id', async (req, res) => {
     dateDelivery,
     timeDelivery,
     status,
-    packed
+    packed,
+    imageUrl,
   } = req.body;
 
   const packedValue =
-    packed === true ||
-    packed === "true" ||
-    packed === 1 ||
-    packed === "1";
+    packed === true || packed === "true" || packed === 1 || packed === "1";
 
   try {
     const result = await query(
       `UPDATE alterations
-         SET bill_number=$1,
-             tailor_name=$2,
-             item_name=$3,
-             date_assigned=$4,
-             date_delivery=$5,
-             time_delivery=$6,
-             status=$7,
-             packed=$8,
-             updated_at=NOW()
-       WHERE id=$9
+         SET bill_number   = $1,
+             tailor_name   = $2,
+             item_name     = $3,
+             date_assigned = $4,
+             date_delivery = $5,
+             time_delivery = $6,
+             status        = $7,
+             packed        = $8,
+             image_url     = $9,
+             updated_at    = NOW()
+       WHERE id = $10
        RETURNING *`,
       [
         billNumber,
@@ -120,22 +109,22 @@ router.put('/:id', async (req, res) => {
         dateAssigned || null,
         dateDelivery || null,
         timeDelivery || null,
-        status || 'PENDING',
+        status || "PENDING",
         packedValue,
-        id
+        imageUrl || null,
+        id,
       ]
     );
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Record not found' });
+      return res.status(404).json({ error: "Record not found" });
     }
 
     res.json(result.rows[0]);
   } catch (err) {
-    console.error('PUT /alterations/:id error:', err);
-    res.status(500).json({ error: 'Database error' });
+    console.error("PUT /alterations/:id error:", err);
+    res.status(500).json({ error: "Database error" });
   }
 });
 
-export default router;
-
+module.exports = router;
