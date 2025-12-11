@@ -28,13 +28,12 @@
     /* HEADER + BRAND LAYOUT */
     header {
       display: grid;
-      grid-template-columns: auto 1fr auto; /* logo | title | actions */
+      grid-template-columns: auto 1fr auto;
       align-items: center;
       gap: 0.75rem;
       margin-bottom: 1.25rem;
     }
 
-    /* Left logo block */
     .brand-left {
       display: flex;
       align-items: center;
@@ -46,7 +45,6 @@
       display: block;
     }
 
-    /* Center title block */
     .brand-text {
       display: flex;
       flex-direction: column;
@@ -67,7 +65,6 @@
       line-height: 1.2;
     }
 
-    /* Right actions block */
     .header-actions {
       display: flex;
       align-items: center;
@@ -171,7 +168,6 @@
       box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12);
     }
 
-    /* SEARCH & FILTER GRID — COMPACT VERSION */
     .search-row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -185,7 +181,6 @@
       margin-bottom: 0.2rem;
     }
 
-    /* FORM GRID – responsive columns */
     .form-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -261,7 +256,6 @@
       align-items: flex-end;
     }
 
-    /* Tablet adjustments */
     @media (max-width: 900px) {
       .card {
         padding: 1.1rem 1.2rem;
@@ -271,7 +265,6 @@
       }
     }
 
-    /* Phone optimisations */
     @media (max-width: 640px) {
       body {
         font-size: 14px;
@@ -312,9 +305,6 @@
         grid-template-columns: 1fr 1fr;
         gap: 0.4rem 0.6rem;
       }
-      .search-input-wrapper {
-        margin-bottom: 0 !important;
-      }
 
       #loginBtn,
       #workForm .btn,
@@ -339,7 +329,6 @@
       }
     }
 
-    /* Image fullscreen modal */
     .image-modal {
       position: fixed;
       inset: 0;
@@ -383,7 +372,7 @@
 </head>
 <body>
 <div class="page">
-  <!-- LOGIN CARD (local only, no backend auth) -->
+  <!-- LOGIN CARD -->
   <section class="card" id="loginCard">
     <div class="card-title">Login</div>
     <div class="login-grid">
@@ -408,18 +397,15 @@
   <!-- MAIN APP -->
   <div id="appMain" style="display:none;">
     <header>
-      <!-- Left: logo -->
       <div class="brand-left">
         <img src="chitrali-logo.png" alt="Chitrali" class="brand-logo" />
       </div>
 
-      <!-- Center: title -->
       <div class="brand-text">
         <div class="brand-title">Alteration Tracker</div>
         <div class="brand-subtitle">Chitrali Fashion</div>
       </div>
 
-      <!-- Right: actions -->
       <div class="header-actions">
         <span id="userInfo"></span>
         <button class="btn btn-primary" id="addNewWorkBtn">Add New Work</button>
@@ -432,7 +418,6 @@
       <form id="workForm">
         <input type="hidden" id="workId" />
         <div class="form-grid">
-          <!-- Row 1 -->
           <div>
             <label for="billNumber">Bill Number *</label>
             <input id="billNumber" required />
@@ -460,7 +445,6 @@
             </select>
           </div>
 
-          <!-- Row 2 -->
           <div>
             <label for="dateAssigned">Date Assigned *</label>
             <input type="date" id="dateAssigned" required />
@@ -473,8 +457,14 @@
             <label for="timeDelivery">Time of Delivery</label>
             <input type="time" id="timeDelivery" />
           </div>
+          <div>
+            <label for="packedFlag">Packed</label>
+            <div style="display:flex;align-items:center;gap:.4rem;margin-top:.3rem;">
+              <input type="checkbox" id="packedFlag" />
+              <span style="font-size:.8rem;color:#4b5563;">Mark as packed</span>
+            </div>
+          </div>
 
-          <!-- Row 3 -->
           <div class="full-span section-break">
             <label for="imageInput">Item Image</label>
             <input type="file" id="imageInput" accept="image/*" />
@@ -482,7 +472,7 @@
               <div class="thumb-wrapper" id="imagePreview"><span>Preview</span></div>
             </div>
             <small style="display:block;margin-top:.25rem;color:#9ca3af;font-size:.75rem;">
-              Image is only for on-screen preview; not saved to the online database yet.
+              Image preview is local only (not uploaded yet).
             </small>
           </div>
           <div class="full-span">
@@ -523,6 +513,15 @@
         </div>
 
         <div class="search-input-wrapper">
+          <label for="searchPacked">Packed</label>
+          <select id="searchPacked">
+            <option value="">All</option>
+            <option value="1">Packed</option>
+            <option value="0">Not Packed</option>
+          </select>
+        </div>
+
+        <div class="search-input-wrapper">
           <label for="searchDateFrom">Delivery Date</label>
           <input id="searchDateFrom" type="date" />
         </div>
@@ -552,6 +551,7 @@
             <th>Date Delivery</th>
             <th>Time Delivery</th>
             <th>Status</th>
+            <th>Packed</th>
             <th>Actions</th>
           </tr>
           </thead>
@@ -562,7 +562,6 @@
   </div>
 </div>
 
-<!-- Image fullscreen modal -->
 <div id="imageModal" class="image-modal">
   <div class="image-modal-backdrop"></div>
   <div class="image-modal-inner">
@@ -572,15 +571,12 @@
 </div>
 
 <script>
-  // ===== CONFIG =====
   const API_BASE = "https://chitrali-alteration-api.onrender.com";
 
-  // ===== STATE =====
   let currentUser = null;
-  let records = [];      // all rows from backend, normalized
-  let editingId = null;  // id of row being edited (null = new)
+  let records = [];
+  let editingId = null;
 
-  // ===== DOM ELEMENTS =====
   const loginCard = document.getElementById("loginCard");
   const appMain = document.getElementById("appMain");
   const loginEmail = document.getElementById("loginEmail");
@@ -601,6 +597,7 @@
   const timeDeliveryInput = document.getElementById("timeDelivery");
   const itemNameInput = document.getElementById("itemName");
   const statusInput = document.getElementById("status");
+  const packedFlagInput = document.getElementById("packedFlag");
   const imageInput = document.getElementById("imageInput");
   const imagePreview = document.getElementById("imagePreview");
   const notesInput = document.getElementById("notes");
@@ -610,6 +607,7 @@
   const searchBillInput = document.getElementById("searchBill");
   const searchTailorInput = document.getElementById("searchTailor");
   const searchStatusSelect = document.getElementById("searchStatus");
+  const searchPackedSelect = document.getElementById("searchPacked");
   const searchDateFromInput = document.getElementById("searchDateFrom");
   const searchBtn = document.getElementById("searchBtn");
   const clearSearchBtn = document.getElementById("clearSearchBtn");
@@ -621,7 +619,6 @@
   const imageModalClose = document.getElementById("imageModalClose");
   const imageModalBackdrop = imageModal.querySelector(".image-modal-backdrop");
 
-  // ===== IMAGE MODAL =====
   function openImageModal(src) {
     if (!src) return;
     imageModalImg.src = src;
@@ -631,7 +628,6 @@
     imageModal.classList.remove("visible");
     imageModalImg.src = "";
   }
-
   imageModalBackdrop.addEventListener("click", closeImageModal);
   imageModalClose.addEventListener("click", closeImageModal);
   imageModal.addEventListener("click", (e) => {
@@ -641,7 +637,6 @@
     if (e.key === "Escape") closeImageModal();
   });
 
-  // ===== UTILS =====
   function statusLabel(s) {
     return s === "IN_PROGRESS" ? "In Progress" : s === "DONE" ? "Done" : "Pending";
   }
@@ -651,20 +646,18 @@
     if (!yyyy || !mm || !dd) return d;
     return `${dd}/${mm}/${yyyy}`;
   }
-  function formatTime(t) {
-    return t || "-";
-  }
+  function formatTime(t) { return t || "-"; }
 
   function showLogin() {
     loginCard.style.display = "block";
     appMain.style.display = "none";
   }
-
   function showApp() {
     loginCard.style.display = "none";
     appMain.style.display = "block";
-    const logoutBtnHtml = `<button class="btn btn-link btn-sm" id="logoutBtn">Logout</button>`;
-    userInfo.innerHTML = `<span class="badge">${currentUser?.name || "Admin"}</span>${logoutBtnHtml}`;
+    userInfo.innerHTML =
+      `<span class="badge">${currentUser?.name || "Admin"}</span>` +
+      `<button class="btn btn-link btn-sm" id="logoutBtn">Logout</button>`;
     document.getElementById("logoutBtn").onclick = () => {
       localStorage.removeItem("alteration_logged_in");
       currentUser = null;
@@ -691,12 +684,10 @@
     return res.json();
   }
 
-  // ===== LOGIN (LOCAL) =====
   function handleLogin() {
     loginError.textContent = "";
     const email = loginEmail.value.trim();
     const password = loginPassword.value;
-
     if (email === "admin@tracker.local" && password === "admin123") {
       currentUser = { name: "Admin" };
       localStorage.setItem("alteration_logged_in", "1");
@@ -707,7 +698,6 @@
     }
   }
 
-  // ===== DATA LOADING & NORMALIZATION =====
   function normalizeRow(row) {
     return {
       id: row.id,
@@ -718,6 +708,7 @@
       dateDelivery: row.date_delivery ? row.date_delivery.slice(0, 10) : "",
       timeDelivery: row.time_delivery || "",
       status: row.status || "PENDING",
+      packed: !!row.packed
     };
   }
 
@@ -731,18 +722,22 @@
     }
   }
 
-  // ===== FILTERING & TABLE RENDER =====
   function getFilteredRecords() {
     const bill = searchBillInput.value.trim().toLowerCase();
     const tailor = searchTailorInput.value.trim().toLowerCase();
     const status = searchStatusSelect.value;
-    const deliveryDate = searchDateFromInput.value; // yyyy-mm-dd
+    const packedVal = searchPackedSelect.value; // "", "1", "0"
+    const deliveryDate = searchDateFromInput.value;
 
     return records.filter((r) => {
       if (bill && !r.billNumber.toLowerCase().includes(bill)) return false;
       if (tailor && !r.tailorName.toLowerCase().includes(tailor)) return false;
       if (status && r.status !== status) return false;
       if (deliveryDate && r.dateDelivery !== deliveryDate) return false;
+      if (packedVal !== "") {
+        const wantPacked = packedVal === "1";
+        if (r.packed !== wantPacked) return false;
+      }
       return true;
     });
   }
@@ -762,7 +757,7 @@
       const tr = document.createElement("tr");
       tr.className = "empty-row";
       const td = document.createElement("td");
-      td.colSpan = 9;
+      td.colSpan = 10;
       td.textContent = "No alteration work found.";
       tr.appendChild(td);
       workTableBody.appendChild(tr);
@@ -773,7 +768,6 @@
     filtered.forEach((w) => {
       const tr = document.createElement("tr");
 
-      // Image (dummy for now – no stored image URL)
       const tdImg = document.createElement("td");
       const wrap = document.createElement("div");
       wrap.className = "thumb-wrapper";
@@ -812,6 +806,14 @@
       tdStatus.appendChild(span);
       tr.appendChild(tdStatus);
 
+      const tdPacked = document.createElement("td");
+      const chk = document.createElement("input");
+      chk.type = "checkbox";
+      chk.checked = w.packed;
+      chk.disabled = true; // change only via Edit form
+      tdPacked.appendChild(chk);
+      tr.appendChild(tdPacked);
+
       const tdActions = document.createElement("td");
       const editBtn = document.createElement("button");
       editBtn.className = "btn btn-link btn-sm";
@@ -826,7 +828,6 @@
     renderSummary(filtered);
   }
 
-  // ===== FORM HELPERS =====
   function resetForm() {
     workForm.reset();
     workIdInput.value = "";
@@ -851,6 +852,7 @@
     dateDeliveryInput.value = w.dateDelivery;
     timeDeliveryInput.value = w.timeDelivery;
     statusInput.value = w.status;
+    packedFlagInput.checked = w.packed;
 
     addWorkBtn.textContent = "Update Work";
     formTitle.textContent = "Edit Alteration Work";
@@ -858,7 +860,6 @@
     window.scrollTo({ top: formCard.offsetTop - 20, behavior: "smooth" });
   }
 
-  // ===== SAVE (ADD / UPDATE) =====
   async function saveWork(e) {
     e.preventDefault();
 
@@ -869,6 +870,7 @@
     const dateDelivery = dateDeliveryInput.value;
     const timeDelivery = timeDeliveryInput.value;
     const status = statusInput.value;
+    const packed = packedFlagInput.checked;
 
     if (!billNumber || !tailorName || !itemName) {
       alert("Bill number, tailor name and item name are required.");
@@ -887,6 +889,7 @@
       dateDelivery,
       timeDelivery,
       status,
+      packed
     };
 
     try {
@@ -914,7 +917,6 @@
     }
   }
 
-  // ===== EVENT BINDINGS =====
   loginBtn.addEventListener("click", handleLogin);
   loginPassword.addEventListener("keydown", (e) => {
     if (e.key === "Enter") handleLogin();
@@ -949,13 +951,12 @@
   workForm.addEventListener("submit", saveWork);
   formCancelBtn.addEventListener("click", resetForm);
 
-  searchBtn.addEventListener("click", () => {
-    renderTable();
-  });
+  searchBtn.addEventListener("click", () => { renderTable(); });
   clearSearchBtn.addEventListener("click", () => {
     searchBillInput.value = "";
     searchTailorInput.value = "";
     searchStatusSelect.value = "";
+    searchPackedSelect.value = "";
     searchDateFromInput.value = "";
     renderTable();
   });
@@ -972,9 +973,9 @@
     }
   });
   searchStatusSelect.addEventListener("change", renderTable);
+  searchPackedSelect.addEventListener("change", renderTable);
   searchDateFromInput.addEventListener("change", renderTable);
 
-  // ===== INIT =====
   (function init() {
     if (localStorage.getItem("alteration_logged_in") === "1") {
       currentUser = { name: "Admin" };
