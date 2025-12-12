@@ -1,30 +1,46 @@
 import express from "express";
 import multer from "multer";
 import streamifier from "streamifier";
-import cloudinary from "../cloudinary.js";
+import { cloudinary } from "../config/cloudinary.js";
 
 const router = express.Router();
 
-// memory storage (no disk on Render)
-const upload = multer({ storage: multer.memoryStorage() });
+// Multer config – MEMORY storage
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB max
+  },
+});
 
-// POST /upload  (field name must be "image")
+// POST /upload
 router.post("/", upload.single("image"), async (req, res) => {
   try {
-    if (!req.file) return res.status(400).json({ error: "No file uploaded (field: image)" });
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
 
-    const result = await new Promise((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream(
-        { folder: "chitrali-alterations" },
-        (err, uploaded) => (err ? reject(err) : resolve(uploaded))
-      );
-      streamifier.createReadStream(req.file.buffer).pipe(stream);
+    const streamUpload = () =>
+      new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: "chitrali-alterations" },
+          (error, result) => {
+            if (result) resolve(result);
+            else reject(error);
+          }
+        );
+
+        streamifier.createReadStream(req.file.buffer).pipe(stream);
+      });
+
+    const result = await streamUpload();
+
+    res.json({
+      imageUrl: result.secure_url,
     });
-
-    return res.json({ imageUrl: result.secure_url, publicId: result.public_id });
   } catch (err) {
-    console.error("POST /upload error:", err);
-    return res.status(500).json({ error: "Upload failed" });
+    console.error("Upload error:", err);
+    res.status(500).json({ error: "Image upload failed" });
   }
 });
 
