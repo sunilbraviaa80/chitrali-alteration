@@ -1,20 +1,3 @@
-HEAD
-{
-  "name": "chitrali-alteration-api",
-  "version": "1.0.0",
-  "description": "Backend API for Chitrali Alteration Tracker",
-  "type": "module",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.19.0",
-    "pg": "^8.11.0"
-  }
-}
-
 {
   "name": "chitrali-alteration-api",
   "version": "1.0.0",
@@ -33,4 +16,3 @@ HEAD
     "streamifier": "^0.1.1"
   }
 }
-16bbc7d (Fix backend start config and dependencies)
