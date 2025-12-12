@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+HEAD
 {
   "name": "chitrali-alteration-api",
   "version": "1.0.0",
@@ -15,8 +15,6 @@
   }
 }
 
-
-=======
 {
   "name": "chitrali-alteration-api",
   "version": "1.0.0",
@@ -35,4 +33,4 @@
     "streamifier": "^0.1.1"
   }
 }
->>>>>>> 16bbc7d (Fix backend start config and dependencies)
+16bbc7d (Fix backend start config and dependencies)
