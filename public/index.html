@@ -1,30 +1,14 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Alteration Tracker</title>
+  <title>Alteration Work Tracker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    :root {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-      color-scheme: light;
-    }
+    :root { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color-scheme: light; }
     * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: #f3f4fb;
-      color: #111827;
-      font-size: 15px;
-    }
-
-    .page {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.2rem 0.9rem 2.5rem;
-    }
+    body { margin: 0; background: #f3f4fb; color: #111827; font-size: 15px; }
+    .page { max-width: 1200px; margin: 0 auto; padding: 1.2rem 0.9rem 2.5rem; }
 
     header {
       display: grid;
@@ -33,1633 +17,193 @@
       gap: 0.75rem;
       margin-bottom: 1.25rem;
     }
-
-    .brand-left {
-      display: flex;
-      align-items: center;
-    }
-    .brand-logo {
-      height: 40px;
-      max-width: 160px;
-      object-fit: contain;
-      display: block;
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      min-width: 0;
-    }
-    .brand-title {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: #111827;
-      line-height: 1.2;
-    }
-    .brand-subtitle {
-      font-size: 0.78rem;
-      color: #6b7280;
-      line-height: 1.2;
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
+    .brand-left { display: flex; align-items: center; }
+    .brand-logo { height: 40px; max-width: 160px; object-fit: contain; display: block; }
+    .brand-text { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-width: 0; }
+    .brand-title { font-size: 1.15rem; font-weight: 600; color: #111827; line-height: 1.2; }
+    .brand-subtitle { font-size: 0.78rem; color: #6b7280; line-height: 1.2; }
+    .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end; }
 
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.45rem 1.1rem;
-      border-radius: 999px;
-      border: none;
-      font-size: 0.9rem;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: box-shadow 0.15s, transform 0.05s, background 0.15s,
-        color 0.15s;
-    }
-    .btn-primary {
-      background: #2563eb;
-      color: #ffffff;
-    }
-    .btn-primary:hover {
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
-      transform: translateY(-1px);
-    }
-    .btn-secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
-    .btn-secondary:hover {
-      background: #d1d5db;
-    }
-    .btn-sm {
-      padding: 0.25rem 0.7rem;
-      font-size: 0.8rem;
-    }
-    .btn-link {
-      background: transparent;
-      color: #2563eb;
-      border: none;
-      padding: 0;
-    }
-
-    .card {
-      background: #ffffff;
-      border-radius: 0.75rem;
-      padding: 1.25rem 1.5rem;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
-      margin-bottom: 1.1rem;
-    }
-    .card-title {
-      font-size: 0.98rem;
-      font-weight: 600;
-      margin-bottom: 0.9rem;
-    }
-
-    label {
-      font-size: 0.8rem;
-      color: #4b5563;
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-    input[type="text"],
-    input[type="password"],
-    input[type="date"],
-    input[type="time"],
-    select {
-      width: 100%;
-      padding: 0.45rem 0.6rem;
-      border-radius: 0.5rem;
-      border: 1px solid #d1d5db;
-      font-size: 0.85rem;
-      background: #f9fafb;
-      outline: none;
-    }
-    input:focus,
-    select:focus {
-      border-color: #2563eb;
-      background: #ffffff;
-      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12);
-    }
-    textarea {
-      width: 100%;
-      min-height: 80px;
-      resize: vertical;
-      border-radius: 0.5rem;
-      border: 1px solid #d1d5db;
-      padding: 0.45rem 0.6rem;
-      font-size: 0.85rem;
-      background: #f9fafb;
-      outline: none;
-    }
-    textarea:focus {
-      border-color: #2563eb;
-      background: #ffffff;
-      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12);
-    }
-
-    .search-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 0.6rem 1rem;
-      align-items: end;
-    }
-    .search-input-wrapper {
-      min-width: 160px;
-    }
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      column-gap: 1.25rem;
-      row-gap: 1.1rem;
-    }
-    .full-span { grid-column: 1 / -1; }
-
-    .section-break {
-      margin-top: 0.5rem;
-      padding-top: 0.6rem;
-      border-top: 1px dashed #e5e7eb;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.82rem;
-    }
-    thead { background: #f9fafb; }
-    th,
-    td {
-      padding: 0.55rem 0.6rem;
-      border-bottom: 1px solid #e5e7eb;
-      text-align: left;
-      vertical-align: middle;
-    }
-    th {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #6b7280;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-    tbody tr:hover { background: #f3f4ff; }
-    .empty-row td {
-      text-align: center;
-      color: #9ca3af;
-      padding: 1rem 0.5rem;
-      font-size: 0.85rem;
-    }
-    .thumb-wrapper {
-      width: 56px;
-      height: 56px;
-      border-radius: 0.6rem;
-      background: #f3f4f6;
-      border: 1px solid #e5e7eb;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      color: #9ca3af;
-    }
-    .thumb-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .badge {
-      display: inline-block;
-      padding: 0.12rem 0.55rem;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      background: #e5e7eb;
-      color: #374151;
-      margin-right: 0.4rem;
-    }
-
-    .login-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 0.75rem 1rem;
-      align-items: flex-end;
-    }
-
-    @media (max-width: 900px) {
-      .card {
-        padding: 1.1rem 1.2rem;
-      }
-      .form-grid {
-        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      body {
-        font-size: 14px;
-      }
-      .page {
-        padding: 1rem 0.7rem 2rem;
-      }
-
-      header {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-      }
-
-      .brand-logo {
-        height: 32px;
-        max-width: 140px;
-      }
-      .brand-title {
-        font-size: 1rem;
-      }
-      .brand-text {
-        width: 100%;
-        align-items: center;
-        text-align: center;
-      }
-      .header-actions {
-        width: 100%;
-        justify-content: flex-start;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .search-row {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.4rem 0.6rem;
-      }
-
-      .thumb-wrapper {
-        width: 64px;
-        height: 64px;
-      }
-
-      th:nth-child(5),
-      td:nth-child(5),
-      th:nth-child(7),
-      td:nth-child(7) {
-        display: none;
-      }
-    }
-
-    .image-modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
-    .image-modal.visible { display: flex; }
-    .image-modal-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.85);
-    }
-    .image-modal-inner {
-      position: relative;
-      max-width: 95vw;
-      max-height: 90vh;
-      z-index: 1;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-      border-radius: 0.75rem;
-      overflow: hidden;
-      background: #000;
-    }
-    .image-modal-inner img {
-      display: block;
-      max-width: 100%;
-      max-height: 90vh;
-      object-fit: contain;
-    }
-    .image-modal-close {
-      position: absolute;
-      top: 0.3rem;
-      right: 0.8rem;
-      color: #f9fafb;
-      font-size: 1.6rem;
-      cursor: pointer;
-      z-index: 2;
-    }
-  </style>
-</head>
-<body>
-<div class="page">
-  <!-- LOGIN -->
-  <section class="card" id="loginCard">
-    <div class="card-title">Login</div>
-    <div class="login-grid">
-      <div>
-        <label for="loginEmail">Email</label>
-        <input id="loginEmail" type="text" value="admin@tracker.local" />
-      </div>
-      <div>
-        <label for="loginPassword">Password</label>
-        <input id="loginPassword" type="password" value="admin123" />
-      </div>
-      <div>
-        <button class="btn btn-primary" id="loginBtn">Login</button>
-      </div>
-    </div>
-    <small style="display:block;margin-top:.5rem;color:#6b7280;">
-      Local admin: admin@tracker.local / admin123
-    </small>
-    <div id="loginError" style="color:#b91c1c;margin-top:.5rem;font-size:.8rem;"></div>
-  </section>
-
-  <!-- MAIN APP -->
-  <div id="appMain" style="display:none;">
-    <header>
-      <div class="brand-left">
-        <img src="chitrali-logo.png" alt="Chitrali" class="brand-logo" />
-      </div>
-
-      <div class="brand-text">
-        <div class="brand-title">Alteration Tracker</div>
-        <div class="brand-subtitle">Chitrali Fashion</div>
-      </div>
-
-      <div class="header-actions">
-        <span id="userInfo"></span>
-        <button class="btn btn-primary" id="addNewWorkBtn">Add New Work</button>
-      </div>
-    </header>
-
-    <!-- FORM -->
-    <section class="card" id="formCard">
-      <div class="card-title" id="formTitle">Add New Alteration Work</div>
-      <form id="workForm">
-        <input type="hidden" id="workId" />
-        <div class="form-grid">
-          <div>
-            <label for="billNumber">Bill Number *</label>
-            <input id="billNumber" required />
-          </div>
-          <div>
-            <label for="itemName">Item Name *</label>
-            <input id="itemName" placeholder="Lehenga, Crop top…" required />
-          </div>
-          <div>
-            <label for="tailorSelect">Tailor Name *</label>
-            <select id="tailorSelect" required>
-              <option value="">Select</option>
-              <option value="Faisal">Faisal</option>
-              <option value="SALMAN">SALMAN</option>
-              <option value="Rahul">Rahul</option>
-              <option value="Imran">Imran</option>
-            </select>
-          </div>
-          <div>
-            <label for="status">Work Status *</label>
-            <select id="status" required>
-              <option value="PENDING">Pending</option>
-              <option value="IN_PROGRESS">In Progress</option>
-              <option value="DONE">Done</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="dateAssigned">Date Assigned *</label>
-            <input type="date" id="dateAssigned" required />
-          </div>
-          <div>
-            <label for="dateDelivery">Date of Delivery *</label>
-            <input type="date" id="dateDelivery" required />
-          </div>
-          <div>
-            <label for="timeDelivery">Time of Delivery</label>
-            <input type="time" id="timeDelivery" />
-          </div>
-          <div>
-            <label for="packedFlag">Packed</label>
-            <div style="display:flex;align-items:center;gap:.4rem;margin-top:.3rem;">
-              <input type="checkbox" id="packedFlag" />
-              <span style="font-size:.8rem;color:#4b5563;">Mark as packed</span>
-            </div>
-          </div>
-
-          <!-- IMAGE: camera / gallery -->
-          <div class="full-span section-break">
-            <label for="imageFile">Item Image (camera / gallery)</label>
-            <input
-              id="imageFile"
-              type="file"
-              accept="image/*"
-              capture="environment"
-            />
-            <small style="display:block;margin-top:.25rem;color:#9ca3af;font-size:.75rem;">
-              On mobile, this can open the camera; you can also choose from gallery.
-            </small>
-            <div style="margin-top:.4rem;">
-              <div class="thumb-wrapper" id="imagePreview"><span>Preview</span></div>
-            </div>
-          </div>
-
-          <div class="full-span">
-            <label for="notes">Notes / Measurements</label>
-            <textarea id="notes" placeholder="Shorten length, adjust waist, etc."></textarea>
-          </div>
-        </div>
-        <div style="margin-top:1.1rem;display:flex;gap:.6rem;flex-wrap:wrap;">
-          <button class="btn btn-primary" type="submit" id="addWorkBtn">Add Work</button>
-          <button class="btn btn-secondary" type="button" id="formCancelBtn">Clear</button>
-        </div>
-      </form>
-    </section>
-
-    <!-- FILTERS -->
-    <section class="card">
-      <div class="card-title">Search & Filters</div>
-      <div class="search-row">
-        <div class="search-input-wrapper">
-          <label for="searchBill">Bill Number</label>
-          <input id="searchBill" type="text" placeholder="e.g. CA2566" />
-        </div>
-
-        <div class="search-input-wrapper">
-          <label for="searchTailor">Tailor Name</label>
-          <input id="searchTailor" type="text" placeholder="e.g. Faisal" />
-        </div>
-
-        <div class="search-input-wrapper">
-          <label for="searchStatus">Status</label>
-          <select id="searchStatus">
-            <option value="">All</option>
-            <option value="PENDING">Pending</option>
-            <option value="IN_PROGRESS">In Progress</option>
-            <option value="DONE">Done</option>
-          </select>
-        </div>
-
-        <div class="search-input-wrapper">
-          <label for="searchPacked">Packed</label>
-          <select id="searchPacked">
-            <option value="">All</option>
-            <option value="1">Packed</option>
-            <option value="0">Not Packed</option>
-          </select>
-        </div>
-
-        <div class="search-input-wrapper">
-          <label for="searchDateFrom">Delivery Date</label>
-          <input id="searchDateFrom" type="date" />
-        </div>
-
-        <div style="display:flex; gap:0.6rem; align-items:flex-end;">
-          <button class="btn btn-primary" id="searchBtn">Search</button>
-          <button class="btn btn-secondary btn-sm" id="clearSearchBtn">Clear</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- TABLE -->
-    <section class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap;">
-        <div class="card-title" style="margin-bottom:0;">All Alteration Work</div>
-        <small id="summaryText" style="color:#6b7280;"></small>
-      </div>
-      <div style="overflow-x:auto;">
-        <table>
-          <thead>
-          <tr>
-            <th>Image</th>
-            <th>Bill Number</th>
-            <th>Tailor Name</th>
-            <th>Item Name</th>
-            <th>Date Assigned</th>
-            <th>Date Delivery</th>
-            <th>Time Delivery</th>
-            <th>Status</th>
-            <th>Packed</th>
-            <th>Actions</th>
-          </tr>
-          </thead>
-          <tbody id="workTableBody"></tbody>
-        </table>
-      </div>
-    </section>
-  </div>
-</div>
-
-<!-- IMAGE MODAL -->
-<div id="imageModal" class="image-modal">
-  <div class="image-modal-backdrop"></div>
-  <div class="image-modal-inner">
-    <span class="image-modal-close" id="imageModalClose">&times;</span>
-    <img id="imageModalImg" src="" alt="Item image" />
-  </div>
-</div>
-
-<script>
-  const API_BASE = "https://chitrali-alteration-api.onrender.com";
-
-  let currentUser = null;
-  let records = [];
-  let editingId = null;
-  let currentImageDataUrl = ""; // holds base64 data URL
-
-  const loginCard = document.getElementById("loginCard");
-  const appMain = document.getElementById("appMain");
-  const loginEmail = document.getElementById("loginEmail");
-  const loginPassword = document.getElementById("loginPassword");
-  const loginBtn = document.getElementById("loginBtn");
-  const loginError = document.getElementById("loginError");
-  const userInfo = document.getElementById("userInfo");
-
-  const addNewWorkBtn = document.getElementById("addNewWorkBtn");
-  const formCard = document.getElementById("formCard");
-  const formTitle = document.getElementById("formTitle");
-  const workForm = document.getElementById("workForm");
-  const workIdInput = document.getElementById("workId");
-  const billNumberInput = document.getElementById("billNumber");
-  const itemNameInput = document.getElementById("itemName");
-  const tailorSelect = document.getElementById("tailorSelect");
-  const dateAssignedInput = document.getElementById("dateAssigned");
-  const dateDeliveryInput = document.getElementById("dateDelivery");
-  const timeDeliveryInput = document.getElementById("timeDelivery");
-  const statusInput = document.getElementById("status");
-  const packedFlagInput = document.getElementById("packedFlag");
-  const imageFileInput = document.getElementById("imageFile");
-  const imagePreview = document.getElementById("imagePreview");
-  const notesInput = document.getElementById("notes");
-  const addWorkBtn = document.getElementById("addWorkBtn");
-  const formCancelBtn = document.getElementById("formCancelBtn");
-
-  const searchBillInput = document.getElementById("searchBill");
-  const searchTailorInput = document.getElementById("searchTailor");
-  const searchStatusSelect = document.getElementById("searchStatus");
-  const searchPackedSelect = document.getElementById("searchPacked");
-  const searchDateFromInput = document.getElementById("searchDateFrom");
-  const searchBtn = document.getElementById("searchBtn");
-  const clearSearchBtn = document.getElementById("clearSearchBtn");
-  const summaryText = document.getElementById("summaryText");
-  const workTableBody = document.getElementById("workTableBody");
-
-  const imageModal = document.getElementById("imageModal");
-  const imageModalImg = document.getElementById("imageModalImg");
-  const imageModalClose = document.getElementById("imageModalClose");
-  const imageModalBackdrop = imageModal.querySelector(".image-modal-backdrop");
-
-  function openImageModal(src) {
-    if (!src) return;
-    imageModalImg.src = src;
-    imageModal.classList.add("visible");
-  }
-  function closeImageModal() {
-    imageModal.classList.remove("visible");
-    imageModalImg.src = "";
-  }
-  imageModalBackdrop.addEventListener("click", closeImageModal);
-  imageModalClose.addEventListener("click", closeImageModal);
-  imageModal.addEventListener("click", (e) => {
-    if (e.target === imageModal) closeImageModal();
-  });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeImageModal();
-  });
-
-  function statusLabel(s) {
-    return s === "IN_PROGRESS" ? "In Progress" : s === "DONE" ? "Done" : "Pending";
-  }
-
-  function applyStatusColor(selectEl) {
-    const v = selectEl.value;
-    let bg = "#e5e7eb";
-    let color = "#111827";
-
-    if (v === "PENDING") {
-      bg = "#fef3c7";
-      color = "#92400e";
-    } else if (v === "IN_PROGRESS") {
-      bg = "#dbeafe";
-      color = "#1d4ed8";
-    } else if (v === "DONE") {
-      bg = "#dcfce7";
-      color = "#065f46";
-    }
-
-    selectEl.style.backgroundColor = bg;
-    selectEl.style.color = color;
-    selectEl.style.borderRadius = "999px";
-    selectEl.style.border = "none";
-    selectEl.style.padding = "0.15rem 0.6rem";
-    selectEl.style.fontSize = ".78rem";
-  }
-
-  function formatDate(d) {
-    if (!d) return "-";
-    const [yyyy, mm, dd] = d.split("-");
-    if (!yyyy || !mm || !dd) return d;
-    return `${dd}/${mm}/${yyyy}`;
-  }
-  function formatTime(t) { return t || "-"; }
-
-  function showLogin() {
-    loginCard.style.display = "block";
-    appMain.style.display = "none";
-  }
-  function showApp() {
-    loginCard.style.display = "none";
-    appMain.style.display = "block";
-    userInfo.innerHTML =
-      `<span class="badge">${currentUser?.name || "Admin"}</span>` +
-      `<button class="btn btn-link btn-sm" id="logoutBtn">Logout</button>`;
-    document.getElementById("logoutBtn").onclick = () => {
-      localStorage.removeItem("alteration_logged_in");
-      currentUser = null;
-      showLogin();
-    };
-  }
-
-  async function api(path, options = {}) {
-    const headers = {
-      "Content-Type": "application/json",
-      ...(options.headers || {}),
-    };
-    const res = await fetch(API_BASE + path, { headers, ...options });
-    if (!res.ok) {
-      let msg = "Request failed";
-      try {
-        const err = await res.json();
-        msg = err.error || msg;
-      } catch {}
-      throw new Error(msg);
-    }
-    return res.json();
-  }
-
-  function handleLogin() {
-    loginError.textContent = "";
-    const email = loginEmail.value.trim();
-    const password = loginPassword.value;
-    if (email === "admin@tracker.local" && password === "admin123") {
-      currentUser = { name: "Admin" };
-      localStorage.setItem("alteration_logged_in", "1");
-      showApp();
-      loadAllRecords();
-    } else {
-      loginError.textContent = "Invalid email or password.";
-    }
-  }
-
-  function normalizeRow(row) {
-    return {
-      id: row.id,
-      billNumber: row.bill_number,
-      tailorName: row.tailor_name,
-      itemName: row.item_name,
-      dateAssigned: row.date_assigned ? row.date_assigned.slice(0, 10) : "",
-      dateDelivery: row.date_delivery ? row.date_delivery.slice(0, 10) : "",
-      timeDelivery: row.time_delivery || "",
-      status: row.status || "PENDING",
-      packed: !!row.packed,
-      imageUrl: row.image_url || "",
-    };
-  }
-
-  async function loadAllRecords() {
-    try {
-      const data = await api("/alterations");
-      records = data.map(normalizeRow);
-      renderTable();
-    } catch (e) {
-      alert("Error loading data: " + e.message);
-    }
-  }
-
-  function getFilteredRecords() {
-    const bill = searchBillInput.value.trim().toLowerCase();
-    const tailor = searchTailorInput.value.trim().toLowerCase();
-    const status = searchStatusSelect.value;
-    const packedVal = searchPackedSelect.value;
-    const deliveryDate = searchDateFromInput.value;
-
-    return records.filter((r) => {
-      if (bill && !r.billNumber.toLowerCase().includes(bill)) return false;
-      if (tailor && !r.tailorName.toLowerCase().includes(tailor)) return false;
-      if (status && r.status !== status) return false;
-      if (deliveryDate && r.dateDelivery !== deliveryDate) return false;
-      if (packedVal !== "") {
-        const wantPacked = packedVal === "1";
-        if (r.packed !== wantPacked) return false;
-      }
-      return true;
-    });
-  }
-
-  function renderSummary(filtered) {
-    const total = records.length;
-    const shown = filtered.length;
-    const open = filtered.filter((w) => w.status !== "DONE").length;
-    summaryText.textContent = `Total: ${total} | Showing: ${shown} | Open: ${open}`;
-  }
-
-  async function updateStatusPackedInline(id, newStatus, newPacked) {
-    const rec = records.find(r => r.id === id);
-    if (!rec) return;
-
-    const payload = {
-      billNumber: rec.billNumber,
-      tailorName: rec.tailorName,
-      itemName: rec.itemName,
-      dateAssigned: rec.dateAssigned,
-      dateDelivery: rec.dateDelivery,
-      timeDelivery: rec.timeDelivery,
-      status: newStatus,
-      packed: newPacked,
-      imageUrl: rec.imageUrl, // already data URL if present
-    };
-
-    try {
-      const updated = await api(`/alterations/${id}`, {
-        method: "PUT",
-        body: JSON.stringify(payload),
-      });
-
-      const normalized = normalizeRow(updated);
-      records = records.map(r => r.id === normalized.id ? normalized : r);
-      renderTable();
-    } catch (e) {
-      alert("Error updating status/packed: " + e.message);
-    }
-  }
-
-  function renderTable() {
-    workTableBody.innerHTML = "";
-    const filtered = getFilteredRecords();
-
-    if (filtered.length === 0) {
-      const tr = document.createElement("tr");
-      tr.className = "empty-row";
-      const td = document.createElement("td");
-      td.colSpan = 10;
-      td.textContent = "No alteration work found.";
-      tr.appendChild(td);
-      workTableBody.appendChild(tr);
-      renderSummary(filtered);
-      return;
-    }
-
-    filtered.forEach((w) => {
-      const tr = document.createElement("tr");
-
-      // IMAGE
-      const tdImg = document.createElement("td");
-      const wrap = document.createElement("div");
-      wrap.className = "thumb-wrapper";
-      if (w.imageUrl) {
-        const img = document.createElement("img");
-        img.src = w.imageUrl;
-        img.style.cursor = "pointer";
-        img.onclick = () => openImageModal(w.imageUrl);
-        wrap.appendChild(img);
-      } else {
-        wrap.innerHTML = "No<br/>Image";
-      }
-      tdImg.appendChild(wrap);
-      tr.appendChild(tdImg);
-
-      const tdBill = document.createElement("td");
-      tdBill.textContent = w.billNumber;
-      tr.appendChild(tdBill);
-
-      const tdTailor = document.createElement("td");
-      tdTailor.textContent = w.tailorName;
-      tr.appendChild(tdTailor);
-
-      const tdItem = document.createElement("td");
-      tdItem.textContent = w.itemName;
-      tr.appendChild(tdItem);
-
-      const tdAssigned = document.createElement("td");
-      tdAssigned.textContent = formatDate(w.dateAssigned);
-      tr.appendChild(tdAssigned);
-
-      const tdDelivery = document.createElement("td");
-      tdDelivery.textContent = formatDate(w.dateDelivery);
-      tr.appendChild(tdDelivery);
-
-      const tdTime = document.createElement("td");
-      tdTime.textContent = formatTime(w.timeDelivery);
-      tr.appendChild(tdTime);
-
-      // STATUS select
-      const tdStatus = document.createElement("td");
-      const sel = document.createElement("select");
-      ["PENDING", "IN_PROGRESS", "DONE"].forEach(val => {
-        const opt = document.createElement("option");
-        opt.value = val;
-        opt.textContent = statusLabel(val);
-        sel.appendChild(opt);
-      });
-      sel.value = w.status;
-      applyStatusColor(sel);
-      tdStatus.appendChild(sel);
-      tr.appendChild(tdStatus);
-
-      // PACKED checkbox
-      const tdPacked = document.createElement("td");
-      const chk = document.createElement("input");
-      chk.type = "checkbox";
-      chk.checked = w.packed;
-      tdPacked.appendChild(chk);
-      tr.appendChild(tdPacked);
-
-      sel.onchange = () => {
-        applyStatusColor(sel);
-        updateStatusPackedInline(w.id, sel.value, chk.checked);
-      };
-      chk.onchange = () => {
-        if (chk.checked && sel.value !== "DONE") {
-          sel.value = "DONE";
-          applyStatusColor(sel);
-        } else if (!chk.checked && sel.value === "DONE") {
-          sel.value = "IN_PROGRESS";
-          applyStatusColor(sel);
-        }
-        updateStatusPackedInline(w.id, sel.value, chk.checked);
-      };
-
-      const tdActions = document.createElement("td");
-      const editBtn = document.createElement("button");
-      editBtn.className = "btn btn-link btn-sm";
-      editBtn.textContent = "Edit";
-      editBtn.onclick = () => loadForEdit(w.id);
-      tdActions.appendChild(editBtn);
-      tr.appendChild(tdActions);
-
-      workTableBody.appendChild(tr);
-    });
-
-    renderSummary(filtered);
-  }
-
-  // ---- IMAGE HANDLING (camera / gallery) ----
-  imageFileInput.addEventListener("change", () => {
-    const file = imageFileInput.files[0];
-    if (!file) {
-      currentImageDataUrl = "";
-      imagePreview.innerHTML = "<span>Preview</span>";
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      currentImageDataUrl = e.target.result; // data URL
-      imagePreview.innerHTML = "";
-      const img = document.createElement("img");
-      img.src = currentImageDataUrl;
-      imagePreview.appendChild(img);
-    };
-    reader.readAsDataURL(file);
-  });
-
-  imagePreview.addEventListener("click", () => {
-    if (currentImageDataUrl) {
-      openImageModal(currentImageDataUrl);
-    }
-  });
-
-  function resetForm() {
-    workForm.reset();
-    workIdInput.value = "";
-    editingId = null;
-    addWorkBtn.textContent = "Add Work";
-    formTitle.textContent = "Add New Alteration Work";
-    imagePreview.innerHTML = "<span>Preview</span>";
-    currentImageDataUrl = "";
-    applyStatusColor(statusInput);
-  }
-
-  function loadForEdit(id) {
-    const w = records.find((r) => r.id === id);
-    if (!w) return;
-
-    editingId = id;
-    workIdInput.value = id;
-    billNumberInput.value = w.billNumber;
-    itemNameInput.value = w.itemName;
-    tailorSelect.value = w.tailorName;
-    dateAssignedInput.value = w.dateAssigned;
-    dateDeliveryInput.value = w.dateDelivery;
-    timeDeliveryInput.value = w.timeDelivery;
-    statusInput.value = w.status;
-    packedFlagInput.checked = w.packed;
-    notesInput.value = w.notes || "";
-    applyStatusColor(statusInput);
-
-    currentImageDataUrl = w.imageUrl || "";
-    if (currentImageDataUrl) {
-      imagePreview.innerHTML = "";
-      const img = document.createElement("img");
-      img.src = currentImageDataUrl;
-      imagePreview.appendChild(img);
-    } else {
-      imagePreview.innerHTML = "<span>Preview</span>";
-    }
-
-    addWorkBtn.textContent = "Update Work";
-    formTitle.textContent = "Edit Alteration Work";
-    window.scrollTo({ top: formCard.offsetTop - 20, behavior: "smooth" });
-  }
-
-  async function saveWork(e) {
-    e.preventDefault();
-
-    const billNumber = billNumberInput.value.trim();
-    const tailorName = tailorSelect.value;
-    const itemName = itemNameInput.value.trim();
-    const dateAssigned = dateAssignedInput.value;
-    const dateDelivery = dateDeliveryInput.value;
-    const timeDelivery = timeDeliveryInput.value;
-    const status = statusInput.value;
-    const packed = packedFlagInput.checked;
-    const imageUrl = currentImageDataUrl; // data URL (can be empty)
-    const notes = notesInput.value.trim();
-
-    if (!billNumber || !tailorName || !itemName) {
-      alert("Bill number, tailor name and item name are required.");
-      return;
-    }
-    if (!dateAssigned || !dateDelivery) {
-      alert("Please select assigned and delivery dates.");
-      return;
-    }
-
-    const payload = {
-      billNumber,
-      tailorName,
-      itemName,
-      dateAssigned,
-      dateDelivery,
-      timeDelivery,
-      status,
-      packed,
-      imageUrl,
-      notes,
-    };
-
-    try {
-      if (editingId) {
-        const updated = await api(`/alterations/${editingId}`, {
-          method: "PUT",
-          body: JSON.stringify(payload),
-        });
-        const normalized = normalizeRow(updated);
-        records = records.map((r) =>
-          r.id === normalized.id ? normalized : r
-        );
-      } else {
-        const created = await api("/alterations", {
-          method: "POST",
-          body: JSON.stringify(payload),
-        });
-        const normalized = normalizeRow(created);
-        records.unshift(normalized);
-      }
-
-      resetForm();
-      renderTable();
-    } catch (e2) {
-      alert("Error saving work: " + e2.message);
-    }
-  }
-
-  loginBtn.addEventListener("click", handleLogin);
-  loginPassword.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") handleLogin();
-  });
-
-  addNewWorkBtn.addEventListener("click", () => {
-    window.scrollTo({ top: formCard.offsetTop - 20, behavior: "smooth" });
-    billNumberInput.focus();
-  });
-
-  statusInput.addEventListener("change", () => applyStatusColor(statusInput));
-  packedFlagInput.addEventListener("change", () => {
-    if (packedFlagInput.checked && statusInput.value !== "DONE") {
-      statusInput.value = "DONE";
-      applyStatusColor(statusInput);
-    } else if (!packedFlagInput.checked && statusInput.value === "DONE") {
-      statusInput.value = "IN_PROGRESS";
-      applyStatusColor(statusInput);
-    }
-  });
-
-  workForm.addEventListener("submit", saveWork);
-  formCancelBtn.addEventListener("click", resetForm);
-
-  searchBtn.addEventListener("click", () => { renderTable(); });
-  clearSearchBtn.addEventListener("click", () => {
-    searchBillInput.value = "";
-    searchTailorInput.value = "";
-    searchStatusSelect.value = "";
-    searchPackedSelect.value = "";
-    searchDateFromInput.value = "";
-    renderTable();
-  });
-  searchBillInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      renderTable();
-    }
-  });
-  searchTailorInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      renderTable();
-    }
-  });
-  searchStatusSelect.addEventListener("change", renderTable);
-  searchPackedSelect.addEventListener("change", renderTable);
-  searchDateFromInput.addEventListener("change", renderTable);
-
-  (function init() {
-    applyStatusColor(statusInput);
-    if (localStorage.getItem("alteration_logged_in") === "1") {
-      currentUser = { name: "Admin" };
-      showApp();
-      loadAllRecords();
-    } else {
-      showLogin();
-    }
-  })();
-</script>
-</body>
-</html>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Alteration Work Tracker</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-      color-scheme: light;
-    }
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      background: #f3f4fb;
-      color: #111827;
-      font-size: 15px;
-    }
-
-    .page {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.2rem 0.9rem 2.5rem;
-    }
-
-    /* HEADER + BRAND LAYOUT */
-    header {
-      display: grid;
-      grid-template-columns: auto 1fr auto; /* logo | title | actions */
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.25rem;
-    }
-
-    /* Left logo block */
-    .brand-left {
-      display: flex;
-      align-items: center;
-    }
-    .brand-logo {
-      height: 40px;
-      max-width: 160px;
-      object-fit: contain;
-      display: block;
-    }
-
-    /* Center title block */
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      min-width: 0;
-    }
-    .brand-title {
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: #111827;
-      line-height: 1.2;
-    }
-    .brand-subtitle {
-      font-size: 0.78rem;
-      color: #6b7280;
-      line-height: 1.2;
-    }
-
-    /* Right actions block */
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.45rem 1.1rem;
-      border-radius: 999px;
-      border: none;
-      font-size: 0.9rem;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: box-shadow 0.15s, transform 0.05s, background 0.15s,
-        color 0.15s;
-    }
-    .btn-primary {
-      background: #2563eb;
-      color: #ffffff;
-    }
-    .btn-primary:hover {
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
-      transform: translateY(-1px);
-    }
-    .btn-secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
-    .btn-secondary:hover {
-      background: #d1d5db;
-    }
-    .btn-sm {
-      padding: 0.25rem 0.7rem;
-      font-size: 0.8rem;
-    }
-    .btn-link {
-      background: transparent;
-      color: #2563eb;
-      border: none;
-      padding: 0;
-    }
-
-    .card {
-      background: #ffffff;
-      border-radius: 0.75rem;
-      padding: 1.25rem 1.5rem;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
-      margin-bottom: 1.1rem;
-    }
-    .card-title {
-      font-size: 0.98rem;
-      font-weight: 600;
-      margin-bottom: 0.9rem;
-    }
-
-    label {
-      font-size: 0.8rem;
-      color: #4b5563;
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-    input[type="text"],
-    input[type="password"],
-    input[type="date"],
-    input[type="time"],
-    select {
-      width: 100%;
-      padding: 0.45rem 0.6rem;
-      border-radius: 0.5rem;
-      border: 1px solid #d1d5db;
-      font-size: 0.85rem;
-      background: #f9fafb;
-      outline: none;
-    }
-    input:focus,
-    select:focus {
-      border-color: #2563eb;
-      background: #ffffff;
-      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12);
-    }
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.45rem 1.1rem; border-radius: 999px; border: none;
+      font-size: 0.9rem; cursor: pointer; white-space: nowrap;
+      transition: box-shadow 0.15s, transform 0.05s, background 0.15s, color 0.15s;
+    }
+    .btn-primary { background: #2563eb; color: #ffffff; }
+    .btn-primary:hover { box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35); transform: translateY(-1px); }
+    .btn-secondary { background: #e5e7eb; color: #111827; }
+    .btn-secondary:hover { background: #d1d5db; }
+    .btn-sm { padding: 0.25rem 0.7rem; font-size: 0.8rem; }
+    .btn-link { background: transparent; color: #2563eb; border: none; padding: 0; }
+
+    .card { background: #ffffff; border-radius: 0.75rem; padding: 1.25rem 1.5rem; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06); margin-bottom: 1.1rem; }
+    .card-title { font-size: 0.98rem; font-weight: 600; margin-bottom: 0.9rem; }
+
+    label { font-size: 0.8rem; color: #4b5563; display: block; margin-bottom: 0.3rem; }
+    input[type="text"], input[type="date"], input[type="time"], select {
+      width: 100%; padding: 0.45rem 0.6rem; border-radius: 0.5rem;
+      border: 1px solid #d1d5db; font-size: 0.85rem; background: #f9fafb; outline: none;
+    }
+    input:focus, select:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12); }
     input[type="file"] { font-size: 0.8rem; }
     textarea {
-      width: 100%;
-      min-height: 80px;
-      resize: vertical;
-      border-radius: 0.5rem;
-      border: 1px solid #d1d5db;
-      padding: 0.45rem 0.6rem;
-      font-size: 0.85rem;
-      background: #f9fafb;
-      outline: none;
+      width: 100%; min-height: 80px; resize: vertical; border-radius: 0.5rem;
+      border: 1px solid #d1d5db; padding: 0.45rem 0.6rem; font-size: 0.85rem; background: #f9fafb; outline: none;
     }
-    textarea:focus {
-      border-color: #2563eb;
-      background: #ffffff;
-      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12);
-    }
+    textarea:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12); }
 
-    /* SEARCH & FILTER GRID — COMPACT VERSION */
-    .search-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 0.6rem 1rem;
-      align-items: end;
-    }
-    .search-input-wrapper {
-      min-width: 160px;
-    }
-    .search-input-wrapper label {
-      margin-bottom: 0.2rem;
-    }
-
-    /* FORM GRID – responsive columns */
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      column-gap: 1.25rem;
-      row-gap: 1.1rem;
-    }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); column-gap: 1.25rem; row-gap: 1.1rem; }
     .full-span { grid-column: 1 / -1; }
+    .section-break { margin-top: 0.5rem; padding-top: 0.6rem; border-top: 1px dashed #e5e7eb; }
 
-    .section-break {
-      margin-top: 0.5rem;
-      padding-top: 0.6rem;
-      border-top: 1px dashed #e5e7eb;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.82rem;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
     thead { background: #f9fafb; }
-    th,
-    td {
-      padding: 0.55rem 0.6rem;
-      border-bottom: 1px solid #e5e7eb;
-      text-align: left;
-      vertical-align: middle;
-    }
-    th {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: #6b7280;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
+    th, td { padding: 0.55rem 0.6rem; border-bottom: 1px solid #e5e7eb; text-align: left; vertical-align: middle; }
+    th { font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.03em; }
     tbody tr:hover { background: #f3f4ff; }
-    .empty-row td {
-      text-align: center;
-      color: #9ca3af;
-      padding: 1rem 0.5rem;
-      font-size: 0.85rem;
-    }
+    .empty-row td { text-align: center; color: #9ca3af; padding: 1rem 0.5rem; font-size: 0.85rem; }
+
     .thumb-wrapper {
-      width: 56px;
-      height: 56px;
-      border-radius: 0.6rem;
-      background: #f3f4f6;
-      border: 1px solid #e5e7eb;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      color: #9ca3af;
+      width: 56px; height: 56px; border-radius: 0.6rem;
+      background: #f3f4f6; border: 1px solid #e5e7eb; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; color: #9ca3af;
     }
-    .thumb-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .badge {
-      display: inline-block;
-      padding: 0.12rem 0.55rem;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      background: #e5e7eb;
-      color: #374151;
-      margin-right: 0.4rem;
-    }
-    .login-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 0.75rem 1rem;
-      align-items: flex-end;
-    }
+    .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+    .badge { display: inline-block; padding: 0.12rem 0.55rem; border-radius: 999px; font-size: 0.72rem; background: #e5e7eb; color: #374151; margin-right: 0.4rem; }
 
-    /* Tablet adjustments */
-    @media (max-width: 900px) {
-      .card {
-        padding: 1.1rem 1.2rem;
-      }
-      .form-grid {
-        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-      }
-    }
-
-    /* Phone optimisations */
-    @media (max-width: 640px) {
-      body {
-        font-size: 14px;
-      }
-      .page {
-        padding: 1rem 0.7rem 2rem;
-      }
-
-      header {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-      }
-
-      .brand-logo {
-        height: 32px;
-        max-width: 140px;
-      }
-      .brand-title {
-        font-size: 1rem;
-      }
-      .brand-text {
-        width: 100%;
-        align-items: center;
-        text-align: center;
-      }
-      .header-actions {
-        width: 100%;
-        justify-content: flex-start;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .search-row {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.4rem 0.6rem;
-      }
-      .search-input-wrapper {
-        margin-bottom: 0 !important;
-      }
-
-      #loginBtn,
-      #workForm .btn,
-      #searchBtn,
-      #clearSearchBtn {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .thumb-wrapper {
-        width: 64px;
-        height: 64px;
-      }
-
-      /* Hide less important cols on very small screens:
-         Date Assigned (5), Time (7), Packed (9) */
-      th:nth-child(5),
-      td:nth-child(5),
-      th:nth-child(7),
-      td:nth-child(7),
-      th:nth-child(9),
-      td:nth-child(9) {
-        display: none;
-      }
-    }
+    /* status tint (applied via inline style in JS too) */
+    .status-select { font-size: .78rem; border-radius: 999px; padding: .28rem .55rem; border: 1px solid #e5e7eb; background: #fff; }
 
     /* Image fullscreen modal */
-    .image-modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-    }
+    .image-modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 9999; }
     .image-modal.visible { display: flex; }
-    .image-modal-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.85);
-    }
-    .image-modal-inner {
-      position: relative;
-      max-width: 95vw;
-      max-height: 90vh;
-      z-index: 1;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-      border-radius: 0.75rem;
-      overflow: hidden;
-      background: #000;
-    }
-    .image-modal-inner img {
-      display: block;
-      max-width: 100%;
-      max-height: 90vh;
-      object-fit: contain;
-    }
-    .image-modal-close {
-      position: absolute;
-      top: 0.3rem;
-      right: 0.8rem;
-      color: #f9fafb;
-      font-size: 1.6rem;
-      cursor: pointer;
-      z-index: 2;
+    .image-modal-backdrop { position: absolute; inset: 0; background: rgba(15, 23, 42, 0.85); }
+    .image-modal-inner { position: relative; max-width: 95vw; max-height: 90vh; z-index: 1; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); border-radius: 0.75rem; overflow: hidden; background: #000; }
+    .image-modal-inner img { display: block; max-width: 100%; max-height: 90vh; object-fit: contain; }
+    .image-modal-close { position: absolute; top: 0.3rem; right: 0.8rem; color: #f9fafb; font-size: 1.6rem; cursor: pointer; z-index: 2; }
+
+    @media (max-width: 640px) {
+      body { font-size: 14px; }
+      .page { padding: 1rem 0.7rem 2rem; }
+      header { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .brand-logo { height: 32px; max-width: 140px; }
+      .brand-title { font-size: 1rem; }
+      .brand-text { width: 100%; align-items: center; text-align: center; }
+      .header-actions { width: 100%; justify-content: flex-start; }
+      .form-grid { grid-template-columns: 1fr; }
+
+      /* Hide less important cols on very small screens: Date Assigned (5), Time (7) */
+      th:nth-child(5), td:nth-child(5),
+      th:nth-child(7), td:nth-child(7) { display: none; }
     }
   </style>
 </head>
 <body>
 <div class="page">
-  <!-- LOGIN CARD -->
-  <section class="card" id="loginCard">
-    <div class="card-title">Login</div>
-    <div class="login-grid">
-      <div>
-        <label for="loginEmail">Email</label>
-        <input id="loginEmail" type="text" value="admin@tracker.local" />
-      </div>
-      <div>
-        <label for="loginPassword">Password</label>
-        <input id="loginPassword" type="password" value="admin123" />
-      </div>
-      <div>
-        <button class="btn btn-primary" id="loginBtn">Login</button>
-      </div>
+  <header>
+    <div class="brand-left">
+      <img src="chitrali-logo.png" alt="Chitrali" class="brand-logo" />
     </div>
-    <small style="display:block;margin-top:.5rem;color:#6b7280;">
-      Default admin on first run: admin@tracker.local / admin123
-    </small>
-    <div id="loginError" style="color:#b91c1c;margin-top:.5rem;font-size:.8rem;"></div>
-  </section>
+    <div class="brand-text">
+      <div class="brand-title">Alteration Tracker</div>
+      <div class="brand-subtitle">Chitrali Fashion</div>
+    </div>
+    <div class="header-actions">
+      <span class="badge">Admin</span>
+      <button class="btn btn-primary" id="addNewWorkBtn">Add New Work</button>
+    </div>
+  </header>
 
-  <!-- MAIN APP -->
-  <div id="appMain" style="display:none;">
-    <header>
-      <!-- Left: logo -->
-      <div class="brand-left">
-        <img src="chitrali-logo.png" alt="Chitrali" class="brand-logo" />
-      </div>
-
-      <!-- Center: title -->
-      <div class="brand-text">
-        <div class="brand-title">Alteration Tracker</div>
-        <div class="brand-subtitle">Chitrali Fashion</div>
-      </div>
-
-      <!-- Right: actions -->
-      <div class="header-actions">
-        <span id="userInfo"></span>
-        <button class="btn btn-primary" id="addNewWorkBtn">Add New Work</button>
-      </div>
-    </header>
-
-    <!-- ADD / EDIT FORM -->
-    <section class="card" id="formCard">
-      <div class="card-title">Add New Alteration Work</div>
-      <form id="workForm">
-        <input type="hidden" id="workId" />
-        <div class="form-grid">
-          <!-- Row 1 -->
-          <div>
-            <label for="billNumber">Bill Number *</label>
-            <input id="billNumber" required />
-          </div>
-          <div>
-            <label for="itemName">Item Name *</label>
-            <input id="itemName" placeholder="Lehenga, Crop top…" required />
-          </div>
-          <div>
-            <label for="tailorSelect">Tailor Name *</label>
-            <select id="tailorSelect" required>
-              <option value="">Select</option>
-              <option value="Faisal">Faisal</option>
-              <option value="SALMAN">SALMAN</option>
-              <option value="Rahul">Rahul</option>
-              <option value="Imran">Imran</option>
-            </select>
-          </div>
-          <div>
-            <label for="status">Work Status *</label>
-            <select id="status" required>
-              <option value="PENDING">Pending</option>
-              <option value="IN_PROGRESS">In Progress</option>
-              <option value="DONE">Done</option>
-            </select>
-          </div>
-
-          <!-- Row 2 -->
-          <div>
-            <label for="dateAssigned">Date Assigned *</label>
-            <input type="date" id="dateAssigned" required />
-          </div>
-          <div>
-            <label for="dateDelivery">Date of Delivery *</label>
-            <input type="date" id="dateDelivery" required />
-          </div>
-          <div>
-            <label for="timeDelivery">Time of Delivery</label>
-            <input type="time" id="timeDelivery" />
-          </div>
-          <div>
-            <label for="packedFlag">Packed</label>
-            <div style="display:flex;align-items:center;gap:.4rem;margin-top:.3rem;">
-              <input type="checkbox" id="packedFlag" />
-              <span style="font-size:.8rem;color:#4b5563;">Mark as packed</span>
-            </div>
-          </div>
-
-          <!-- Row 3 -->
-          <div class="full-span section-break">
-            <label for="imageInput">Item Image</label>
-            <input type="file" id="imageInput" accept="image/*" />
-            <div style="margin-top:.4rem;">
-              <div class="thumb-wrapper" id="imagePreview"><span>Preview</span></div>
-            </div>
-          </div>
-          <div class="full-span">
-            <label for="notes">Notes / Measurements</label>
-            <textarea id="notes" placeholder="Shorten length, adjust waist, etc."></textarea>
-          </div>
+  <!-- ADD / EDIT FORM -->
+  <section class="card" id="formCard">
+    <div class="card-title" id="formTitle">Add New Alteration Work</div>
+    <form id="workForm">
+      <input type="hidden" id="workId" />
+      <div class="form-grid">
+        <div>
+          <label for="billNumber">Bill Number *</label>
+          <input id="billNumber" required />
         </div>
-        <div style="margin-top:1.1rem;display:flex;gap:.6rem;flex-wrap:wrap;">
-          <button class="btn btn-primary" type="submit" id="addWorkBtn">Add Work</button>
-          <button class="btn btn-secondary" type="button" id="formCancelBtn">Clear</button>
+        <div>
+          <label for="itemName">Item Name *</label>
+          <input id="itemName" placeholder="Lehenga, Crop top…" required />
         </div>
-      </form>
-    </section>
-
-    <!-- SEARCH & FILTERS -->
-    <section class="card">
-      <div class="card-title">Search & Filters</div>
-
-      <div class="search-row">
-        <div class="search-input-wrapper">
-          <label for="searchBill">Bill Number</label>
-          <input id="searchBill" type="text" placeholder="e.g. CA2566" />
+        <div>
+          <label for="tailorSelect">Tailor Name *</label>
+          <select id="tailorSelect" required>
+            <option value="">Select</option>
+            <option value="Faisal">Faisal</option>
+            <option value="SALMAN">SALMAN</option>
+            <option value="Rahul">Rahul</option>
+            <option value="Imran">Imran</option>
+          </select>
         </div>
-
-        <div class="search-input-wrapper">
-          <label for="searchTailor">Tailor Name</label>
-          <input id="searchTailor" type="text" placeholder="e.g. Faisal" />
-        </div>
-
-        <div class="search-input-wrapper">
-          <label for="searchStatus">Status</label>
-          <select id="searchStatus">
-            <option value="">All</option>
+        <div>
+          <label for="status">Work Status *</label>
+          <select id="status" required class="status-select">
             <option value="PENDING">Pending</option>
             <option value="IN_PROGRESS">In Progress</option>
             <option value="DONE">Done</option>
           </select>
         </div>
 
-        <div class="search-input-wrapper">
-          <label for="searchPacked">Packed</label>
-          <select id="searchPacked">
-            <option value="">All</option>
-            <option value="1">Packed</option>
-            <option value="0">Not Packed</option>
-          </select>
+        <div>
+          <label for="dateAssigned">Date Assigned *</label>
+          <input type="date" id="dateAssigned" required />
+        </div>
+        <div>
+          <label for="dateDelivery">Date of Delivery *</label>
+          <input type="date" id="dateDelivery" required />
+        </div>
+        <div>
+          <label for="timeDelivery">Time of Delivery</label>
+          <input type="time" id="timeDelivery" />
+        </div>
+        <div>
+          <label for="packedFlag">Packed</label>
+          <div style="display:flex;align-items:center;gap:.4rem;margin-top:.3rem;">
+            <input type="checkbox" id="packedFlag" />
+            <span style="font-size:.8rem;color:#4b5563;">Mark as packed (auto sets status = Done)</span>
+          </div>
         </div>
 
-        <div class="search-input-wrapper">
-          <label for="searchDateFrom">Delivery Date</label>
-          <input id="searchDateFrom" type="date" />
+        <div class="full-span section-break">
+          <label for="imageInput">Item Image (camera / gallery)</label>
+          <input type="file" id="imageInput" accept="image/*" capture="environment" />
+          <small style="display:block;margin-top:.25rem;color:#6b7280;">
+            On mobile, this can open the camera; you can also choose from gallery.
+          </small>
+          <div style="margin-top:.4rem;">
+            <div class="thumb-wrapper" id="imagePreview" title="Click to preview full screen"><span>Preview</span></div>
+          </div>
         </div>
 
-        <div style="display:flex; gap:0.6rem; align-items:flex-end;">
-          <button class="btn btn-primary" id="searchBtn">Search</button>
-          <button class="btn btn-secondary btn-sm" id="clearSearchBtn">Clear</button>
+        <div class="full-span">
+          <label for="notes">Notes / Measurements</label>
+          <textarea id="notes" placeholder="Shorten length, adjust waist, etc."></textarea>
         </div>
       </div>
-    </section>
 
-    <!-- TABLE -->
-    <section class="card">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap;">
-        <div class="card-title" style="margin-bottom:0;">All Alteration Work</div>
-        <small id="summaryText" style="color:#6b7280;"></small>
+      <div style="margin-top:1.1rem;display:flex;gap:.6rem;flex-wrap:wrap;">
+        <button class="btn btn-primary" type="submit" id="saveBtn">Add Work</button>
+        <button class="btn btn-secondary" type="button" id="formCancelBtn">Clear</button>
       </div>
-      <div style="overflow-x:auto;">
-        <table>
-          <thead>
+
+      <div id="saveError" style="color:#b91c1c;margin-top:.6rem;font-size:.85rem;"></div>
+    </form>
+  </section>
+
+  <!-- TABLE -->
+  <section class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap;">
+      <div class="card-title" style="margin-bottom:0;">All Alteration Work</div>
+      <small id="summaryText" style="color:#6b7280;"></small>
+    </div>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead>
           <tr>
             <th>Image</th>
             <th>Bill Number</th>
@@ -1672,12 +216,11 @@
             <th>Packed</th>
             <th>Actions</th>
           </tr>
-          </thead>
-          <tbody id="workTableBody"></tbody>
-        </table>
-      </div>
-    </section>
-  </div>
+        </thead>
+        <tbody id="workTableBody"></tbody>
+      </table>
+    </div>
+  </section>
 </div>
 
 <!-- Image fullscreen modal -->
@@ -1690,22 +233,17 @@
 </div>
 
 <script>
-  const API_BASE = "";
-  let authToken = localStorage.getItem("alteration_token") || null;
-  let currentUser = null;
+  // ✅ Your backend base URL:
+  const API_BASE = "https://chitrali-alteration-api.onrender.com";
+
   let workItems = [];
   let editingId = null;
-
-  const loginCard = document.getElementById("loginCard");
-  const appMain = document.getElementById("appMain");
-  const loginEmail = document.getElementById("loginEmail");
-  const loginPassword = document.getElementById("loginPassword");
-  const loginBtn = document.getElementById("loginBtn");
-  const loginError = document.getElementById("loginError");
-  const userInfo = document.getElementById("userInfo");
+  let lastUploadedImageUrl = null; // set after upload; saved into DB on save
 
   const addNewWorkBtn = document.getElementById("addNewWorkBtn");
   const formCard = document.getElementById("formCard");
+  const formTitle = document.getElementById("formTitle");
+
   const workForm = document.getElementById("workForm");
   const workIdInput = document.getElementById("workId");
   const billNumberInput = document.getElementById("billNumber");
@@ -1719,16 +257,10 @@
   const imageInput = document.getElementById("imageInput");
   const imagePreview = document.getElementById("imagePreview");
   const notesInput = document.getElementById("notes");
-  const addWorkBtn = document.getElementById("addWorkBtn");
+  const saveBtn = document.getElementById("saveBtn");
   const formCancelBtn = document.getElementById("formCancelBtn");
+  const saveError = document.getElementById("saveError");
 
-  const searchBillInput = document.getElementById("searchBill");
-  const searchTailorInput = document.getElementById("searchTailor");
-  const searchStatusSelect = document.getElementById("searchStatus");
-  const searchPackedSelect = document.getElementById("searchPacked");
-  const searchDateFromInput = document.getElementById("searchDateFrom");
-  const searchBtn = document.getElementById("searchBtn");
-  const clearSearchBtn = document.getElementById("clearSearchBtn");
   const summaryText = document.getElementById("summaryText");
   const workTableBody = document.getElementById("workTableBody");
 
@@ -1746,304 +278,320 @@
     imageModal.classList.remove("visible");
     imageModalImg.src = "";
   }
-
   imageModalBackdrop.addEventListener("click", closeImageModal);
   imageModalClose.addEventListener("click", closeImageModal);
-  imageModal.addEventListener("click", (e) => {
-    if (e.target === imageModal) closeImageModal();
-  });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeImageModal();
-  });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeImageModal(); });
 
   function statusLabel(s){
     return s==="IN_PROGRESS"?"In Progress":s==="DONE"?"Done":"Pending";
   }
+  function statusTint(s){
+    // soft tints (no hard-coded brand colors; just simple readable shades)
+    if(s==="DONE") return "rgba(34, 197, 94, 0.18)";       // green-ish
+    if(s==="IN_PROGRESS") return "rgba(234, 179, 8, 0.18)"; // yellow-ish
+    return "rgba(148, 163, 184, 0.15)";                    // gray-ish
+  }
   function formatDate(d){
     if(!d) return "-";
-    const dt=new Date(d);
-    return isNaN(dt)?d:dt.toLocaleDateString("en-IN");
+    const dt = new Date(d);
+    return isNaN(dt) ? d : dt.toLocaleDateString("en-IN");
   }
-  function formatTime(t){ return t||"-"; }
+  function formatTime(t){ return t || "-"; }
 
-  function getTailorName(){ return tailorSelect.value; }
-
-  function setTailorControls(name){
-    const values=[...tailorSelect.options].map(o=>o.value);
-    if(!name){ tailorSelect.value=""; return; }
-    if(!values.includes(name)){
-      const opt=document.createElement("option");
-      opt.value=name;
-      opt.textContent=name;
-      tailorSelect.appendChild(opt);
+  async function apiJson(path, opts = {}) {
+    const headers = Object.assign({ "Accept": "application/json" }, opts.headers || {});
+    if (opts.body && !(opts.body instanceof FormData)) headers["Content-Type"] = "application/json";
+    const res = await fetch(API_BASE + path, { ...opts, headers });
+    const text = await res.text();
+    const data = text ? (() => { try { return JSON.parse(text); } catch { return text; } })() : null;
+    if (!res.ok) {
+      const msg = (data && data.error) ? data.error : "Request failed";
+      throw new Error(msg);
     }
-    tailorSelect.value=name;
-  }
-
-  function showLogin(){
-    loginCard.style.display="block";
-    appMain.style.display="none";
-  }
-
-  function showApp(){
-    loginCard.style.display="none";
-    appMain.style.display="block";
-    const logoutBtnHtml = `<button class="btn btn-link btn-sm" id="logoutBtn">Logout</button>`;
-    userInfo.innerHTML = `<span class="badge">${currentUser.name || "User"}</span>${logoutBtnHtml}`;
-    document.getElementById("logoutBtn").onclick = () => {
-      authToken = null;
-      currentUser = null;
-      localStorage.removeItem("alteration_token");
-      showLogin();
-    };
-  }
-
-  async function api(path,opts={}){
-    const headers=opts.headers||{};
-    headers["Accept"]="application/json";
-    if(!(opts.body instanceof FormData)){
-      headers["Content-Type"]=headers["Content-Type"] || "application/json";
-    }
-    if(authToken){
-      headers["Authorization"]="Bearer "+authToken;
-    }
-    const res = await fetch(path,{...opts,headers});
-    if(!res.ok){
-      let err;
-      try{err=await res.json();}catch{err={error:"Request failed"};}
-      throw new Error(err.error||"Request failed");
-    }
-    try{return await res.json();}catch{return null;}
-  }
-
-  async function login(){
-    loginError.textContent="";
-    try{
-      const data = await api("/api/login",{
-        method:"POST",
-        body:JSON.stringify({ email:loginEmail.value.trim(), password:loginPassword.value })
-      });
-      authToken=data.token;
-      currentUser=data.user;
-      localStorage.setItem("alteration_token",authToken);
-      showApp();
-      await loadWorkAll();
-    }catch(e){
-      loginError.textContent=e.message;
-    }
-  }
-
-  function buildFilterQuery() {
-    const bill = searchBillInput.value.trim();
-    const tailor = searchTailorInput.value.trim();
-    const status = searchStatusSelect.value;
-    const packed = searchPackedSelect.value;
-    const deliveryDate = searchDateFromInput.value;
-
-    const parts = [];
-    if (bill) parts.push("bill=" + encodeURIComponent(bill));
-    if (tailor) parts.push("tailor=" + encodeURIComponent(tailor));
-    if (status) parts.push("status=" + encodeURIComponent(status));
-    if (packed !== "") parts.push("packed=" + encodeURIComponent(packed));
-    if (deliveryDate) parts.push("date=" + encodeURIComponent(deliveryDate));
-
-    return parts.length ? "?" + parts.join("&") : "";
-  }
-
-  async function loadWorkFiltered() {
-    const q = buildFilterQuery();
-    workItems = await api("/api/work" + q);
-    renderTable();
+    return data;
   }
 
   async function loadWorkAll() {
-    workItems = await api("/api/work");
+    workItems = await apiJson("/alterations");
     renderTable();
   }
 
   function renderSummary(){
-    const total=workItems.length;
-    const open=workItems.filter(w=>w.status!=="DONE").length;
-    summaryText.textContent=`Total: ${total} | Open: ${open}`;
+    const total = workItems.length;
+    const open = workItems.filter(w => w.status !== "DONE").length;
+    summaryText.textContent = `Total: ${total} | Open: ${open}`;
   }
 
   function renderTable(){
-    workTableBody.innerHTML="";
-    if(workItems.length===0){
-      const tr=document.createElement("tr");
-      tr.className="empty-row";
-      const td=document.createElement("td");
-      td.colSpan=10;
-      td.textContent="No alteration work found.";
+    workTableBody.innerHTML = "";
+    if (!workItems.length) {
+      const tr = document.createElement("tr");
+      tr.className = "empty-row";
+      const td = document.createElement("td");
+      td.colSpan = 10;
+      td.textContent = "No alteration work found.";
       tr.appendChild(td);
       workTableBody.appendChild(tr);
       renderSummary();
       return;
     }
 
-    workItems.forEach(w=>{
-      const tr=document.createElement("tr");
+    workItems.forEach(w => {
+      const tr = document.createElement("tr");
 
-      const tdImg=document.createElement("td");
-      const wrap=document.createElement("div");
-      wrap.className="thumb-wrapper";
-      if(w.image_url){
-        const img=document.createElement("img");
-        img.src=w.image_url;
-        img.style.cursor="pointer";
-        img.addEventListener("click",()=>openImageModal(w.image_url));
+      // Image
+      const tdImg = document.createElement("td");
+      const wrap = document.createElement("div");
+      wrap.className = "thumb-wrapper";
+      if (w.image_url) {
+        const img = document.createElement("img");
+        img.src = w.image_url;
+        img.style.cursor = "pointer";
+        img.addEventListener("click", () => openImageModal(w.image_url));
         wrap.appendChild(img);
-      }else{
-        wrap.innerHTML="No<br/>Image";
+      } else {
+        wrap.innerHTML = "No<br/>Image";
       }
       tdImg.appendChild(wrap);
       tr.appendChild(tdImg);
 
-      const tdBill=document.createElement("td"); tdBill.textContent=w.bill_number; tr.appendChild(tdBill);
-      const tdTailor=document.createElement("td"); tdTailor.textContent=w.tailor_name; tr.appendChild(tdTailor);
-      const tdItem=document.createElement("td"); tdItem.textContent=w.item_name; tr.appendChild(tdItem);
-      const tdAssigned=document.createElement("td"); tdAssigned.textContent=formatDate(w.date_assigned); tr.appendChild(tdAssigned);
-      const tdDelivery=document.createElement("td"); tdDelivery.textContent=formatDate(w.date_delivery); tr.appendChild(tdDelivery);
-      const tdTime=document.createElement("td"); tdTime.textContent=formatTime(w.time_delivery); tr.appendChild(tdTime);
+      const tdBill = document.createElement("td"); tdBill.textContent = w.bill_number; tr.appendChild(tdBill);
+      const tdTailor = document.createElement("td"); tdTailor.textContent = w.tailor_name; tr.appendChild(tdTailor);
+      const tdItem = document.createElement("td"); tdItem.textContent = w.item_name; tr.appendChild(tdItem);
+      const tdAssigned = document.createElement("td"); tdAssigned.textContent = formatDate(w.date_assigned); tr.appendChild(tdAssigned);
+      const tdDelivery = document.createElement("td"); tdDelivery.textContent = formatDate(w.date_delivery); tr.appendChild(tdDelivery);
+      const tdTime = document.createElement("td"); tdTime.textContent = formatTime(w.time_delivery); tr.appendChild(tdTime);
 
-      const tdStatus=document.createElement("td");
-      const sel=document.createElement("select");
-      ["PENDING","IN_PROGRESS","DONE"].forEach(val=>{
-        const opt=document.createElement("option");
-        opt.value=val;
-        opt.textContent=statusLabel(val);
+      // Status dropdown (editable)
+      const tdStatus = document.createElement("td");
+      const sel = document.createElement("select");
+      sel.className = "status-select";
+      ["PENDING","IN_PROGRESS","DONE"].forEach(val => {
+        const opt = document.createElement("option");
+        opt.value = val;
+        opt.textContent = statusLabel(val);
         sel.appendChild(opt);
       });
-      sel.value=w.status;
-      sel.style.fontSize=".78rem";
-      sel.onchange=()=>updateStatusPacked(w.id, sel.value, !!w.packed);
+      sel.value = w.status || "PENDING";
+      sel.style.background = statusTint(sel.value);
+      sel.onchange = async () => {
+        try {
+          const updated = await updateAlteration(w.id, { status: sel.value });
+          sel.style.background = statusTint(updated.status);
+        } catch (e) {
+          alert("Error updating status: " + e.message);
+          sel.value = w.status || "PENDING";
+          sel.style.background = statusTint(sel.value);
+        }
+      };
       tdStatus.appendChild(sel);
       tr.appendChild(tdStatus);
 
-      const tdPacked=document.createElement("td");
-      const chk=document.createElement("input");
-      chk.type="checkbox";
-      chk.checked=!!w.packed;
-      chk.onchange=()=>updateStatusPacked(w.id, w.status, chk.checked);
+      // Packed checkbox (editable). If ticked => auto sets status DONE.
+      const tdPacked = document.createElement("td");
+      const chk = document.createElement("input");
+      chk.type = "checkbox";
+      chk.checked = !!w.packed;
+      chk.onchange = async () => {
+        try {
+          const patch = { packed: chk.checked };
+          if (chk.checked) patch.status = "DONE";
+          const updated = await updateAlteration(w.id, patch);
+          // refresh row UI quickly
+          w.status = updated.status;
+          w.packed = updated.packed;
+          renderTable();
+        } catch (e) {
+          alert("Error updating packed: " + e.message);
+          chk.checked = !!w.packed;
+        }
+      };
       tdPacked.appendChild(chk);
       tr.appendChild(tdPacked);
 
-      const tdActions=document.createElement("td");
-      const editBtn=document.createElement("button");
-      editBtn.className="btn btn-link btn-sm";
-      editBtn.textContent="Edit";
-      editBtn.onclick=()=>loadForEdit(w);
+      // Actions
+      const tdActions = document.createElement("td");
+      const editBtn = document.createElement("button");
+      editBtn.className = "btn btn-link btn-sm";
+      editBtn.textContent = "Edit";
+      editBtn.onclick = () => loadForEdit(w);
       tdActions.appendChild(editBtn);
       tr.appendChild(tdActions);
 
       workTableBody.appendChild(tr);
     });
+
     renderSummary();
   }
 
-  async function updateStatusPacked(id,newStatus,newPacked){
-    try{
-      const body = { status:newStatus, packed:newPacked };
-      const res = await api(`/api/work/${id}/status`,{
-        method:"PATCH",
-        body:JSON.stringify(body)
-      });
-      const idx = workItems.findIndex(x=>x.id===id);
-      if(idx!==-1) workItems[idx]=res;
-      renderTable();
-    }catch(e){
-      alert("Error updating status/packed: "+e.message);
-    }
+  async function updateAlteration(id, patch) {
+    const existing = workItems.find(x => x.id === id);
+    if (!existing) throw new Error("Record not found");
+
+    // backend PUT expects full object fields (camelCase)
+    const payload = {
+      billNumber: existing.bill_number,
+      tailorName: existing.tailor_name,
+      itemName: existing.item_name,
+      dateAssigned: existing.date_assigned,
+      dateDelivery: existing.date_delivery,
+      timeDelivery: existing.time_delivery,
+      status: existing.status || "PENDING",
+      packed: !!existing.packed,
+      imageUrl: existing.image_url || null
+    };
+
+    // apply patch (status/packed only)
+    if (patch.status !== undefined) payload.status = patch.status;
+    if (patch.packed !== undefined) payload.packed = patch.packed;
+
+    const updated = await apiJson(`/alterations/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(payload)
+    });
+
+    // update local cache
+    const idx = workItems.findIndex(x => x.id === id);
+    if (idx !== -1) workItems[idx] = updated;
+    return updated;
   }
 
   function resetForm(){
     workForm.reset();
-    workIdInput.value="";
-    editingId=null;
-    addWorkBtn.textContent="Add Work";
-    tailorSelect.value="";
-    packedFlagInput.checked=false;
-    imagePreview.innerHTML="<span>Preview</span>";
-    imageInput.value="";
-    notesInput.value="";
+    workIdInput.value = "";
+    editingId = null;
+    lastUploadedImageUrl = null;
+    formTitle.textContent = "Add New Alteration Work";
+    saveBtn.textContent = "Add Work";
+    imagePreview.innerHTML = "<span>Preview</span>";
+    imageInput.value = "";
+    saveError.textContent = "";
+    applyStatusTint(statusInput);
   }
 
   function loadForEdit(w){
-    editingId=w.id;
-    workIdInput.value=w.id;
-    billNumberInput.value=w.bill_number;
-    setTailorControls(w.tailor_name);
-    dateAssignedInput.value=w.date_assigned;
-    dateDeliveryInput.value=w.date_delivery;
-    timeDeliveryInput.value=w.time_delivery || "";
-    itemNameInput.value=w.item_name;
-    statusInput.value=w.status;
-    packedFlagInput.checked=!!w.packed;
-    notesInput.value=w.notes || "";
-    if(w.image_url){
-      imagePreview.innerHTML="";
-      const img=document.createElement("img");
-      img.src=w.image_url;
+    editingId = w.id;
+    workIdInput.value = w.id;
+    billNumberInput.value = w.bill_number || "";
+    tailorSelect.value = w.tailor_name || "";
+    itemNameInput.value = w.item_name || "";
+    dateAssignedInput.value = w.date_assigned ? String(w.date_assigned).slice(0,10) : "";
+    dateDeliveryInput.value = w.date_delivery ? String(w.date_delivery).slice(0,10) : "";
+    timeDeliveryInput.value = w.time_delivery || "";
+    statusInput.value = w.status || "PENDING";
+    packedFlagInput.checked = !!w.packed;
+    notesInput.value = w.notes || "";
+    lastUploadedImageUrl = w.image_url || null;
+
+    if (w.image_url) {
+      imagePreview.innerHTML = "";
+      const img = document.createElement("img");
+      img.src = w.image_url;
       imagePreview.appendChild(img);
-    }else{
-      imagePreview.innerHTML="<span>Preview</span>";
+    } else {
+      imagePreview.innerHTML = "<span>Preview</span>";
     }
-    addWorkBtn.textContent="Update Work";
-    window.scrollTo({top:0,behavior:"smooth"});
+
+    formTitle.textContent = "Edit Alteration Work";
+    saveBtn.textContent = "Update Work";
+    applyStatusTint(statusInput);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  async function uploadImageIfAny() {
+    if (imageInput.files.length === 0) return lastUploadedImageUrl; // keep existing for edit
+    const fd = new FormData();
+    fd.append("image", imageInput.files[0]);
+
+    // Important: /upload must exist on backend and return { imageUrl }
+    const res = await fetch(API_BASE + "/upload", { method: "POST", body: fd });
+    const text = await res.text();
+    let data = null;
+    try { data = text ? JSON.parse(text) : null; } catch { data = null; }
+
+    if (!res.ok) {
+      const msg = (data && data.error) ? data.error : "Image upload failed";
+      throw new Error(msg);
+    }
+    if (!data || !data.imageUrl) throw new Error("Upload did not return imageUrl");
+    return data.imageUrl;
   }
 
   async function saveWork(e){
     e.preventDefault();
+    saveError.textContent = "";
+
     const bill = billNumberInput.value.trim();
-    const tailor = getTailorName();
+    const tailor = tailorSelect.value;
     const item = itemNameInput.value.trim();
 
-    if(!bill || !tailor || !item){
-      alert("Bill number, tailor name and item name are required.");
+    if (!bill || !tailor || !item) {
+      saveError.textContent = "Bill number, tailor name and item name are required.";
       return;
     }
 
-    const fd = new FormData();
-    fd.append("bill_number",bill);
-    fd.append("tailor_name",tailor);
-    fd.append("item_name",item);
-    fd.append("date_assigned",dateAssignedInput.value);
-    fd.append("date_delivery",dateDeliveryInput.value);
-    fd.append("time_delivery",timeDeliveryInput.value);
-    fd.append("status",statusInput.value);
-    fd.append("packed",packedFlagInput.checked ? "1" : "0");
-    fd.append("notes",notesInput.value.trim());
-    if(imageInput.files[0]) fd.append("image",imageInput.files[0]);
+    // auto-set DONE if packed ticked
+    if (packedFlagInput.checked) statusInput.value = "DONE";
+    applyStatusTint(statusInput);
 
-    const headers = { "Authorization":"Bearer "+authToken };
-    const opts = { method: editingId ? "PUT" : "POST", headers, body: fd };
-    const url = editingId ? `/api/work/${editingId}` : "/api/work";
+    try {
+      // 1) upload image (optional)
+      const imageUrl = await uploadImageIfAny();
 
-    const res = await fetch(url, opts);
-    if(!res.ok){
-      const err = await res.json().catch(()=>({error:"Request failed"}));
-      alert("Error saving work: "+(err.error||"Request failed"));
-      return;
+      // 2) save JSON to /alterations
+      const payload = {
+        billNumber: bill,
+        tailorName: tailor,
+        itemName: item,
+        dateAssigned: dateAssignedInput.value || null,
+        dateDelivery: dateDeliveryInput.value || null,
+        timeDelivery: timeDeliveryInput.value || null,
+        status: statusInput.value || "PENDING",
+        packed: packedFlagInput.checked,
+        imageUrl: imageUrl || null
+      };
+
+      const path = editingId ? `/alterations/${editingId}` : "/alterations";
+      const method = editingId ? "PUT" : "POST";
+      const saved = await apiJson(path, { method, body: JSON.stringify(payload) });
+
+      // refresh list
+      await loadWorkAll();
+      resetForm();
+    } catch (err) {
+      saveError.textContent = err.message || "Request failed";
     }
-    await loadWorkFiltered();
-    resetForm();
   }
 
-  loginBtn.addEventListener("click",login);
-  loginPassword.addEventListener("keydown",e=>{ if(e.key==="Enter") login(); });
+  function applyStatusTint(selectEl){
+    selectEl.style.background = statusTint(selectEl.value);
+  }
 
-  addNewWorkBtn.addEventListener("click",()=>{
-    window.scrollTo({top:formCard.offsetTop-20,behavior:"smooth"});
+  // UI events
+  addNewWorkBtn.addEventListener("click", () => {
+    window.scrollTo({ top: formCard.offsetTop - 20, behavior: "smooth" });
   });
 
-  imageInput.addEventListener("change",()=>{
-    const file=imageInput.files[0];
-    if(!file){ imagePreview.innerHTML="<span>Preview</span>"; return; }
-    const reader=new FileReader();
-    reader.onload=e=>{
-      imagePreview.innerHTML="";
-      const img=document.createElement("img");
-      img.src=e.target.result;
+  statusInput.addEventListener("change", () => applyStatusTint(statusInput));
+
+  packedFlagInput.addEventListener("change", () => {
+    if (packedFlagInput.checked) {
+      statusInput.value = "DONE";
+    }
+    applyStatusTint(statusInput);
+  });
+
+  imageInput.addEventListener("change", () => {
+    const file = imageInput.files[0];
+    if (!file) {
+      imagePreview.innerHTML = "<span>Preview</span>";
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      imagePreview.innerHTML = "";
+      const img = document.createElement("img");
+      img.src = e.target.result;
       imagePreview.appendChild(img);
     };
     reader.readAsDataURL(file);
@@ -2051,55 +599,25 @@
 
   imagePreview.addEventListener("click", () => {
     const img = imagePreview.querySelector("img");
+    // if preview is local (data:) open it; else open stored URL
     if (img && img.src) openImageModal(img.src);
+    else if (lastUploadedImageUrl) openImageModal(lastUploadedImageUrl);
   });
 
-  workForm.addEventListener("submit",saveWork);
-  formCancelBtn.addEventListener("click",resetForm);
+  workForm.addEventListener("submit", saveWork);
+  formCancelBtn.addEventListener("click", resetForm);
 
-  searchBtn.addEventListener("click", () => {
-    loadWorkFiltered();
-  });
-  clearSearchBtn.addEventListener("click", () => {
-    searchBillInput.value = "";
-    searchTailorInput.value = "";
-    searchStatusSelect.value = "";
-    searchPackedSelect.value = "";
-    searchDateFromInput.value = "";
-    loadWorkAll();
-  });
-  searchBillInput.addEventListener("keydown", e => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      loadWorkFiltered();
-    }
-  });
-  searchTailorInput.addEventListener("keydown", e => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      loadWorkFiltered();
-    }
-  });
-  searchStatusSelect.addEventListener("change", loadWorkFiltered);
-  searchPackedSelect.addEventListener("change", loadWorkFiltered);
-  searchDateFromInput.addEventListener("change", loadWorkFiltered);
-
+  // Init
   (async function init(){
-    if(authToken){
-      try{
-        await api("/api/health");
-        currentUser={name:"User"};
-        showApp();
-        await loadWorkAll();
-        return;
-      }catch{
-        authToken=null;
-        localStorage.removeItem("alteration_token");
-      }
+    resetForm();
+    try {
+      await apiJson("/health");
+      await loadWorkAll();
+    } catch (e) {
+      summaryText.textContent = "Backend not reachable. Check API_BASE / Render status.";
+      console.error(e);
     }
-    showLogin();
   })();
 </script>
 </body>
 </html>
->>>>>>> 16bbc7d (Fix backend start config and dependencies)
