@@ -1,4 +1,3 @@
-// backend/index.js
 import express from "express";
 import cors from "cors";
 import alterationsRouter from "./routes/alterations.js";
@@ -10,15 +9,11 @@ app.use(cors());
 app.use(express.json());
 
 // Health check
-app.get("/health", (req, res) => {
-  res.json({ status: "ok" });
-});
+app.get("/health", (req, res) => res.json({ status: "ok" }));
 
-// Routes
+// Upload + API
 app.use("/upload", uploadRouter);
 app.use("/alterations", alterationsRouter);
 
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => {
-  console.log(`API listening on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`API listening on port ${PORT}`));
