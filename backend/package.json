@@ -1,7 +1,6 @@
 {
   "name": "chitrali-alteration-api",
   "version": "1.0.0",
-  "description": "Backend API for Chitrali Alteration Tracker",
   "type": "module",
   "main": "index.js",
   "scripts": {
