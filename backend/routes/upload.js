@@ -1,3 +1,4 @@
+// backend/routes/upload.js
 import express from "express";
 import multer from "multer";
 import streamifier from "streamifier";
@@ -6,20 +7,10 @@ import cloudinary from "../config/cloudinary.js";
 
 const router = express.Router();
 
-// 🚫 Reject JSON uploads immediately
-router.use harmoniously = (req, res, next) => {
-  if (!req.is("multipart/form-data")) {
-    return res.status(415).json({
-      error: "Use multipart/form-data for /upload",
-    });
-  }
-  next();
-};
-
-// ✅ Memory storage so Sharp can compress
+// Use memory storage so Sharp can process image
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 6 * 1024 * 1024 }, // 6 MB max
+  limits: { fileSize: 6 * 1024 * 1024 }, // 6 MB
 });
 
 router.post("/", upload.single("image"), async (req, res) => {
@@ -28,31 +19,35 @@ router.post("/", upload.single("image"), async (req, res) => {
       return res.status(400).json({ error: "No image file uploaded" });
     }
 
-    // ✅ Compress & resize
-    const optimized = await sharp(req.file.buffer)
+    // Compress + resize image
+    const optimizedBuffer = await sharp(req.file.buffer)
       .rotate()
       .resize({ width: 1200, withoutEnlargement: true })
       .jpeg({ quality: 75 })
       .toBuffer();
 
-    const uploadToCloudinary = () =>
-      new Promise((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
-          { folder: "chitrali_alterations" },
-          (err, result) => (err ? reject(err) : resolve(result))
-        );
-        streamifier.createReadStream(optimized).pipe(stream);
-      });
+    const uploadResult = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: "chitrali_alterations",
+          resource_type: "image",
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
 
-    const result = await uploadToCloudinary();
+      streamifier.createReadStream(optimizedBuffer).pipe(stream);
+    });
 
     res.json({
-      imageUrl: result.secure_url,
-      publicId: result.public_id,
+      imageUrl: uploadResult.secure_url,
+      publicId: uploadResult.public_id,
     });
   } catch (err) {
-    console.error("UPLOAD ERROR:", err);
-    res.status(500).json({ error: "Upload failed" });
+    console.error("UPLOAD error:", err);
+    res.status(500).json({ error: "Image upload failed" });
   }
 });
 
