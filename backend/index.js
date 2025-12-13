@@ -7,19 +7,19 @@ const app = express();
 
 app.use(cors());
 
-// ✅ Keep JSON limits small (images must NOT come through JSON)
+// 🔒 JSON must stay SMALL (no images here)
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 
 app.get("/health", (req, res) => res.json({ status: "ok" }));
 
-// ✅ Upload route uses multipart/form-data (multer)
+// ✅ ONLY multipart uploads here
 app.use("/upload", uploadRouter);
 
-// ✅ Normal CRUD (JSON only, no image file)
+// ✅ CRUD = JSON only
 app.use("/alterations", alterationsRouter);
 
-// ✅ Friendly error message if someone still sends a huge JSON payload
+// 🔥 Friendly error for mistakes
 app.use((err, req, res, next) => {
   if (err?.type === "entity.too.large") {
     return res.status(413).json({
