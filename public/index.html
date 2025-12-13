@@ -10,13 +10,7 @@
     body { margin: 0; background: #f3f4fb; color: #111827; font-size: 15px; }
     .page { max-width: 1200px; margin: 0 auto; padding: 1.2rem 0.9rem 2.5rem; }
 
-    header {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.25rem;
-    }
+    header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
     .brand-left { display: flex; align-items: center; }
     .brand-logo { height: 40px; max-width: 160px; object-fit: contain; display: block; }
     .brand-text { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-width: 0; }
@@ -24,12 +18,7 @@
     .brand-subtitle { font-size: 0.78rem; color: #6b7280; line-height: 1.2; }
     .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end; }
 
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 0.45rem 1.1rem; border-radius: 999px; border: none;
-      font-size: 0.9rem; cursor: pointer; white-space: nowrap;
-      transition: box-shadow 0.15s, transform 0.05s, background 0.15s, color 0.15s;
-    }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.45rem 1.1rem; border-radius: 999px; border: none; font-size: 0.9rem; cursor: pointer; white-space: nowrap; transition: box-shadow 0.15s, transform 0.05s, background 0.15s, color 0.15s; }
     .btn-primary { background: #2563eb; color: #ffffff; }
     .btn-primary:hover { box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35); transform: translateY(-1px); }
     .btn-secondary { background: #e5e7eb; color: #111827; }
@@ -41,16 +30,10 @@
     .card-title { font-size: 0.98rem; font-weight: 600; margin-bottom: 0.9rem; }
 
     label { font-size: 0.8rem; color: #4b5563; display: block; margin-bottom: 0.3rem; }
-    input[type="text"], input[type="date"], input[type="time"], select {
-      width: 100%; padding: 0.45rem 0.6rem; border-radius: 0.5rem;
-      border: 1px solid #d1d5db; font-size: 0.85rem; background: #f9fafb; outline: none;
-    }
+    input[type="text"], input[type="date"], input[type="time"], select { width: 100%; padding: 0.45rem 0.6rem; border-radius: 0.5rem; border: 1px solid #d1d5db; font-size: 0.85rem; background: #f9fafb; outline: none; }
     input:focus, select:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12); }
     input[type="file"] { font-size: 0.8rem; }
-    textarea {
-      width: 100%; min-height: 80px; resize: vertical; border-radius: 0.5rem;
-      border: 1px solid #d1d5db; padding: 0.45rem 0.6rem; font-size: 0.85rem; background: #f9fafb; outline: none;
-    }
+    textarea { width: 100%; min-height: 80px; resize: vertical; border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.45rem 0.6rem; font-size: 0.85rem; background: #f9fafb; outline: none; }
     textarea:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12); }
 
     .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); column-gap: 1.25rem; row-gap: 1.1rem; }
@@ -64,25 +47,21 @@
     tbody tr:hover { background: #f3f4ff; }
     .empty-row td { text-align: center; color: #9ca3af; padding: 1rem 0.5rem; font-size: 0.85rem; }
 
-    .thumb-wrapper {
-      width: 56px; height: 56px; border-radius: 0.6rem;
-      background: #f3f4f6; border: 1px solid #e5e7eb; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem; color: #9ca3af;
-    }
+    .thumb-wrapper { width: 56px; height: 56px; border-radius: 0.6rem; background: #f3f4f6; border: 1px solid #e5e7eb; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #9ca3af; }
     .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; }
     .badge { display: inline-block; padding: 0.12rem 0.55rem; border-radius: 999px; font-size: 0.72rem; background: #e5e7eb; color: #374151; margin-right: 0.4rem; }
 
-    /* status tint (applied via inline style in JS too) */
     .status-select { font-size: .78rem; border-radius: 999px; padding: .28rem .55rem; border: 1px solid #e5e7eb; background: #fff; }
 
-    /* Image fullscreen modal */
     .image-modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 9999; }
     .image-modal.visible { display: flex; }
     .image-modal-backdrop { position: absolute; inset: 0; background: rgba(15, 23, 42, 0.85); }
     .image-modal-inner { position: relative; max-width: 95vw; max-height: 90vh; z-index: 1; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); border-radius: 0.75rem; overflow: hidden; background: #000; }
     .image-modal-inner img { display: block; max-width: 100%; max-height: 90vh; object-fit: contain; }
     .image-modal-close { position: absolute; top: 0.3rem; right: 0.8rem; color: #f9fafb; font-size: 1.6rem; cursor: pointer; z-index: 2; }
+
+    .muted { color:#6b7280; font-size:.78rem; }
+    .uploading { opacity: .75; pointer-events: none; }
 
     @media (max-width: 640px) {
       body { font-size: 14px; }
@@ -93,10 +72,7 @@
       .brand-text { width: 100%; align-items: center; text-align: center; }
       .header-actions { width: 100%; justify-content: flex-start; }
       .form-grid { grid-template-columns: 1fr; }
-
-      /* Hide less important cols on very small screens: Date Assigned (5), Time (7) */
-      th:nth-child(5), td:nth-child(5),
-      th:nth-child(7), td:nth-child(7) { display: none; }
+      th:nth-child(5), td:nth-child(5), th:nth-child(7), td:nth-child(7) { display: none; }
     }
   </style>
 </head>
@@ -116,7 +92,6 @@
     </div>
   </header>
 
-  <!-- ADD / EDIT FORM -->
   <section class="card" id="formCard">
     <div class="card-title" id="formTitle">Add New Alteration Work</div>
     <form id="workForm">
@@ -172,11 +147,12 @@
         <div class="full-span section-break">
           <label for="imageInput">Item Image (camera / gallery)</label>
           <input type="file" id="imageInput" accept="image/*" capture="environment" />
-          <small style="display:block;margin-top:.25rem;color:#6b7280;">
+          <small class="muted" style="display:block;margin-top:.25rem;">
             On mobile, this can open the camera; you can also choose from gallery.
           </small>
-          <div style="margin-top:.4rem;">
+          <div style="margin-top:.4rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;">
             <div class="thumb-wrapper" id="imagePreview" title="Click to preview full screen"><span>Preview</span></div>
+            <small class="muted">Image uploads via <code>/upload</code> (multipart/form-data), then record saves with URL only.</small>
           </div>
         </div>
 
@@ -195,7 +171,6 @@
     </form>
   </section>
 
-  <!-- TABLE -->
   <section class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap;">
       <div class="card-title" style="margin-bottom:0;">All Alteration Work</div>
@@ -223,7 +198,6 @@
   </section>
 </div>
 
-<!-- Image fullscreen modal -->
 <div id="imageModal" class="image-modal">
   <div class="image-modal-backdrop"></div>
   <div class="image-modal-inner">
@@ -233,12 +207,11 @@
 </div>
 
 <script>
-  // ✅ Your backend base URL:
   const API_BASE = "https://chitrali-alteration-api.onrender.com";
 
   let workItems = [];
   let editingId = null;
-  let lastUploadedImageUrl = null; // set after upload; saved into DB on save
+  let lastUploadedImageUrl = null;
 
   const addNewWorkBtn = document.getElementById("addNewWorkBtn");
   const formCard = document.getElementById("formCard");
@@ -269,33 +242,19 @@
   const imageModalClose = document.getElementById("imageModalClose");
   const imageModalBackdrop = imageModal.querySelector(".image-modal-backdrop");
 
-  function openImageModal(src) {
-    if (!src) return;
-    imageModalImg.src = src;
-    imageModal.classList.add("visible");
-  }
-  function closeImageModal() {
-    imageModal.classList.remove("visible");
-    imageModalImg.src = "";
-  }
+  function openImageModal(src) { if (!src) return; imageModalImg.src = src; imageModal.classList.add("visible"); }
+  function closeImageModal() { imageModal.classList.remove("visible"); imageModalImg.src = ""; }
   imageModalBackdrop.addEventListener("click", closeImageModal);
   imageModalClose.addEventListener("click", closeImageModal);
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeImageModal(); });
 
-  function statusLabel(s){
-    return s==="IN_PROGRESS"?"In Progress":s==="DONE"?"Done":"Pending";
-  }
+  function statusLabel(s){ return s==="IN_PROGRESS"?"In Progress":s==="DONE"?"Done":"Pending"; }
   function statusTint(s){
-    // soft tints (no hard-coded brand colors; just simple readable shades)
-    if(s==="DONE") return "rgba(34, 197, 94, 0.18)";       // green-ish
-    if(s==="IN_PROGRESS") return "rgba(234, 179, 8, 0.18)"; // yellow-ish
-    return "rgba(148, 163, 184, 0.15)";                    // gray-ish
+    if(s==="DONE") return "rgba(34, 197, 94, 0.18)";
+    if(s==="IN_PROGRESS") return "rgba(234, 179, 8, 0.18)";
+    return "rgba(148, 163, 184, 0.15)";
   }
-  function formatDate(d){
-    if(!d) return "-";
-    const dt = new Date(d);
-    return isNaN(dt) ? d : dt.toLocaleDateString("en-IN");
-  }
+  function formatDate(d){ if(!d) return "-"; const dt = new Date(d); return isNaN(dt) ? d : dt.toLocaleDateString("en-IN"); }
   function formatTime(t){ return t || "-"; }
 
   async function apiJson(path, opts = {}) {
@@ -311,10 +270,7 @@
     return data;
   }
 
-  async function loadWorkAll() {
-    workItems = await apiJson("/alterations");
-    renderTable();
-  }
+  async function loadWorkAll() { workItems = await apiJson("/alterations"); renderTable(); }
 
   function renderSummary(){
     const total = workItems.length;
@@ -339,7 +295,6 @@
     workItems.forEach(w => {
       const tr = document.createElement("tr");
 
-      // Image
       const tdImg = document.createElement("td");
       const wrap = document.createElement("div");
       wrap.className = "thumb-wrapper";
@@ -362,7 +317,6 @@
       const tdDelivery = document.createElement("td"); tdDelivery.textContent = formatDate(w.date_delivery); tr.appendChild(tdDelivery);
       const tdTime = document.createElement("td"); tdTime.textContent = formatTime(w.time_delivery); tr.appendChild(tdTime);
 
-      // Status dropdown (editable)
       const tdStatus = document.createElement("td");
       const sel = document.createElement("select");
       sel.className = "status-select";
@@ -387,7 +341,6 @@
       tdStatus.appendChild(sel);
       tr.appendChild(tdStatus);
 
-      // Packed checkbox (editable). If ticked => auto sets status DONE.
       const tdPacked = document.createElement("td");
       const chk = document.createElement("input");
       chk.type = "checkbox";
@@ -397,7 +350,6 @@
           const patch = { packed: chk.checked };
           if (chk.checked) patch.status = "DONE";
           const updated = await updateAlteration(w.id, patch);
-          // refresh row UI quickly
           w.status = updated.status;
           w.packed = updated.packed;
           renderTable();
@@ -409,7 +361,6 @@
       tdPacked.appendChild(chk);
       tr.appendChild(tdPacked);
 
-      // Actions
       const tdActions = document.createElement("td");
       const editBtn = document.createElement("button");
       editBtn.className = "btn btn-link btn-sm";
@@ -428,7 +379,6 @@
     const existing = workItems.find(x => x.id === id);
     if (!existing) throw new Error("Record not found");
 
-    // backend PUT expects full object fields (camelCase)
     const payload = {
       billNumber: existing.bill_number,
       tailorName: existing.tailor_name,
@@ -441,19 +391,23 @@
       imageUrl: existing.image_url || null
     };
 
-    // apply patch (status/packed only)
     if (patch.status !== undefined) payload.status = patch.status;
     if (patch.packed !== undefined) payload.packed = patch.packed;
 
-    const updated = await apiJson(`/alterations/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(payload)
-    });
-
-    // update local cache
+    const updated = await apiJson(`/alterations/${id}`, { method: "PUT", body: JSON.stringify(payload) });
     const idx = workItems.findIndex(x => x.id === id);
     if (idx !== -1) workItems[idx] = updated;
     return updated;
+  }
+
+  function setSaving(isSaving, text){
+    if(isSaving){
+      saveBtn.textContent = text || "Saving...";
+      workForm.classList.add("uploading");
+    } else {
+      workForm.classList.remove("uploading");
+      saveBtn.textContent = editingId ? "Update Work" : "Add Work";
+    }
   }
 
   function resetForm(){
@@ -498,12 +452,13 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  // Upload image using multipart/form-data ONLY
   async function uploadImageIfAny() {
     if (imageInput.files.length === 0) return lastUploadedImageUrl; // keep existing for edit
+
     const fd = new FormData();
     fd.append("image", imageInput.files[0]);
 
-    // Important: /upload must exist on backend and return { imageUrl }
     const res = await fetch(API_BASE + "/upload", { method: "POST", body: fd });
     const text = await res.text();
     let data = null;
@@ -530,15 +485,17 @@
       return;
     }
 
-    // auto-set DONE if packed ticked
     if (packedFlagInput.checked) statusInput.value = "DONE";
     applyStatusTint(statusInput);
 
     try {
-      // 1) upload image (optional)
-      const imageUrl = await uploadImageIfAny();
+      setSaving(true, (imageInput.files.length ? "Uploading..." : "Saving..."));
 
-      // 2) save JSON to /alterations
+      const imageUrl = await uploadImageIfAny();
+      lastUploadedImageUrl = imageUrl || lastUploadedImageUrl;
+
+      setSaving(true, "Saving...");
+
       const payload = {
         billNumber: bill,
         tailorName: tailor,
@@ -553,40 +510,27 @@
 
       const path = editingId ? `/alterations/${editingId}` : "/alterations";
       const method = editingId ? "PUT" : "POST";
-      const saved = await apiJson(path, { method, body: JSON.stringify(payload) });
+      await apiJson(path, { method, body: JSON.stringify(payload) });
 
-      // refresh list
       await loadWorkAll();
       resetForm();
     } catch (err) {
       saveError.textContent = err.message || "Request failed";
+    } finally {
+      setSaving(false);
     }
   }
 
-  function applyStatusTint(selectEl){
-    selectEl.style.background = statusTint(selectEl.value);
-  }
+  function applyStatusTint(selectEl){ selectEl.style.background = statusTint(selectEl.value); }
 
-  // UI events
-  addNewWorkBtn.addEventListener("click", () => {
-    window.scrollTo({ top: formCard.offsetTop - 20, behavior: "smooth" });
-  });
-
+  addNewWorkBtn.addEventListener("click", () => { window.scrollTo({ top: formCard.offsetTop - 20, behavior: "smooth" }); });
   statusInput.addEventListener("change", () => applyStatusTint(statusInput));
+  packedFlagInput.addEventListener("change", () => { if (packedFlagInput.checked) statusInput.value = "DONE"; applyStatusTint(statusInput); });
 
-  packedFlagInput.addEventListener("change", () => {
-    if (packedFlagInput.checked) {
-      statusInput.value = "DONE";
-    }
-    applyStatusTint(statusInput);
-  });
-
+  // Local preview only (does NOT affect backend payload size)
   imageInput.addEventListener("change", () => {
     const file = imageInput.files[0];
-    if (!file) {
-      imagePreview.innerHTML = "<span>Preview</span>";
-      return;
-    }
+    if (!file) { imagePreview.innerHTML = "<span>Preview</span>"; return; }
     const reader = new FileReader();
     reader.onload = (e) => {
       imagePreview.innerHTML = "";
@@ -599,7 +543,6 @@
 
   imagePreview.addEventListener("click", () => {
     const img = imagePreview.querySelector("img");
-    // if preview is local (data:) open it; else open stored URL
     if (img && img.src) openImageModal(img.src);
     else if (lastUploadedImageUrl) openImageModal(lastUploadedImageUrl);
   });
@@ -607,7 +550,6 @@
   workForm.addEventListener("submit", saveWork);
   formCancelBtn.addEventListener("click", resetForm);
 
-  // Init
   (async function init(){
     resetForm();
     try {
