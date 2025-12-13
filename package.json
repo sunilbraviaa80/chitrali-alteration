@@ -1,31 +1,19 @@
 {
-<<<<<<< HEAD
-  "name": "chitrali-alteration",
+  "name": "chitrali-alteration-api",
   "version": "1.0.0",
-  "description": "Chitrali Alteration Work Tracker",
-  "main": "server.js",
+  "description": "Backend API for Chitrali Alteration Tracker",
+  "type": "module",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js"
-  },
-  "engines": {
-    "node": ">=18 <23"
+    "start": "node index.js"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.8.0",
     "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.2",
-    "multer": "1.4.5-lts.1",
-=======
-  "name": "alteration-tracker",
-  "version": "1.0.0",
-  "main": "server.js",
-  "scripts": { "start": "node server.js" },
-  "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "multer": "^1.4.5",
->>>>>>> 16bbc7d (Fix backend start config and dependencies)
-    "sqlite3": "^5.1.6"
+    "express": "^4.19.0",
+    "multer": "^2.0.2",
+    "pg": "^8.11.0",
+    "sharp": "^0.33.5",
+    "streamifier": "^0.1.1"
   }
 }
