@@ -4,13 +4,18 @@ import { query } from "../db.js";
 
 const router = express.Router();
 
-// GET /alterations  – list all
+const toBool = (v) => v === true || v === "true" || v === 1 || v === "1";
+
+const normalizeStatus = (status) => {
+  const s = (status || "PENDING").toString().toUpperCase();
+  if (s === "DONE" || s === "IN_PROGRESS" || s === "PENDING") return s;
+  return "PENDING";
+};
+
+// GET /alterations
 router.get("/", async (req, res) => {
   try {
-    const result = await query(
-      "SELECT * FROM alterations ORDER BY id DESC",
-      []
-    );
+    const result = await query("SELECT * FROM alterations ORDER BY id DESC", []);
     res.json(result.rows);
   } catch (err) {
     console.error("GET /alterations error:", err);
@@ -18,7 +23,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// POST /alterations – create
+// POST /alterations (JSON only)
 router.post("/", async (req, res) => {
   const {
     billNumber,
@@ -29,17 +34,17 @@ router.post("/", async (req, res) => {
     timeDelivery,
     status,
     packed,
-    imageUrl,
+    imageUrl, // should come from /upload
   } = req.body;
 
   if (!billNumber || !tailorName || !itemName) {
-    return res
-      .status(400)
-      .json({ error: "billNumber, tailorName, itemName are required" });
+    return res.status(400).json({
+      error: "billNumber, tailorName, itemName are required",
+    });
   }
 
-  const packedValue =
-    packed === true || packed === "true" || packed === 1 || packed === "1";
+  const packedValue = toBool(packed);
+  const statusValue = packedValue ? "DONE" : normalizeStatus(status);
 
   try {
     const result = await query(
@@ -56,7 +61,7 @@ router.post("/", async (req, res) => {
         dateAssigned || null,
         dateDelivery || null,
         timeDelivery || null,
-        status || "PENDING",
+        statusValue,
         packedValue,
         imageUrl || null,
       ]
@@ -69,7 +74,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PUT /alterations/:id – full update
+// PUT /alterations/:id (JSON only)
 router.put("/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -85,8 +90,8 @@ router.put("/:id", async (req, res) => {
     imageUrl,
   } = req.body;
 
-  const packedValue =
-    packed === true || packed === "true" || packed === 1 || packed === "1";
+  const packedValue = toBool(packed);
+  const statusValue = packedValue ? "DONE" : normalizeStatus(status);
 
   try {
     const result = await query(
@@ -110,17 +115,14 @@ router.put("/:id", async (req, res) => {
         dateAssigned || null,
         dateDelivery || null,
         timeDelivery || null,
-        status || "PENDING",
+        statusValue,
         packedValue,
         imageUrl || null,
         id,
       ]
     );
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Record not found" });
-    }
-
+    if (result.rows.length === 0) return res.status(404).json({ error: "Record not found" });
     res.json(result.rows[0]);
   } catch (err) {
     console.error("PUT /alterations/:id error:", err);
@@ -128,5 +130,29 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// ⬅️ THIS is what Render is expecting:
+// PATCH /alterations/:id/status (status + packed toggle from table)
+router.patch("/:id/status", async (req, res) => {
+  const id = req.params.id;
+  const packedValue = toBool(req.body.packed);
+  const statusValue = packedValue ? "DONE" : normalizeStatus(req.body.status);
+
+  try {
+    const result = await query(
+      `UPDATE alterations
+         SET status = $1,
+             packed = $2,
+             updated_at = NOW()
+       WHERE id = $3
+       RETURNING *`,
+      [statusValue, packedValue, id]
+    );
+
+    if (result.rows.length === 0) return res.status(404).json({ error: "Record not found" });
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("PATCH /alterations/:id/status error:", err);
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
 export default router;
