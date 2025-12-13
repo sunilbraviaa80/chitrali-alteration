@@ -4,13 +4,14 @@ import { query } from "../db.js";
 
 const router = express.Router();
 
-// GET /alterations  – list all
+function toBool(v) {
+  return v === true || v === "true" || v === 1 || v === "1";
+}
+
+// GET /alterations – list all
 router.get("/", async (req, res) => {
   try {
-    const result = await query(
-      "SELECT * FROM alterations ORDER BY id DESC",
-      []
-    );
+    const result = await query("SELECT * FROM alterations ORDER BY id DESC", []);
     res.json(result.rows);
   } catch (err) {
     console.error("GET /alterations error:", err);
@@ -18,7 +19,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// POST /alterations – create
+// POST /alterations – create (JSON)
 router.post("/", async (req, res) => {
   const {
     billNumber,
@@ -30,6 +31,7 @@ router.post("/", async (req, res) => {
     status,
     packed,
     imageUrl,
+    notes
   } = req.body;
 
   if (!billNumber || !tailorName || !itemName) {
@@ -38,16 +40,16 @@ router.post("/", async (req, res) => {
       .json({ error: "billNumber, tailorName, itemName are required" });
   }
 
-  const packedValue =
-    packed === true || packed === "true" || packed === 1 || packed === "1";
+  const packedValue = toBool(packed);
+  const finalStatus = packedValue ? "DONE" : (status || "PENDING");
 
   try {
     const result = await query(
       `INSERT INTO alterations
         (bill_number, tailor_name, item_name,
          date_assigned, date_delivery, time_delivery,
-         status, packed, image_url)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+         status, packed, image_url, notes)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
        RETURNING *`,
       [
         billNumber,
@@ -56,9 +58,10 @@ router.post("/", async (req, res) => {
         dateAssigned || null,
         dateDelivery || null,
         timeDelivery || null,
-        status || "PENDING",
+        finalStatus,
         packedValue,
         imageUrl || null,
+        notes || null
       ]
     );
 
@@ -69,7 +72,8 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PUT /alterations/:id – full update
+// PUT /alterations/:id – full update (JSON)
+// image_url is NOT cleared if imageUrl is missing/empty
 router.put("/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -83,10 +87,16 @@ router.put("/:id", async (req, res) => {
     status,
     packed,
     imageUrl,
+    notes
   } = req.body;
 
-  const packedValue =
-    packed === true || packed === "true" || packed === 1 || packed === "1";
+  const packedValue = toBool(packed);
+  const finalStatus = packedValue ? "DONE" : (status || "PENDING");
+
+  // Treat empty string as null so COALESCE keeps old value
+  const imageUrlValue = (typeof imageUrl === "string" && imageUrl.trim() === "")
+    ? null
+    : (imageUrl ?? null);
 
   try {
     const result = await query(
@@ -99,9 +109,10 @@ router.put("/:id", async (req, res) => {
              time_delivery = $6,
              status        = $7,
              packed        = $8,
-             image_url     = $9,
+             image_url     = COALESCE($9, image_url),
+             notes         = $10,
              updated_at    = NOW()
-       WHERE id = $10
+       WHERE id = $11
        RETURNING *`,
       [
         billNumber,
@@ -110,10 +121,11 @@ router.put("/:id", async (req, res) => {
         dateAssigned || null,
         dateDelivery || null,
         timeDelivery || null,
-        status || "PENDING",
+        finalStatus,
         packedValue,
-        imageUrl || null,
-        id,
+        imageUrlValue,
+        notes || null,
+        id
       ]
     );
 
@@ -128,5 +140,4 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-// ⬅️ THIS is what Render is expecting:
 export default router;
