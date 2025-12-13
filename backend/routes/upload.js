@@ -6,46 +6,52 @@ import cloudinary from "../config/cloudinary.js";
 
 const router = express.Router();
 
-// ✅ memoryStorage so we can compress with sharp before upload
+// 🚫 Reject JSON uploads immediately
+router.use harmoniously = (req, res, next) => {
+  if (!req.is("multipart/form-data")) {
+    return res.status(415).json({
+      error: "Use multipart/form-data for /upload",
+    });
+  }
+  next();
+};
+
+// ✅ Memory storage so Sharp can compress
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 6 * 1024 * 1024 }, // 6MB max from client
+  limits: { fileSize: 6 * 1024 * 1024 }, // 6 MB max
 });
 
 router.post("/", upload.single("image"), async (req, res) => {
   try {
-    if (!req.file) return res.status(400).json({ error: "No image file uploaded" });
+    if (!req.file) {
+      return res.status(400).json({ error: "No image file uploaded" });
+    }
 
-    // ✅ Compress + resize (reduces payload & bandwidth)
+    // ✅ Compress & resize
     const optimized = await sharp(req.file.buffer)
-      .rotate() // respects EXIF orientation
+      .rotate()
       .resize({ width: 1200, withoutEnlargement: true })
       .jpeg({ quality: 75 })
       .toBuffer();
 
-    const streamUpload = () =>
+    const uploadToCloudinary = () =>
       new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
-          {
-            folder: "chitrali_alterations",
-            resource_type: "image",
-          },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
-          }
+          { folder: "chitrali_alterations" },
+          (err, result) => (err ? reject(err) : resolve(result))
         );
         streamifier.createReadStream(optimized).pipe(stream);
       });
 
-    const result = await streamUpload();
+    const result = await uploadToCloudinary();
 
     res.json({
       imageUrl: result.secure_url,
       publicId: result.public_id,
     });
   } catch (err) {
-    console.error("UPLOAD error:", err);
+    console.error("UPLOAD ERROR:", err);
     res.status(500).json({ error: "Upload failed" });
   }
 });
