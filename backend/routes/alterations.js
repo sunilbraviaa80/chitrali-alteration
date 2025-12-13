@@ -1,29 +1,27 @@
-// backend/routes/alterations.js
 import express from "express";
 import { query } from "../db.js";
 
 const router = express.Router();
 
-<<<<<<< HEAD
-function toBool(v) {
-  return v === true || v === "true" || v === 1 || v === "1";
-}
+/* ------------------ helpers ------------------ */
 
-// GET /alterations – list all
-=======
-const toBool = (v) => v === true || v === "true" || v === 1 || v === "1";
+const toBool = (v) =>
+  v === true || v === "true" || v === 1 || v === "1";
 
 const normalizeStatus = (status) => {
   const s = (status || "PENDING").toString().toUpperCase();
-  if (s === "DONE" || s === "IN_PROGRESS" || s === "PENDING") return s;
+  if (["DONE", "IN_PROGRESS", "PENDING"].includes(s)) return s;
   return "PENDING";
 };
 
-// GET /alterations
->>>>>>> edcb81ca66dcd526fe8d6dd7590e63b11aae3318
+/* ------------------ GET all ------------------ */
+
 router.get("/", async (req, res) => {
   try {
-    const result = await query("SELECT * FROM alterations ORDER BY id DESC", []);
+    const result = await query(
+      "SELECT * FROM alterations ORDER BY id DESC",
+      []
+    );
     res.json(result.rows);
   } catch (err) {
     console.error("GET /alterations error:", err);
@@ -31,11 +29,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-// POST /alterations – create (JSON)
-=======
-// POST /alterations (JSON only)
->>>>>>> edcb81ca66dcd526fe8d6dd7590e63b11aae3318
+/* ------------------ CREATE ------------------ */
+/* JSON only — imageUrl must come from upload API */
+
 router.post("/", async (req, res) => {
   const {
     billNumber,
@@ -46,12 +42,8 @@ router.post("/", async (req, res) => {
     timeDelivery,
     status,
     packed,
-<<<<<<< HEAD
     imageUrl,
-    notes
-=======
-    imageUrl, // should come from /upload
->>>>>>> edcb81ca66dcd526fe8d6dd7590e63b11aae3318
+    notes,
   } = req.body;
 
   if (!billNumber || !tailorName || !itemName) {
@@ -61,18 +53,16 @@ router.post("/", async (req, res) => {
   }
 
   const packedValue = toBool(packed);
-<<<<<<< HEAD
-  const finalStatus = packedValue ? "DONE" : (status || "PENDING");
-=======
-  const statusValue = packedValue ? "DONE" : normalizeStatus(status);
->>>>>>> edcb81ca66dcd526fe8d6dd7590e63b11aae3318
+  const statusValue = packedValue
+    ? "DONE"
+    : normalizeStatus(status);
 
   try {
     const result = await query(
       `INSERT INTO alterations
-        (bill_number, tailor_name, item_name,
-         date_assigned, date_delivery, time_delivery,
-         status, packed, image_url, notes)
+       (bill_number, tailor_name, item_name,
+        date_assigned, date_delivery, time_delivery,
+        status, packed, image_url, notes)
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
        RETURNING *`,
       [
@@ -82,14 +72,10 @@ router.post("/", async (req, res) => {
         dateAssigned || null,
         dateDelivery || null,
         timeDelivery || null,
-<<<<<<< HEAD
-        finalStatus,
-=======
         statusValue,
->>>>>>> edcb81ca66dcd526fe8d6dd7590e63b11aae3318
         packedValue,
         imageUrl || null,
-        notes || null
+        notes || null,
       ]
     );
 
@@ -100,12 +86,8 @@ router.post("/", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-// PUT /alterations/:id – full update (JSON)
-// image_url is NOT cleared if imageUrl is missing/empty
-=======
-// PUT /alterations/:id (JSON only)
->>>>>>> edcb81ca66dcd526fe8d6dd7590e63b11aae3318
+/* ------------------ UPDATE FULL ------------------ */
+
 router.put("/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -119,35 +101,33 @@ router.put("/:id", async (req, res) => {
     status,
     packed,
     imageUrl,
-    notes
+    notes,
   } = req.body;
 
   const packedValue = toBool(packed);
-<<<<<<< HEAD
-  const finalStatus = packedValue ? "DONE" : (status || "PENDING");
+  const statusValue = packedValue
+    ? "DONE"
+    : normalizeStatus(status);
 
-  // Treat empty string as null so COALESCE keeps old value
-  const imageUrlValue = (typeof imageUrl === "string" && imageUrl.trim() === "")
-    ? null
-    : (imageUrl ?? null);
-=======
-  const statusValue = packedValue ? "DONE" : normalizeStatus(status);
->>>>>>> edcb81ca66dcd526fe8d6dd7590e63b11aae3318
+  const imageUrlValue =
+    typeof imageUrl === "string" && imageUrl.trim() === ""
+      ? null
+      : imageUrl ?? null;
 
   try {
     const result = await query(
       `UPDATE alterations
-         SET bill_number   = $1,
-             tailor_name   = $2,
-             item_name     = $3,
-             date_assigned = $4,
-             date_delivery = $5,
-             time_delivery = $6,
-             status        = $7,
-             packed        = $8,
-             image_url     = COALESCE($9, image_url),
-             notes         = $10,
-             updated_at    = NOW()
+       SET bill_number   = $1,
+           tailor_name   = $2,
+           item_name     = $3,
+           date_assigned = $4,
+           date_delivery = $5,
+           time_delivery = $6,
+           status        = $7,
+           packed        = $8,
+           image_url     = COALESCE($9, image_url),
+           notes         = $10,
+           updated_at    = NOW()
        WHERE id = $11
        RETURNING *`,
       [
@@ -157,19 +137,18 @@ router.put("/:id", async (req, res) => {
         dateAssigned || null,
         dateDelivery || null,
         timeDelivery || null,
-<<<<<<< HEAD
-        finalStatus,
-=======
         statusValue,
->>>>>>> edcb81ca66dcd526fe8d6dd7590e63b11aae3318
         packedValue,
         imageUrlValue,
         notes || null,
-        id
+        id,
       ]
     );
 
-    if (result.rows.length === 0) return res.status(404).json({ error: "Record not found" });
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Record not found" });
+    }
+
     res.json(result.rows[0]);
   } catch (err) {
     console.error("PUT /alterations/:id error:", err);
@@ -177,26 +156,31 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-=======
-// PATCH /alterations/:id/status (status + packed toggle from table)
+/* ------------------ PATCH STATUS / PACKED ------------------ */
+
 router.patch("/:id/status", async (req, res) => {
   const id = req.params.id;
+
   const packedValue = toBool(req.body.packed);
-  const statusValue = packedValue ? "DONE" : normalizeStatus(req.body.status);
+  const statusValue = packedValue
+    ? "DONE"
+    : normalizeStatus(req.body.status);
 
   try {
     const result = await query(
       `UPDATE alterations
-         SET status = $1,
-             packed = $2,
-             updated_at = NOW()
+       SET status = $1,
+           packed = $2,
+           updated_at = NOW()
        WHERE id = $3
        RETURNING *`,
       [statusValue, packedValue, id]
     );
 
-    if (result.rows.length === 0) return res.status(404).json({ error: "Record not found" });
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Record not found" });
+    }
+
     res.json(result.rows[0]);
   } catch (err) {
     console.error("PATCH /alterations/:id/status error:", err);
@@ -204,5 +188,6 @@ router.patch("/:id/status", async (req, res) => {
   }
 });
 
->>>>>>> edcb81ca66dcd526fe8d6dd7590e63b11aae3318
+/* ------------------ EXPORT ------------------ */
+
 export default router;
