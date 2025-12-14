@@ -224,15 +224,13 @@
 
   let workItems = [];
   let editingId = null;
-  let lastUploadedImageUrl = null;   // Cloudinary URL ONLY
-  let localPreviewUrl = null;        // Object URL for local preview ONLY (never sent)
+  let lastUploadedImageUrl = null;
 
-  const addNewWorkBtn = document.getElementById("addNewWorkBtn");
-  const formCard = document.getElementById("formCard");
-  const formTitle = document.getElementById("formTitle");
+  // IMPORTANT: keep file separately, do NOT convert to base64
+  let selectedImageFile = null;
+  let selectedPreviewObjectUrl = null;
 
   const workForm = document.getElementById("workForm");
-  const workIdInput = document.getElementById("workId");
   const billNumberInput = document.getElementById("billNumber");
   const tailorSelect = document.getElementById("tailorSelect");
   const dateAssignedInput = document.getElementById("dateAssigned");
@@ -244,59 +242,19 @@
   const imageInput = document.getElementById("imageInput");
   const imagePreview = document.getElementById("imagePreview");
   const compressInfo = document.getElementById("compressInfo");
-  const notesInput = document.getElementById("notes");
-  const saveBtn = document.getElementById("saveBtn");
-  const formCancelBtn = document.getElementById("formCancelBtn");
   const saveError = document.getElementById("saveError");
-
-  const summaryText = document.getElementById("summaryText");
   const workTableBody = document.getElementById("workTableBody");
-
-  const imageModal = document.getElementById("imageModal");
-  const imageModalImg = document.getElementById("imageModalImg");
-  const imageModalClose = document.getElementById("imageModalClose");
-  const imageModalBackdrop = imageModal.querySelector(".image-modal-backdrop");
-
-  function openImageModal(src) {
-    if (!src) return;
-    imageModalImg.src = src;
-    imageModal.classList.add("visible");
-  }
-  function closeImageModal() {
-    imageModal.classList.remove("visible");
-    imageModalImg.src = "";
-  }
-  imageModalBackdrop.addEventListener("click", closeImageModal);
-  imageModalClose.addEventListener("click", closeImageModal);
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeImageModal(); });
-
-  function statusLabel(s){
-    return s==="IN_PROGRESS"?"In Progress":s==="DONE"?"Done":"Pending";
-  }
-  function statusTint(s){
-    if(s==="DONE") return "rgba(34, 197, 94, 0.18)";
-    if(s==="IN_PROGRESS") return "rgba(234, 179, 8, 0.18)";
-    return "rgba(148, 163, 184, 0.15)";
-  }
-  function formatDate(d){
-    if(!d) return "-";
-    const dt = new Date(d);
-    return isNaN(dt) ? d : dt.toLocaleDateString("en-IN");
-  }
-  function formatTime(t){ return t || "-"; }
-  function fmtBytes(n){
-    if (!Number.isFinite(n)) return "";
-    const kb = n/1024;
-    if (kb < 1024) return `${Math.round(kb)} KB`;
-    return `${(kb/1024).toFixed(2)} MB`;
-  }
+  const summaryText = document.getElementById("summaryText");
 
   async function apiJson(path, opts = {}) {
     const headers = Object.assign({ "Accept": "application/json" }, opts.headers || {});
     if (opts.body && !(opts.body instanceof FormData)) headers["Content-Type"] = "application/json";
     const res = await fetch(API_BASE + path, { ...opts, headers });
+
     const text = await res.text();
-    const data = text ? (() => { try { return JSON.parse(text); } catch { return text; } })() : null;
+    let data = null;
+    try { data = text ? JSON.parse(text) : null; } catch { data = text; }
+
     if (!res.ok) {
       const msg = (data && data.error) ? data.error : "Request failed";
       throw new Error(msg);
@@ -304,226 +262,41 @@
     return data;
   }
 
-  async function loadWorkAll() {
-    workItems = await apiJson("/alterations");
-    renderTable();
+  function statusTint(s){
+    if(s==="DONE") return "rgba(34, 197, 94, 0.18)";
+    if(s==="IN_PROGRESS") return "rgba(234, 179, 8, 0.18)";
+    return "rgba(148, 163, 184, 0.15)";
+  }
+  function applyStatusTint(el){ el.style.background = statusTint(el.value); }
+
+  function fmtBytes(n){
+    if (!Number.isFinite(n)) return "";
+    const kb = n/1024;
+    if (kb < 1024) return `${Math.round(kb)} KB`;
+    return `${(kb/1024).toFixed(2)} MB`;
   }
 
-  function renderSummary(){
-    const total = workItems.length;
-    const open = workItems.filter(w => w.status !== "DONE").length;
-    summaryText.textContent = `Total: ${total} | Open: ${open}`;
-  }
-
-  function renderTable(){
-    workTableBody.innerHTML = "";
-    if (!workItems.length) {
-      const tr = document.createElement("tr");
-      tr.className = "empty-row";
-      const td = document.createElement("td");
-      td.colSpan = 10;
-      td.textContent = "No alteration work found.";
-      tr.appendChild(td);
-      workTableBody.appendChild(tr);
-      renderSummary();
-      return;
-    }
-
-    workItems.forEach(w => {
-      const tr = document.createElement("tr");
-
-      const tdImg = document.createElement("td");
-      const wrap = document.createElement("div");
-      wrap.className = "thumb-wrapper";
-      if (w.image_url) {
-        const img = document.createElement("img");
-        img.src = w.image_url;
-        img.style.cursor = "pointer";
-        img.addEventListener("click", () => openImageModal(w.image_url));
-        wrap.appendChild(img);
-      } else {
-        wrap.innerHTML = "No<br/>Image";
-      }
-      tdImg.appendChild(wrap);
-      tr.appendChild(tdImg);
-
-      const tdBill = document.createElement("td"); tdBill.textContent = w.bill_number; tr.appendChild(tdBill);
-      const tdTailor = document.createElement("td"); tdTailor.textContent = w.tailor_name; tr.appendChild(tdTailor);
-      const tdItem = document.createElement("td"); tdItem.textContent = w.item_name; tr.appendChild(tdItem);
-      const tdAssigned = document.createElement("td"); tdAssigned.textContent = formatDate(w.date_assigned); tr.appendChild(tdAssigned);
-      const tdDelivery = document.createElement("td"); tdDelivery.textContent = formatDate(w.date_delivery); tr.appendChild(tdDelivery);
-      const tdTime = document.createElement("td"); tdTime.textContent = formatTime(w.time_delivery); tr.appendChild(tdTime);
-
-      const tdStatus = document.createElement("td");
-      const sel = document.createElement("select");
-      sel.className = "status-select";
-      ["PENDING","IN_PROGRESS","DONE"].forEach(val => {
-        const opt = document.createElement("option");
-        opt.value = val;
-        opt.textContent = statusLabel(val);
-        sel.appendChild(opt);
-      });
-      sel.value = w.status || "PENDING";
-      sel.style.background = statusTint(sel.value);
-      sel.onchange = async () => {
-        try {
-          const updated = await updateAlteration(w.id, { status: sel.value });
-          sel.style.background = statusTint(updated.status);
-        } catch (e) {
-          alert("Error updating status: " + e.message);
-          sel.value = w.status || "PENDING";
-          sel.style.background = statusTint(sel.value);
-        }
-      };
-      tdStatus.appendChild(sel);
-      tr.appendChild(tdStatus);
-
-      const tdPacked = document.createElement("td");
-      const chk = document.createElement("input");
-      chk.type = "checkbox";
-      chk.checked = !!w.packed;
-      chk.onchange = async () => {
-        try {
-          const patch = { packed: chk.checked };
-          if (chk.checked) patch.status = "DONE";
-          const updated = await updateAlteration(w.id, patch);
-          w.status = updated.status;
-          w.packed = updated.packed;
-          renderTable();
-        } catch (e) {
-          alert("Error updating packed: " + e.message);
-          chk.checked = !!w.packed;
-        }
-      };
-      tdPacked.appendChild(chk);
-      tr.appendChild(tdPacked);
-
-      const tdActions = document.createElement("td");
-      const editBtn = document.createElement("button");
-      editBtn.className = "btn btn-link btn-sm";
-      editBtn.textContent = "Edit";
-      editBtn.onclick = () => loadForEdit(w);
-      tdActions.appendChild(editBtn);
-      tr.appendChild(tdActions);
-
-      workTableBody.appendChild(tr);
-    });
-
-    renderSummary();
-  }
-
-  async function updateAlteration(id, patch) {
-    const existing = workItems.find(x => x.id === id);
-    if (!existing) throw new Error("Record not found");
-
-    const payload = {
-      billNumber: existing.bill_number,
-      tailorName: existing.tailor_name,
-      itemName: existing.item_name,
-      dateAssigned: existing.date_assigned,
-      dateDelivery: existing.date_delivery,
-      timeDelivery: existing.time_delivery,
-      status: existing.status || "PENDING",
-      packed: !!existing.packed,
-      imageUrl: existing.image_url || null
-    };
-
-    if (patch.status !== undefined) payload.status = patch.status;
-    if (patch.packed !== undefined) payload.packed = patch.packed;
-
-    const updated = await apiJson(`/alterations/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(payload)
-    });
-
-    const idx = workItems.findIndex(x => x.id === id);
-    if (idx !== -1) workItems[idx] = updated;
-    return updated;
-  }
-
-  function cleanupLocalPreviewUrl(){
-    if (localPreviewUrl) {
-      try { URL.revokeObjectURL(localPreviewUrl); } catch {}
-      localPreviewUrl = null;
-    }
-  }
-
-  function resetForm(){
-    workForm.reset();
-    workIdInput.value = "";
-    editingId = null;
-    lastUploadedImageUrl = null;
-    cleanupLocalPreviewUrl();
-    formTitle.textContent = "Add New Alteration Work";
-    saveBtn.textContent = "Add Work";
-    imagePreview.innerHTML = "<span>Preview</span>";
-    imageInput.value = "";
-    compressInfo.textContent = "";
-    saveError.textContent = "";
-    applyStatusTint(statusInput);
-  }
-
-  function loadForEdit(w){
-    editingId = w.id;
-    workIdInput.value = w.id;
-    billNumberInput.value = w.bill_number || "";
-    tailorSelect.value = w.tailor_name || "";
-    itemNameInput.value = w.item_name || "";
-    dateAssignedInput.value = w.date_assigned ? String(w.date_assigned).slice(0,10) : "";
-    dateDeliveryInput.value = w.date_delivery ? String(w.date_delivery).slice(0,10) : "";
-    timeDeliveryInput.value = w.time_delivery || "";
-    statusInput.value = w.status || "PENDING";
-    packedFlagInput.checked = !!w.packed;
-    notesInput.value = w.notes || "";
-
-    lastUploadedImageUrl = w.image_url || null;
-    cleanupLocalPreviewUrl();
-
-    if (w.image_url) {
-      imagePreview.innerHTML = "";
-      const img = document.createElement("img");
-      img.src = w.image_url;
-      imagePreview.appendChild(img);
-    } else {
-      imagePreview.innerHTML = "<span>Preview</span>";
-    }
-
-    formTitle.textContent = "Edit Alteration Work";
-    saveBtn.textContent = "Update Work";
-    applyStatusTint(statusInput);
-    compressInfo.textContent = "";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  // ---------- Frontend image compression ----------
+  // ---------- Frontend compression (no base64) ----------
   async function fileToBitmap(file) {
     if ("createImageBitmap" in window) {
       try { return await createImageBitmap(file, { imageOrientation: "from-image" }); }
       catch { return await createImageBitmap(file); }
     }
+    // fallback: createImageBitmap exists on most modern browsers; this fallback is rare
+    const img = new Image();
     const url = URL.createObjectURL(file);
-    try {
-      const img = await new Promise((resolve, reject) => {
-        const i = new Image();
-        i.onload = () => resolve(i);
-        i.onerror = reject;
-        i.src = url;
-      });
-      return img;
-    } finally {
-      try { URL.revokeObjectURL(url); } catch {}
-    }
+    await new Promise((res, rej) => { img.onload = res; img.onerror = rej; img.src = url; });
+    URL.revokeObjectURL(url);
+    return img;
   }
 
   function drawToCanvas(bitmap, maxW = 1280, maxH = 1280) {
-    const w = bitmap.width;
-    const h = bitmap.height;
+    const w = bitmap.width, h = bitmap.height;
     const scale = Math.min(1, maxW / w, maxH / h);
     const outW = Math.max(1, Math.round(w * scale));
     const outH = Math.max(1, Math.round(h * scale));
     const canvas = document.createElement("canvas");
-    canvas.width = outW;
-    canvas.height = outH;
+    canvas.width = outW; canvas.height = outH;
     const ctx = canvas.getContext("2d", { alpha: false });
     ctx.imageSmoothingEnabled = true;
     ctx.imageSmoothingQuality = "high";
@@ -532,9 +305,7 @@
   }
 
   function canvasToBlob(canvas, quality) {
-    return new Promise((resolve) => {
-      canvas.toBlob((blob) => resolve(blob), "image/jpeg", quality);
-    });
+    return new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", quality));
   }
 
   async function compressImageFile(file, {
@@ -560,19 +331,57 @@
     return { blob, filename: safeName, qualityUsed: quality };
   }
 
-  async function uploadImageIfAny() {
-    if (imageInput.files.length === 0) return lastUploadedImageUrl;
+  // ---------- Image preview without base64 ----------
+  function setPreviewFromFile(file) {
+    // cleanup old object URL
+    if (selectedPreviewObjectUrl) URL.revokeObjectURL(selectedPreviewObjectUrl);
+    selectedPreviewObjectUrl = URL.createObjectURL(file);
 
-    const original = imageInput.files[0];
-    const { blob, filename } = await compressImageFile(original, {
-      maxW: 1280, maxH: 1280,
-      targetBytes: 900 * 1024,
-      startQuality: 0.85, minQuality: 0.55
+    imagePreview.innerHTML = "";
+    const img = document.createElement("img");
+    img.src = selectedPreviewObjectUrl;
+    imagePreview.appendChild(img);
+  }
+
+  imageInput.addEventListener("change", async () => {
+    saveError.textContent = "";
+    compressInfo.textContent = "";
+
+    const file = imageInput.files && imageInput.files[0];
+    selectedImageFile = file || null;
+
+    if (!file) {
+      imagePreview.innerHTML = "<span>Preview</span>";
+      if (selectedPreviewObjectUrl) URL.revokeObjectURL(selectedPreviewObjectUrl);
+      selectedPreviewObjectUrl = null;
+      return;
+    }
+
+    setPreviewFromFile(file);
+
+    try {
+      const { blob } = await compressImageFile(file, { targetBytes: 900 * 1024 });
+      compressInfo.textContent = `Will compress before upload: ${fmtBytes(file.size)} → ~${fmtBytes(blob.size)}`;
+    } catch {
+      // ignore
+    }
+  });
+
+  async function uploadImageIfAny() {
+    // If user didn't pick a new file, keep existing image for edit
+    if (!selectedImageFile) return lastUploadedImageUrl;
+
+    // compress first for best UX
+    const { blob, filename } = await compressImageFile(selectedImageFile, {
+      maxW: 1280,
+      maxH: 1280,
+      targetBytes: 900 * 1024
     });
 
     const fd = new FormData();
     fd.append("image", blob, filename);
 
+    // MUST see this request in DevTools network
     const res = await fetch(API_BASE + "/upload", { method: "POST", body: fd });
     const text = await res.text();
     let data = null;
@@ -582,12 +391,14 @@
       const msg = (data && data.error) ? data.error : "Image upload failed";
       throw new Error(msg);
     }
-    if (!data || !data.imageUrl) throw new Error("Upload did not return imageUrl");
+
+    if (!data?.imageUrl) throw new Error("Upload did not return imageUrl");
 
     lastUploadedImageUrl = data.imageUrl;
     return data.imageUrl;
   }
 
+  // ---------- Save work (JSON only) ----------
   async function saveWork(e){
     e.preventDefault();
     saveError.textContent = "";
@@ -595,7 +406,6 @@
     const bill = billNumberInput.value.trim();
     const tailor = tailorSelect.value;
     const item = itemNameInput.value.trim();
-
     if (!bill || !tailor || !item) {
       saveError.textContent = "Bill number, tailor name and item name are required.";
       return;
@@ -605,16 +415,10 @@
     applyStatusTint(statusInput);
 
     try {
+      // 1) upload image (multipart)
       const imageUrl = await uploadImageIfAny();
 
-      // Safety: never send base64/blob URL to backend JSON
-      if (typeof imageUrl === "string" && imageUrl.startsWith("data:image/")) {
-        throw new Error("Do not send base64 images. Please re-select the image and try again.");
-      }
-      if (typeof imageUrl === "string" && imageUrl.startsWith("blob:")) {
-        throw new Error("Internal error: blob URL detected. Please re-select the image and try again.");
-      }
-
+      // 2) send only Cloudinary URL in JSON (tiny payload)
       const payload = {
         billNumber: bill,
         tailorName: tailor,
@@ -623,75 +427,36 @@
         dateDelivery: dateDeliveryInput.value || null,
         timeDelivery: timeDeliveryInput.value || null,
         status: statusInput.value || "PENDING",
-        packed: packedFlagInput.checked,
+        packed: !!packedFlagInput.checked,
         imageUrl: imageUrl || null
       };
+
+      // HARD GUARD: never allow base64 into /alterations
+      if (payload.imageUrl && String(payload.imageUrl).startsWith("data:image/")) {
+        throw new Error("Do not send base64 images. Image must upload via /upload first.");
+      }
 
       const path = editingId ? `/alterations/${editingId}` : "/alterations";
       const method = editingId ? "PUT" : "POST";
       await apiJson(path, { method, body: JSON.stringify(payload) });
 
-      await loadWorkAll();
-      resetForm();
+      // Clear file selection after save
+      selectedImageFile = null;
+      if (selectedPreviewObjectUrl) URL.revokeObjectURL(selectedPreviewObjectUrl);
+      selectedPreviewObjectUrl = null;
+      imageInput.value = "";
+      compressInfo.textContent = "";
+
+      // reload list (keep your existing load function if you have it)
+      // await loadWorkAll();
+      location.reload();
     } catch (err) {
       saveError.textContent = err.message || "Request failed";
     }
   }
 
-  function applyStatusTint(selectEl){ selectEl.style.background = statusTint(selectEl.value); }
-
-  addNewWorkBtn.addEventListener("click", () => {
-    window.scrollTo({ top: formCard.offsetTop - 20, behavior: "smooth" });
-  });
-
-  statusInput.addEventListener("change", () => applyStatusTint(statusInput));
-
-  packedFlagInput.addEventListener("change", () => {
-    if (packedFlagInput.checked) statusInput.value = "DONE";
-    applyStatusTint(statusInput);
-  });
-
-  // ✅ IMPORTANT FIX: Preview using Object URL (NO base64)
-  imageInput.addEventListener("change", async () => {
-    const file = imageInput.files[0];
-    compressInfo.textContent = "";
-    cleanupLocalPreviewUrl();
-
-    if (!file) {
-      imagePreview.innerHTML = "<span>Preview</span>";
-      return;
-    }
-
-    localPreviewUrl = URL.createObjectURL(file);
-    imagePreview.innerHTML = "";
-    const img = document.createElement("img");
-    img.src = localPreviewUrl;
-    imagePreview.appendChild(img);
-
-    try {
-      const { blob } = await compressImageFile(file, { targetBytes: 900 * 1024 });
-      compressInfo.textContent = `Image will be compressed: ${fmtBytes(file.size)} → ~${fmtBytes(blob.size)}`;
-    } catch {}
-  });
-
-  imagePreview.addEventListener("click", () => {
-    if (localPreviewUrl) openImageModal(localPreviewUrl);
-    else if (lastUploadedImageUrl) openImageModal(lastUploadedImageUrl);
-  });
-
   workForm.addEventListener("submit", saveWork);
-  formCancelBtn.addEventListener("click", resetForm);
-
-  (async function init(){
-    resetForm();
-    try {
-      await apiJson("/health");
-      await loadWorkAll();
-    } catch (e) {
-      summaryText.textContent = "Backend not reachable. Check API_BASE / Render status.";
-      console.error(e);
-    }
-  })();
 </script>
 </body>
 </html>
+
