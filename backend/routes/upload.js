@@ -10,6 +10,8 @@ const router = express.Router();
 // ✅ memory storage so Sharp can process image before Cloudinary upload
 const upload = multer({
   storage: multer.memoryStorage(),
+  limits: { fileSize: 20 * 1024 * 1024 }, // ✅ 20MB max
+});
 
   // ✅ Increase input limit (phone camera photos are often 8–12MB)
   // You can set 15MB if needed:
