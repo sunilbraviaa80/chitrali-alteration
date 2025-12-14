@@ -1,15 +1,20 @@
+// backend/routes/alterations.js
 import express from "express";
 import { query } from "../db.js";
 
 const router = express.Router();
 
-const normalizePacked = (packed) =>
-  packed === true || packed === "true" || packed === 1 || packed === "1";
+function rejectBase64(imageUrl, res) {
+  if (imageUrl && String(imageUrl).startsWith("data:image/")) {
+    res.status(413).json({
+      error: "Do not send base64 images. Upload via /upload first.",
+    });
+    return true;
+  }
+  return false;
+}
 
-const isBase64Image = (v) =>
-  typeof v === "string" && v.startsWith("data:image/");
-
-// GET /alterations  – list all
+// GET /alterations – list all
 router.get("/", async (req, res) => {
   try {
     const result = await query("SELECT * FROM alterations ORDER BY id DESC", []);
@@ -20,7 +25,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// POST /alterations – create
+// POST /alterations – create (JSON only)
 router.post("/", async (req, res) => {
   const {
     billNumber,
@@ -32,43 +37,37 @@ router.post("/", async (req, res) => {
     status,
     packed,
     imageUrl,
-    notes,
   } = req.body;
 
-  // 🚫 Block base64 images (prevents PayloadTooLarge permanently)
-  if (isBase64Image(imageUrl)) {
-    return res.status(413).json({
-      error: "Do not send base64 images. Upload via /upload first and send only imageUrl.",
+  if (!billNumber || !tailorName || !itemName) {
+    return res.status(400).json({
+      error: "billNumber, tailorName, itemName are required",
     });
   }
 
-  if (!billNumber || !tailorName || !itemName) {
-    return res
-      .status(400)
-      .json({ error: "billNumber, tailorName, itemName are required" });
-  }
+  if (rejectBase64(imageUrl, res)) return;
 
-  const packedValue = normalizePacked(packed);
+  const packedValue =
+    packed === true || packed === "true" || packed === 1 || packed === "1";
 
   try {
     const result = await query(
       `INSERT INTO alterations
         (bill_number, tailor_name, item_name,
          date_assigned, date_delivery, time_delivery,
-         status, packed, image_url, notes)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+         status, packed, image_url)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
        RETURNING *`,
       [
-        String(billNumber).trim(),
-        String(tailorName).trim(),
-        String(itemName).trim(),
+        billNumber,
+        tailorName,
+        itemName,
         dateAssigned || null,
         dateDelivery || null,
         timeDelivery || null,
         status || "PENDING",
         packedValue,
         imageUrl || null,
-        notes || null,
       ]
     );
 
@@ -79,7 +78,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-// PUT /alterations/:id – full update (frontend uses this)
+// PUT /alterations/:id – full update (JSON only)
 router.put("/:id", async (req, res) => {
   const id = req.params.id;
 
@@ -93,23 +92,12 @@ router.put("/:id", async (req, res) => {
     status,
     packed,
     imageUrl,
-    notes,
   } = req.body;
 
-  // 🚫 Block base64 images
-  if (isBase64Image(imageUrl)) {
-    return res.status(413).json({
-      error: "Do not send base64 images. Upload via /upload first and send only imageUrl.",
-    });
-  }
+  if (rejectBase64(imageUrl, res)) return;
 
-  if (!billNumber || !tailorName || !itemName) {
-    return res
-      .status(400)
-      .json({ error: "billNumber, tailorName, itemName are required" });
-  }
-
-  const packedValue = normalizePacked(packed);
+  const packedValue =
+    packed === true || packed === "true" || packed === 1 || packed === "1";
 
   try {
     const result = await query(
@@ -123,21 +111,19 @@ router.put("/:id", async (req, res) => {
              status        = $7,
              packed        = $8,
              image_url     = $9,
-             notes         = $10,
              updated_at    = NOW()
-       WHERE id = $11
+       WHERE id = $10
        RETURNING *`,
       [
-        String(billNumber).trim(),
-        String(tailorName).trim(),
-        String(itemName).trim(),
+        billNumber,
+        tailorName,
+        itemName,
         dateAssigned || null,
         dateDelivery || null,
         timeDelivery || null,
         status || "PENDING",
         packedValue,
         imageUrl || null,
-        notes || null,
         id,
       ]
     );
