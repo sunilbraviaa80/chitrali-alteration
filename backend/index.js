@@ -7,23 +7,23 @@ const app = express();
 
 app.use(cors());
 
-// 🔒 JSON must stay SMALL (no images here)
-app.use(express.json({ limit: "1mb" }));
-app.use(express.urlencoded({ extended: true, limit: "1mb" }));
+// ✅ Increase JSON limits (safety net). Images should still NOT be sent in JSON.
+app.use(express.json({ limit: "20mb" }));
+app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 
 app.get("/health", (req, res) => res.json({ status: "ok" }));
 
-// ✅ ONLY multipart uploads here
+// ✅ multipart route
 app.use("/upload", uploadRouter);
 
-// ✅ CRUD = JSON only
+// ✅ JSON CRUD
 app.use("/alterations", alterationsRouter);
 
-// 🔥 Friendly error for mistakes
+// ✅ 413 handler (covers JSON)
 app.use((err, req, res, next) => {
   if (err?.type === "entity.too.large") {
     return res.status(413).json({
-      error: "Payload too large. Upload image via /upload (multipart/form-data), not JSON.",
+      error: "Payload too large. Please upload the image via /upload (multipart/form-data).",
     });
   }
   next(err);
