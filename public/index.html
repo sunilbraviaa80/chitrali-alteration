@@ -9,14 +9,7 @@
     * { box-sizing: border-box; }
     body { margin: 0; background: #f3f4fb; color: #111827; font-size: 15px; }
     .page { max-width: 1200px; margin: 0 auto; padding: 1.2rem 0.9rem 2.5rem; }
-
-    header {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1.25rem;
-    }
+    header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
     .brand-left { display: flex; align-items: center; }
     .brand-logo { height: 40px; max-width: 160px; object-fit: contain; display: block; }
     .brand-text { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-width: 0; }
@@ -24,12 +17,7 @@
     .brand-subtitle { font-size: 0.78rem; color: #6b7280; line-height: 1.2; }
     .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end; }
 
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center;
-      padding: 0.45rem 1.1rem; border-radius: 999px; border: none;
-      font-size: 0.9rem; cursor: pointer; white-space: nowrap;
-      transition: box-shadow 0.15s, transform 0.05s, background 0.15s, color 0.15s;
-    }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.45rem 1.1rem; border-radius: 999px; border: none; font-size: 0.9rem; cursor: pointer; white-space: nowrap; transition: box-shadow 0.15s, transform 0.05s, background 0.15s, color 0.15s; }
     .btn-primary { background: #2563eb; color: #ffffff; }
     .btn-primary:hover { box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35); transform: translateY(-1px); }
     .btn-secondary { background: #e5e7eb; color: #111827; }
@@ -41,16 +29,10 @@
     .card-title { font-size: 0.98rem; font-weight: 600; margin-bottom: 0.9rem; }
 
     label { font-size: 0.8rem; color: #4b5563; display: block; margin-bottom: 0.3rem; }
-    input[type="text"], input[type="date"], input[type="time"], select {
-      width: 100%; padding: 0.45rem 0.6rem; border-radius: 0.5rem;
-      border: 1px solid #d1d5db; font-size: 0.85rem; background: #f9fafb; outline: none;
-    }
+    input[type="text"], input[type="date"], input[type="time"], select { width: 100%; padding: 0.45rem 0.6rem; border-radius: 0.5rem; border: 1px solid #d1d5db; font-size: 0.85rem; background: #f9fafb; outline: none; }
     input:focus, select:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12); }
     input[type="file"] { font-size: 0.8rem; }
-    textarea {
-      width: 100%; min-height: 80px; resize: vertical; border-radius: 0.5rem;
-      border: 1px solid #d1d5db; padding: 0.45rem 0.6rem; font-size: 0.85rem; background: #f9fafb; outline: none;
-    }
+    textarea { width: 100%; min-height: 80px; resize: vertical; border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.45rem 0.6rem; font-size: 0.85rem; background: #f9fafb; outline: none; }
     textarea:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12); }
 
     .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); column-gap: 1.25rem; row-gap: 1.1rem; }
@@ -64,12 +46,7 @@
     tbody tr:hover { background: #f3f4ff; }
     .empty-row td { text-align: center; color: #9ca3af; padding: 1rem 0.5rem; font-size: 0.85rem; }
 
-    .thumb-wrapper {
-      width: 56px; height: 56px; border-radius: 0.6rem;
-      background: #f3f4f6; border: 1px solid #e5e7eb; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem; color: #9ca3af;
-    }
+    .thumb-wrapper { width: 56px; height: 56px; border-radius: 0.6rem; background: #f3f4f6; border: 1px solid #e5e7eb; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #9ca3af; }
     .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; }
     .badge { display: inline-block; padding: 0.12rem 0.55rem; border-radius: 999px; font-size: 0.72rem; background: #e5e7eb; color: #374151; margin-right: 0.4rem; }
 
@@ -231,6 +208,11 @@
 
   let workItems = [];
   let editingId = null;
+
+  // Local preview only (base64) — NEVER send to backend
+  let previewDataUrl = null;
+
+  // DB-safe URL only (Cloudinary)
   let lastUploadedImageUrl = null;
 
   const addNewWorkBtn = document.getElementById("addNewWorkBtn");
@@ -451,6 +433,7 @@
     workForm.reset();
     workIdInput.value = "";
     editingId = null;
+    previewDataUrl = null;
     lastUploadedImageUrl = null;
     formTitle.textContent = "Add New Alteration Work";
     saveBtn.textContent = "Add Work";
@@ -473,7 +456,10 @@
     statusInput.value = w.status || "PENDING";
     packedFlagInput.checked = !!w.packed;
     notesInput.value = w.notes || "";
+
+    // ✅ DB-safe only:
     lastUploadedImageUrl = w.image_url || null;
+    previewDataUrl = null;
 
     if (w.image_url) {
       imagePreview.innerHTML = "";
@@ -491,7 +477,7 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  // ---------- Frontend image compression ----------
+  // ---------- Frontend compression ----------
   async function fileToBitmap(file) {
     if ("createImageBitmap" in window) {
       try { return await createImageBitmap(file, { imageOrientation: "from-image" }); }
@@ -561,18 +547,12 @@
     if (imageInput.files.length === 0) return lastUploadedImageUrl;
 
     const original = imageInput.files[0];
-
-    const { blob, filename } = await compressImageFile(original, {
-      maxW: 1280,
-      maxH: 1280,
-      targetBytes: 900 * 1024,
-      startQuality: 0.85,
-      minQuality: 0.55
-    });
+    const { blob, filename } = await compressImageFile(original, { targetBytes: 900 * 1024 });
 
     const fd = new FormData();
     fd.append("image", blob, filename);
 
+    // NOTE: route is mounted at /upload, so POST to /upload (not /upload/upload)
     const res = await fetch(API_BASE + "/upload", { method: "POST", body: fd });
     const text = await res.text();
     let data = null;
@@ -583,6 +563,8 @@
       throw new Error(msg);
     }
     if (!data || !data.imageUrl) throw new Error("Upload did not return imageUrl");
+
+    lastUploadedImageUrl = data.imageUrl; // Cloudinary URL
     return data.imageUrl;
   }
 
@@ -604,6 +586,11 @@
 
     try {
       const imageUrl = await uploadImageIfAny();
+
+      // Absolute safety: never send base64
+      if (imageUrl && String(imageUrl).startsWith("data:image/")) {
+        throw new Error("Do not send base64 images. Upload via /upload first.");
+      }
 
       const payload = {
         billNumber: bill,
@@ -644,20 +631,25 @@
   imageInput.addEventListener("change", async () => {
     const file = imageInput.files[0];
     compressInfo.textContent = "";
+    previewDataUrl = null;
+
     if (!file) {
       imagePreview.innerHTML = "<span>Preview</span>";
       return;
     }
 
+    // Preview (base64 local only)
     const reader = new FileReader();
     reader.onload = (e) => {
+      previewDataUrl = e.target.result;
       imagePreview.innerHTML = "";
       const img = document.createElement("img");
-      img.src = e.target.result;
+      img.src = previewDataUrl;
       imagePreview.appendChild(img);
     };
     reader.readAsDataURL(file);
 
+    // Compression info
     try {
       const { blob } = await compressImageFile(file, { targetBytes: 900 * 1024 });
       compressInfo.textContent = `Image will be compressed: ${fmtBytes(file.size)} → ~${fmtBytes(blob.size)}`;
@@ -665,8 +657,7 @@
   });
 
   imagePreview.addEventListener("click", () => {
-    const img = imagePreview.querySelector("img");
-    if (img && img.src) openImageModal(img.src);
+    if (previewDataUrl) openImageModal(previewDataUrl);
     else if (lastUploadedImageUrl) openImageModal(lastUploadedImageUrl);
   });
 
