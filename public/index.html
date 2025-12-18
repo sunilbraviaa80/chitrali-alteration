@@ -9,7 +9,6 @@
     * { box-sizing: border-box; }
     body { margin: 0; background: #f3f4fb; color: #111827; font-size: 15px; }
     .page { max-width: 1200px; margin: 0 auto; padding: 1.2rem 0.9rem 2.5rem; }
-
     header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
     .brand-left { display: flex; align-items: center; }
     .brand-logo { height: 40px; max-width: 160px; object-fit: contain; display: block; }
@@ -17,7 +16,6 @@
     .brand-title { font-size: 1.15rem; font-weight: 600; color: #111827; line-height: 1.2; }
     .brand-subtitle { font-size: 0.78rem; color: #6b7280; line-height: 1.2; }
     .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end; }
-
     .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.45rem 1.1rem; border-radius: 999px; border: none;
       font-size: 0.9rem; cursor: pointer; white-space: nowrap; transition: box-shadow 0.15s, transform 0.05s, background 0.15s, color 0.15s; }
     .btn-primary { background: #2563eb; color: #ffffff; }
@@ -26,10 +24,8 @@
     .btn-secondary:hover { background: #d1d5db; }
     .btn-sm { padding: 0.25rem 0.7rem; font-size: 0.8rem; }
     .btn-link { background: transparent; color: #2563eb; border: none; padding: 0; }
-
     .card { background: #ffffff; border-radius: 0.75rem; padding: 1.25rem 1.5rem; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06); margin-bottom: 1.1rem; }
     .card-title { font-size: 0.98rem; font-weight: 600; margin-bottom: 0.9rem; }
-
     label { font-size: 0.8rem; color: #4b5563; display: block; margin-bottom: 0.3rem; }
     input[type="text"], input[type="date"], input[type="time"], select {
       width: 100%; padding: 0.45rem 0.6rem; border-radius: 0.5rem; border: 1px solid #d1d5db; font-size: 0.85rem; background: #f9fafb; outline: none;
@@ -40,34 +36,26 @@
       width: 100%; min-height: 80px; resize: vertical; border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.45rem 0.6rem; font-size: 0.85rem; background: #f9fafb; outline: none;
     }
     textarea:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12); }
-
     .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); column-gap: 1.25rem; row-gap: 1.1rem; }
     .full-span { grid-column: 1 / -1; }
     .section-break { margin-top: 0.5rem; padding-top: 0.6rem; border-top: 1px dashed #e5e7eb; }
-
     table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
     thead { background: #f9fafb; }
     th, td { padding: 0.55rem 0.6rem; border-bottom: 1px solid #e5e7eb; text-align: left; vertical-align: middle; }
     th { font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.03em; }
     tbody tr:hover { background: #f3f4ff; }
     .empty-row td { text-align: center; color: #9ca3af; padding: 1rem 0.5rem; font-size: 0.85rem; }
-
-    .thumb-wrapper {
-      width: 56px; height: 56px; border-radius: 0.6rem; background: #f3f4f6; border: 1px solid #e5e7eb; overflow: hidden;
-      display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #9ca3af;
-    }
+    .thumb-wrapper { width: 56px; height: 56px; border-radius: 0.6rem; background: #f3f4f6; border: 1px solid #e5e7eb; overflow: hidden;
+      display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #9ca3af; }
     .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; }
     .badge { display: inline-block; padding: 0.12rem 0.55rem; border-radius: 999px; font-size: 0.72rem; background: #e5e7eb; color: #374151; margin-right: 0.4rem; }
-
     .status-select { font-size: .78rem; border-radius: 999px; padding: .28rem .55rem; border: 1px solid #e5e7eb; background: #fff; }
-
     .image-modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 9999; }
     .image-modal.visible { display: flex; }
     .image-modal-backdrop { position: absolute; inset: 0; background: rgba(15, 23, 42, 0.85); }
     .image-modal-inner { position: relative; max-width: 95vw; max-height: 90vh; z-index: 1; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); border-radius: 0.75rem; overflow: hidden; background: #000; }
     .image-modal-inner img { display: block; max-width: 100%; max-height: 90vh; object-fit: contain; }
     .image-modal-close { position: absolute; top: 0.3rem; right: 0.8rem; color: #f9fafb; font-size: 1.6rem; cursor: pointer; z-index: 2; }
-
     @media (max-width: 640px) {
       body { font-size: 14px; }
       .page { padding: 1rem 0.7rem 2rem; }
@@ -77,8 +65,7 @@
       .brand-text { width: 100%; align-items: center; text-align: center; }
       .header-actions { width: 100%; justify-content: flex-start; }
       .form-grid { grid-template-columns: 1fr; }
-      th:nth-child(5), td:nth-child(5),
-      th:nth-child(7), td:nth-child(7) { display: none; }
+      th:nth-child(5), td:nth-child(5), th:nth-child(7), td:nth-child(7) { display: none; }
     }
   </style>
 </head>
@@ -103,14 +90,8 @@
     <form id="workForm">
       <input type="hidden" id="workId" />
       <div class="form-grid">
-        <div>
-          <label for="billNumber">Bill Number *</label>
-          <input id="billNumber" required />
-        </div>
-        <div>
-          <label for="itemName">Item Name *</label>
-          <input id="itemName" required />
-        </div>
+        <div><label for="billNumber">Bill Number *</label><input id="billNumber" required /></div>
+        <div><label for="itemName">Item Name *</label><input id="itemName" required /></div>
         <div>
           <label for="tailorSelect">Tailor Name *</label>
           <select id="tailorSelect" required>
@@ -130,18 +111,9 @@
           </select>
         </div>
 
-        <div>
-          <label for="dateAssigned">Date Assigned *</label>
-          <input type="date" id="dateAssigned" required />
-        </div>
-        <div>
-          <label for="dateDelivery">Date of Delivery *</label>
-          <input type="date" id="dateDelivery" required />
-        </div>
-        <div>
-          <label for="timeDelivery">Time of Delivery</label>
-          <input type="time" id="timeDelivery" />
-        </div>
+        <div><label for="dateAssigned">Date Assigned *</label><input type="date" id="dateAssigned" required /></div>
+        <div><label for="dateDelivery">Date of Delivery *</label><input type="date" id="dateDelivery" required /></div>
+        <div><label for="timeDelivery">Time of Delivery</label><input type="time" id="timeDelivery" /></div>
         <div>
           <label for="packedFlag">Packed</label>
           <div style="display:flex;align-items:center;gap:.4rem;margin-top:.3rem;">
@@ -154,7 +126,7 @@
           <label for="imageInput">Item Image (camera / gallery)</label>
           <input type="file" id="imageInput" accept="image/*" capture="environment" />
           <small style="display:block;margin-top:.25rem;color:#6b7280;">
-            Large photos will be uploaded via /upload. (No base64 will be sent to /alterations.)
+            Images upload via <b>/upload</b> (multipart/form-data). Only the final HTTPS URL is saved.
           </small>
           <div style="margin-top:.4rem;">
             <div class="thumb-wrapper" id="imagePreview" title="Click to preview full screen"><span>Preview</span></div>
@@ -208,14 +180,17 @@
 <script>
   const API_BASE = "https://chitrali-alteration-api.onrender.com";
 
-  // client side max file guidance (backend multer limit should match)
   const MAX_FILE_MB = 12;
   const MAX_FILE_BYTES = MAX_FILE_MB * 1024 * 1024;
 
   let workItems = [];
   let editingId = null;
-  let lastUploadedImageUrl = null; // ONLY https URL
-  let previewObjectUrl = null;     // blob: URL only for preview (never saved)
+
+  // ✅ ONLY https Cloudinary URL gets saved/sent.
+  let uploadedImageUrl = null;
+
+  // ✅ ONLY for preview; never sent/saved.
+  let previewObjectUrl = null;
 
   const addNewWorkBtn = document.getElementById("addNewWorkBtn");
   const formCard = document.getElementById("formCard");
@@ -279,6 +254,17 @@
     return `${(kb/1024).toFixed(2)} MB`;
   }
 
+  function assertNoInlineImage(url) {
+    if (!url) return;
+    const s = String(url);
+    if (s.startsWith("data:image/")) {
+      throw new Error("BUG: base64 image detected. Upload must go through /upload, and only https URL can be sent to /alterations.");
+    }
+    if (s.startsWith("blob:")) {
+      throw new Error("BUG: blob preview URL detected. Only https URL can be sent to /alterations.");
+    }
+  }
+
   async function apiJson(path, opts = {}) {
     const headers = Object.assign({ "Accept": "application/json" }, opts.headers || {});
     if (opts.body && !(opts.body instanceof FormData)) headers["Content-Type"] = "application/json";
@@ -323,7 +309,7 @@
       const tdImg = document.createElement("td");
       const wrap = document.createElement("div");
       wrap.className = "thumb-wrapper";
-      if (w.image_url) {
+      if (w.image_url && String(w.image_url).startsWith("http")) {
         const img = document.createElement("img");
         img.src = w.image_url;
         img.style.cursor = "pointer";
@@ -413,17 +399,15 @@
       timeDelivery: existing.time_delivery,
       status: existing.status || "PENDING",
       packed: !!existing.packed,
-      imageUrl: existing.image_url || null
+      imageUrl: (existing.image_url && String(existing.image_url).startsWith("http")) ? existing.image_url : null
     };
 
     if (patch.status !== undefined) payload.status = patch.status;
     if (patch.packed !== undefined) payload.packed = patch.packed;
 
-    const updated = await apiJson(`/alterations/${id}`, {
-      method: "PUT",
-      body: JSON.stringify(payload)
-    });
+    assertNoInlineImage(payload.imageUrl);
 
+    const updated = await apiJson(`/alterations/${id}`, { method: "PUT", body: JSON.stringify(payload) });
     const idx = workItems.findIndex(x => x.id === id);
     if (idx !== -1) workItems[idx] = updated;
     return updated;
@@ -440,14 +424,19 @@
     workForm.reset();
     workIdInput.value = "";
     editingId = null;
-    lastUploadedImageUrl = null;
+    uploadedImageUrl = null;
+
     cleanupPreviewUrl();
+
     formTitle.textContent = "Add New Alteration Work";
     saveBtn.textContent = "Add Work";
+    saveBtn.disabled = false;
+
     imagePreview.innerHTML = "<span>Preview</span>";
     imageInput.value = "";
     fileInfo.textContent = "";
     saveError.textContent = "";
+
     applyStatusTint(statusInput);
   }
 
@@ -464,14 +453,13 @@
     packedFlagInput.checked = !!w.packed;
     notesInput.value = w.notes || "";
 
-    // keep only https URL from DB
-    lastUploadedImageUrl = (w.image_url && String(w.image_url).startsWith("http")) ? w.image_url : null;
+    uploadedImageUrl = (w.image_url && String(w.image_url).startsWith("http")) ? w.image_url : null;
 
     cleanupPreviewUrl();
-    if (lastUploadedImageUrl) {
+    if (uploadedImageUrl) {
       imagePreview.innerHTML = "";
       const img = document.createElement("img");
-      img.src = lastUploadedImageUrl;
+      img.src = uploadedImageUrl;
       imagePreview.appendChild(img);
     } else {
       imagePreview.innerHTML = "<span>Preview</span>";
@@ -484,33 +472,35 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  // ✅ Upload only via /upload. Never send base64 to /alterations.
   async function uploadImageIfAny() {
-    if (imageInput.files.length === 0) return lastUploadedImageUrl;
+    if (imageInput.files.length === 0) return uploadedImageUrl;
 
     const file = imageInput.files[0];
-
-    // Client validation
     if (file.size > MAX_FILE_BYTES) {
       throw new Error(`Image too large: ${fmtBytes(file.size)}. Please choose a file under ${MAX_FILE_MB} MB.`);
     }
 
-    const fd = new FormData();
-    fd.append("image", file);
+    saveBtn.disabled = true;
+    saveBtn.textContent = "Uploading…";
 
-    const res = await fetch(API_BASE + "/upload", { method: "POST", body: fd });
-    const text = await res.text();
-    let data = null;
-    try { data = text ? JSON.parse(text) : null; } catch { data = null; }
+    try {
+      const fd = new FormData();
+      fd.append("image", file);
 
-    if (!res.ok) {
-      const msg = (data && data.error) ? data.error : "Image upload failed";
-      throw new Error(msg);
+      const res = await fetch(API_BASE + "/upload", { method: "POST", body: fd });
+      const text = await res.text();
+      let data = null;
+      try { data = text ? JSON.parse(text) : null; } catch { data = null; }
+
+      if (!res.ok) throw new Error((data && data.error) ? data.error : "Image upload failed");
+      if (!data || !data.imageUrl || !String(data.imageUrl).startsWith("http")) throw new Error("Upload did not return https imageUrl");
+
+      uploadedImageUrl = data.imageUrl;
+      return uploadedImageUrl;
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = editingId ? "Update Work" : "Add Work";
     }
-    if (!data || !data.imageUrl || !String(data.imageUrl).startsWith("http")) {
-      throw new Error("Upload did not return a valid imageUrl");
-    }
-    return data.imageUrl;
   }
 
   async function saveWork(e){
@@ -530,10 +520,9 @@
     applyStatusTint(statusInput);
 
     try {
-      // 1) If file selected: must upload first; if upload fails, STOP (do not call /alterations).
       const imageUrl = await uploadImageIfAny();
+      assertNoInlineImage(imageUrl);
 
-      // 2) Send only small JSON to /alterations (only imageUrl string)
       const payload = {
         billNumber: bill,
         tailorName: tailor,
@@ -545,6 +534,8 @@
         packed: packedFlagInput.checked,
         imageUrl: imageUrl || null
       };
+
+      assertNoInlineImage(payload.imageUrl);
 
       const path = editingId ? `/alterations/${editingId}` : "/alterations";
       const method = editingId ? "PUT" : "POST";
@@ -570,10 +561,13 @@
     applyStatusTint(statusInput);
   });
 
-  // ✅ Preview WITHOUT base64 (blob URL only)
   imageInput.addEventListener("change", () => {
     const file = imageInput.files[0];
     fileInfo.textContent = "";
+
+    // Selecting a new file means we MUST re-upload to get a new https URL
+    uploadedImageUrl = null;
+
     cleanupPreviewUrl();
 
     if (!file) {
@@ -598,7 +592,7 @@
   imagePreview.addEventListener("click", () => {
     const img = imagePreview.querySelector("img");
     if (img && img.src) openImageModal(img.src);
-    else if (lastUploadedImageUrl) openImageModal(lastUploadedImageUrl);
+    else if (uploadedImageUrl) openImageModal(uploadedImageUrl);
   });
 
   workForm.addEventListener("submit", saveWork);
