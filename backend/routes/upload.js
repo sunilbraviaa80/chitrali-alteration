@@ -11,36 +11,57 @@ const router = express.Router();
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
-    fileSize: 12 * 1024 * 1024, // 12MB
+    fileSize: 20 * 1024 * 1024, // 20 MB hard cap
   },
 });
 
 // POST /upload  (multipart/form-data, field name: "image")
-router.post("/", upload.single("image"), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: "No image file uploaded" });
-    }
+router.post(
+  "/upload",
+  upload.single("image"),
+  async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: "No image uploaded" });
+      }
 
-    // ✅ Optimize image (rotate + resize + compress)
-    const optimizedBuffer = await sharp(req.file.buffer)
-      .rotate()
-      .resize({ width: 1200, withoutEnlargement: true })
-      .jpeg({ quality: 75 })
-      .toBuffer();
+      // 🔹 Compress & resize BEFORE upload
+      const optimizedBuffer = await sharp(req.file.buffer)
+        .rotate() // auto-orient
+        .resize({
+          width: 1600,          // max width
+          withoutEnlargement: true,
+        })
+        .jpeg({
+          quality: 75,          // 70–80 is ideal
+          mozjpeg: true,
+        })
+        .toBuffer();
 
-    const result = await new Promise((resolve, reject) => {
-      const stream = cloudinary.uploader.upload_stream(
+      // 🔹 Upload optimized image to Cloudinary
+      const result = await cloudinary.uploader.upload_stream(
         {
-          folder: "chitrali_alterations",
+          folder: "chitrali-alterations",
           resource_type: "image",
+          format: "jpg",
         },
         (error, uploaded) => {
-          if (error) return reject(error);
-          resolve(uploaded);
+          if (error) {
+            console.error(error);
+            return res.status(500).json({ error: "Cloudinary upload failed" });
+          }
+
+          res.json({ imageUrl: uploaded.secure_url });
         }
       );
 
+      result.end(optimizedBuffer);
+    } catch (err) {
+      console.error("Upload error:", err);
+      res.status(500).json({ error: "Image processing failed" });
+    }
+  }
+);
       streamifier.createReadStream(optimizedBuffer).pipe(stream);
     });
 
