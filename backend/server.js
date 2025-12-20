@@ -1,22 +1,19 @@
-// backend/server.js
-const express = require("express");
-const cors = require("cors");
-const alterationsRouter = require("./routes/alterations");
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Simple health check
-app.get("/health", (req, res) => {
-  res.json({ status: "ok" });
+// Serve static files from /public
+app.use(express.static(path.join(__dirname, "public")));
+
+// Serve index.html at root
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// API routes
-app.use("/alterations", alterationsRouter);
-
-const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => {
-  console.log(`API listening on port ${PORT}`);
-});
+const port = process.env.PORT || 10000;
+app.listen(port, () => console.log(`Frontend running on ${port}`));
