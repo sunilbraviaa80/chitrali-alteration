@@ -149,7 +149,44 @@
     </form>
   </section>
 
-  <section class="card">
+  
+  <section class="card" id="filterCard">
+    <div class="card-title" style="margin-bottom:0.9rem;">Search &amp; Filters</div>
+    <div class="form-grid">
+      <div>
+        <label for="filterBill">Bill Number</label>
+        <input id="filterBill" type="text" placeholder="e.g. Demo6" />
+      </div>
+      <div>
+        <label for="filterTailor">Tailor Name</label>
+        <input id="filterTailor" type="text" placeholder="e.g. Faisal" />
+      </div>
+      <div>
+        <label for="filterStatus">Status</label>
+        <select id="filterStatus" class="status-select">
+          <option value="ALL">All</option>
+          <option value="PENDING">Pending</option>
+          <option value="IN_PROGRESS">In Progress</option>
+          <option value="DONE">Done</option>
+        </select>
+      </div>
+      <div>
+        <label for="filterDateAssigned">Date Assigned</label>
+        <input id="filterDateAssigned" type="date" />
+      </div>
+      <div>
+        <label for="filterDateDelivery">Date of Delivery</label>
+        <input id="filterDateDelivery" type="date" />
+      </div>
+      <div style="display:flex;align-items:flex-end;gap:.6rem;flex-wrap:wrap;">
+        <button class="btn btn-primary btn-sm" type="button" id="filterApplyBtn">Search</button>
+        <button class="btn btn-secondary btn-sm" type="button" id="filterClearBtn">Clear</button>
+      </div>
+    </div>
+  </section>
+
+
+<section class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap;">
       <div class="card-title" style="margin-bottom:0;">All Alteration Work</div>
       <small id="summaryText" style="color:#6b7280;"></small>
@@ -217,6 +254,19 @@
   const summaryText = document.getElementById("summaryText");
   const workTableBody = document.getElementById("workTableBody");
 
+  // --- Search & Filters ---
+  const filterBill = document.getElementById("filterBill");
+  const filterTailor = document.getElementById("filterTailor");
+  const filterStatus = document.getElementById("filterStatus");
+  const filterDateAssigned = document.getElementById("filterDateAssigned");
+  const filterDateDelivery = document.getElementById("filterDateDelivery");
+  const filterApplyBtn = document.getElementById("filterApplyBtn");
+  const filterClearBtn = document.getElementById("filterClearBtn");
+
+  // null = no active filters
+  let filteredItems = null;
+
+
   const imageModal = document.getElementById("imageModal");
   const imageModalImg = document.getElementById("imageModalImg");
   const imageModalClose = document.getElementById("imageModalClose");
@@ -280,18 +330,23 @@
 
   async function loadWorkAll() {
     workItems = await apiJson("/alterations");
-    renderTable();
+    // keep current filters (if any) after refresh
+    if (filteredItems !== null) applyFilters();
+    else renderTable();
   }
 
   function renderSummary(){
     const total = workItems.length;
-    const open = workItems.filter(w => w.status !== "DONE").length;
-    summaryText.textContent = `Total: ${total} | Open: ${open}`;
+    const list = filteredItems ?? workItems;
+    const showing = list.length;
+    const open = list.filter(w => w.status !== "DONE").length;
+    summaryText.textContent = `Total: ${total} | Showing: ${showing} | Open: ${open}`;
   }
 
   function renderTable(){
+    const list = filteredItems ?? workItems;
     workTableBody.innerHTML = "";
-    if (!workItems.length) {
+    if (!list.length) {
       const tr = document.createElement("tr");
       tr.className = "empty-row";
       const td = document.createElement("td");
@@ -303,7 +358,7 @@
       return;
     }
 
-    workItems.forEach(w => {
+    list.forEach(w => {
       const tr = document.createElement("tr");
 
       const tdImg = document.createElement("td");
@@ -386,7 +441,56 @@
     renderSummary();
   }
 
-  async function updateAlteration(id, patch) {
+  
+  function normalizeStr(s){ return (s ?? "").toString().trim().toLowerCase(); }
+
+  function applyFilters(){
+    const billQ = normalizeStr(filterBill?.value);
+    const tailorQ = normalizeStr(filterTailor?.value);
+    const statusQ = (filterStatus?.value || "ALL");
+    const assignedQ = filterDateAssigned?.value || "";
+    const deliveryQ = filterDateDelivery?.value || "";
+
+    const hasAny =
+      billQ || tailorQ || (statusQ && statusQ !== "ALL") || assignedQ || deliveryQ;
+
+    if (!hasAny) {
+      filteredItems = null;
+      renderTable();
+      return;
+    }
+
+    filteredItems = workItems.filter(w => {
+      if (billQ && !normalizeStr(w.bill_number).includes(billQ)) return false;
+      if (tailorQ && !normalizeStr(w.tailor_name).includes(tailorQ)) return false;
+      if (statusQ !== "ALL" && (w.status || "PENDING") !== statusQ) return false;
+
+      // dates are stored as YYYY-MM-DD; match exact day when filter provided
+      if (assignedQ) {
+        const wa = w.date_assigned ? String(w.date_assigned).slice(0,10) : "";
+        if (wa !== assignedQ) return false;
+      }
+      if (deliveryQ) {
+        const wd = w.date_delivery ? String(w.date_delivery).slice(0,10) : "";
+        if (wd !== deliveryQ) return false;
+      }
+      return true;
+    });
+
+    renderTable();
+  }
+
+  function clearFilters(){
+    if (filterBill) filterBill.value = "";
+    if (filterTailor) filterTailor.value = "";
+    if (filterStatus) filterStatus.value = "ALL";
+    if (filterDateAssigned) filterDateAssigned.value = "";
+    if (filterDateDelivery) filterDateDelivery.value = "";
+    filteredItems = null;
+    renderTable();
+  }
+
+async function updateAlteration(id, patch) {
     const existing = workItems.find(x => x.id === id);
     if (!existing) throw new Error("Record not found");
 
@@ -549,6 +653,19 @@
   }
 
   function applyStatusTint(selectEl){ selectEl.style.background = statusTint(selectEl.value); }
+
+
+  // Filter listeners
+  if (filterApplyBtn) filterApplyBtn.addEventListener("click", applyFilters);
+  if (filterClearBtn) filterClearBtn.addEventListener("click", clearFilters);
+
+  // Apply filters on Enter in bill/tailor inputs for quick UX
+  [filterBill, filterTailor].forEach(el => {
+    if (!el) return;
+    el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); applyFilters(); }
+    });
+  });
 
   addNewWorkBtn.addEventListener("click", () => {
     window.scrollTo({ top: formCard.offsetTop - 20, behavior: "smooth" });
