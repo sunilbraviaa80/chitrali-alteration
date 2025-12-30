@@ -159,7 +159,9 @@
       </div>
       <div>
         <label for="filterTailor">Tailor Name</label>
-        <input id="filterTailor" type="text" placeholder="e.g. Faisal" />
+        <select id="filterTailor" class="status-select">
+          <option value="ALL">All</option>
+        </select>
       </div>
       <div>
         <label for="filterStatus">Status</label>
@@ -266,6 +268,33 @@
   // null = no active filters
   let filteredItems = null;
 
+  function populateTailorFilterOptions() {
+    if (!filterTailor) return;
+    const prev = filterTailor.value || "ALL";
+    const unique = Array.from(new Set((workItems || []).map(w => (w.tailor_name || "").trim()).filter(Boolean)));
+    unique.sort((a,b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
+
+    // Rebuild options
+    filterTailor.innerHTML = "";
+    const optAll = document.createElement("option");
+    optAll.value = "ALL";
+    optAll.textContent = "All";
+    filterTailor.appendChild(optAll);
+
+    unique.forEach(name => {
+      const opt = document.createElement("option");
+      opt.value = name;
+      opt.textContent = name;
+      filterTailor.appendChild(opt);
+    });
+
+    // Restore previous selection if still available
+    const hasPrev = Array.from(filterTailor.options).some(o => o.value === prev);
+    filterTailor.value = hasPrev ? prev : "ALL";
+  }
+
+
+
 
   const imageModal = document.getElementById("imageModal");
   const imageModalImg = document.getElementById("imageModalImg");
@@ -330,6 +359,7 @@
 
   async function loadWorkAll() {
     workItems = await apiJson("/alterations");
+    populateTailorFilterOptions();
     // keep current filters (if any) after refresh
     if (filteredItems !== null) applyFilters();
     else renderTable();
@@ -446,7 +476,8 @@
 
   function applyFilters(){
     const billQ = normalizeStr(filterBill?.value);
-    const tailorQ = normalizeStr(filterTailor?.value);
+    const tailorVal = (filterTailor?.value || "ALL");
+    const tailorQ = (tailorVal === "ALL") ? "" : normalizeStr(tailorVal);
     const statusQ = (filterStatus?.value || "ALL");
     const assignedQ = filterDateAssigned?.value || "";
     const deliveryQ = filterDateDelivery?.value || "";
@@ -462,7 +493,7 @@
 
     filteredItems = workItems.filter(w => {
       if (billQ && !normalizeStr(w.bill_number).includes(billQ)) return false;
-      if (tailorQ && !normalizeStr(w.tailor_name).includes(tailorQ)) return false;
+      if (tailorQ && normalizeStr(w.tailor_name) !== tailorQ) return false;
       if (statusQ !== "ALL" && (w.status || "PENDING") !== statusQ) return false;
 
       // dates are stored as YYYY-MM-DD; match exact day when filter provided
@@ -482,7 +513,7 @@
 
   function clearFilters(){
     if (filterBill) filterBill.value = "";
-    if (filterTailor) filterTailor.value = "";
+    if (filterTailor) filterTailor.value = "ALL";
     if (filterStatus) filterStatus.value = "ALL";
     if (filterDateAssigned) filterDateAssigned.value = "";
     if (filterDateDelivery) filterDateDelivery.value = "";
