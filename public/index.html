@@ -91,7 +91,22 @@
       <input type="hidden" id="workId" />
       <div class="form-grid">
         <div><label for="billNumber">Bill Number *</label><input id="billNumber" required /></div>
-        <div><label for="itemName">Item Name *</label><input id="itemName" required /></div>
+        <div>
+  <label for="itemName">Item Name *</label>
+  <select id="itemName" required>
+    <option value="">Select item</option>
+    <option value="Lehenga">Lehenga</option>
+    <option value="Croptop Skirt">Croptop Skirt</option>
+    <option value="Blouse">Blouse</option>
+    <option value="Ready to Wear Saree">Ready to Wear Saree</option>
+    <option value="Suit">Suit</option>
+    <option value="Croptop Palazzo">Croptop Palazzo</option>
+    <option value="Sharara">Sharara</option>
+    <option value="Gown">Gown</option>
+    <option value="Saree Pleating">Saree Pleating</option>
+    <option value="Indowestern">Indowestern</option>
+  </select>
+</div>
         <div>
           <label for="tailorSelect">Tailor Name *</label>
           <select id="tailorSelect" required>
@@ -758,4 +773,5 @@ async function updateAlteration(id, patch) {
 </script>
 </body>
 </html>
+
 
