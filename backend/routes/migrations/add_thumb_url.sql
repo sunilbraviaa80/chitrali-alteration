@@ -1,1 +1,0 @@
-ALTER TABLE alterations ADD COLUMN IF NOT EXISTS thumb_url TEXT;
