@@ -8,7 +8,8 @@
     :root { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color-scheme: light; }
     * { box-sizing: border-box; }
     body { margin: 0; background: #f3f4fb; color: #111827; font-size: 15px; }
-    .page { max-width: 1200px; margin: 0 auto; padding: 1.2rem 0.9rem 2.5rem; }
+    .page { max-width: 1240px; margin: 0 auto; padding: 1.2rem 0.9rem 2.5rem; }
+
     header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem; }
     .brand-left { display: flex; align-items: center; }
     .brand-logo { height: 40px; max-width: 160px; object-fit: contain; display: block; }
@@ -16,46 +17,90 @@
     .brand-title { font-size: 1.15rem; font-weight: 600; color: #111827; line-height: 1.2; }
     .brand-subtitle { font-size: 0.78rem; color: #6b7280; line-height: 1.2; }
     .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.45rem 1.1rem; border-radius: 999px; border: none;
-      font-size: 0.9rem; cursor: pointer; white-space: nowrap; transition: box-shadow 0.15s, transform 0.05s, background 0.15s, color 0.15s; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.45rem 1.1rem; border-radius: 999px; border: none;
+      font-size: 0.9rem; cursor: pointer; white-space: nowrap;
+      transition: box-shadow 0.15s, transform 0.05s, background 0.15s, color 0.15s;
+    }
     .btn-primary { background: #2563eb; color: #ffffff; }
     .btn-primary:hover { box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35); transform: translateY(-1px); }
     .btn-secondary { background: #e5e7eb; color: #111827; }
     .btn-secondary:hover { background: #d1d5db; }
     .btn-sm { padding: 0.25rem 0.7rem; font-size: 0.8rem; }
     .btn-link { background: transparent; color: #2563eb; border: none; padding: 0; }
-    .card { background: #ffffff; border-radius: 0.75rem; padding: 1.25rem 1.5rem; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06); margin-bottom: 1.1rem; }
+
+    .card {
+      background: #ffffff; border-radius: 0.75rem; padding: 1.25rem 1.5rem;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06); margin-bottom: 1.1rem;
+    }
     .card-title { font-size: 0.98rem; font-weight: 600; margin-bottom: 0.9rem; }
+
     label { font-size: 0.8rem; color: #4b5563; display: block; margin-bottom: 0.3rem; }
     input[type="text"], input[type="date"], input[type="time"], select {
-      width: 100%; padding: 0.45rem 0.6rem; border-radius: 0.5rem; border: 1px solid #d1d5db; font-size: 0.85rem; background: #f9fafb; outline: none;
+      width: 100%; padding: 0.45rem 0.6rem; border-radius: 0.5rem;
+      border: 1px solid #d1d5db; font-size: 0.85rem; background: #f9fafb; outline: none;
     }
-    input:focus, select:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12); }
+    input:focus, select:focus {
+      border-color: #2563eb; background: #ffffff;
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12);
+    }
     input[type="file"] { font-size: 0.8rem; }
     textarea {
-      width: 100%; min-height: 80px; resize: vertical; border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.45rem 0.6rem; font-size: 0.85rem; background: #f9fafb; outline: none;
+      width: 100%; min-height: 80px; resize: vertical; border-radius: 0.5rem;
+      border: 1px solid #d1d5db; padding: 0.45rem 0.6rem; font-size: 0.85rem;
+      background: #f9fafb; outline: none;
     }
-    textarea:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12); }
-    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); column-gap: 1.25rem; row-gap: 1.1rem; }
+    textarea:focus {
+      border-color: #2563eb; background: #ffffff;
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12);
+    }
+
+    .form-grid, .filter-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      column-gap: 1.25rem; row-gap: 1.1rem;
+    }
     .full-span { grid-column: 1 / -1; }
     .section-break { margin-top: 0.5rem; padding-top: 0.6rem; border-top: 1px dashed #e5e7eb; }
+
     table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
     thead { background: #f9fafb; }
     th, td { padding: 0.55rem 0.6rem; border-bottom: 1px solid #e5e7eb; text-align: left; vertical-align: middle; }
     th { font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.03em; }
     tbody tr:hover { background: #f3f4ff; }
     .empty-row td { text-align: center; color: #9ca3af; padding: 1rem 0.5rem; font-size: 0.85rem; }
-    .thumb-wrapper { width: 56px; height: 56px; border-radius: 0.6rem; background: #f3f4f6; border: 1px solid #e5e7eb; overflow: hidden;
-      display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #9ca3af; }
-    .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-    .badge { display: inline-block; padding: 0.12rem 0.55rem; border-radius: 999px; font-size: 0.72rem; background: #e5e7eb; color: #374151; margin-right: 0.4rem; }
-    .status-select { font-size: .78rem; border-radius: 999px; padding: .28rem .55rem; border: 1px solid #e5e7eb; background: #fff; }
+
+    .thumb-wrapper {
+      width: 56px; height: 56px; border-radius: 0.6rem;
+      background: #f3f4f6; border: 1px solid #e5e7eb; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; color: #9ca3af;
+    }
+    .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .badge {
+      display: inline-block; padding: 0.12rem 0.55rem; border-radius: 999px;
+      font-size: 0.72rem; background: #e5e7eb; color: #374151; margin-right: 0.4rem;
+    }
+    .status-select {
+      font-size: .78rem; border-radius: 999px; padding: .28rem .55rem;
+      border: 1px solid #e5e7eb; background: #fff;
+    }
+
     .image-modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 9999; }
     .image-modal.visible { display: flex; }
     .image-modal-backdrop { position: absolute; inset: 0; background: rgba(15, 23, 42, 0.85); }
-    .image-modal-inner { position: relative; max-width: 95vw; max-height: 90vh; z-index: 1; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); border-radius: 0.75rem; overflow: hidden; background: #000; }
+    .image-modal-inner {
+      position: relative; max-width: 95vw; max-height: 90vh; z-index: 1;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      border-radius: 0.75rem; overflow: hidden; background: #000;
+    }
     .image-modal-inner img { display: block; max-width: 100%; max-height: 90vh; object-fit: contain; }
-    .image-modal-close { position: absolute; top: 0.3rem; right: 0.8rem; color: #f9fafb; font-size: 1.6rem; cursor: pointer; z-index: 2; }
+    .image-modal-close {
+      position: absolute; top: 0.3rem; right: 0.8rem; color: #f9fafb;
+      font-size: 1.6rem; cursor: pointer; z-index: 2;
+    }
+
     @media (max-width: 640px) {
       body { font-size: 14px; }
       .page { padding: 1rem 0.7rem 2rem; }
@@ -64,8 +109,9 @@
       .brand-title { font-size: 1rem; }
       .brand-text { width: 100%; align-items: center; text-align: center; }
       .header-actions { width: 100%; justify-content: flex-start; }
-      .form-grid { grid-template-columns: 1fr; }
-      th:nth-child(5), td:nth-child(5), th:nth-child(7), td:nth-child(7) { display: none; }
+      .form-grid, .filter-grid { grid-template-columns: 1fr; }
+      th:nth-child(5), td:nth-child(5),
+      th:nth-child(7), td:nth-child(7) { display: none; }
     }
   </style>
 </head>
@@ -90,33 +136,39 @@
     <form id="workForm">
       <input type="hidden" id="workId" />
       <div class="form-grid">
-        <div><label for="billNumber">Bill Number *</label><input id="billNumber" required /></div>
         <div>
-  <label for="itemName">Item Name *</label>
-  <select id="itemName" required>
-    <option value="">Select item</option>
-    <option value="Lehenga">Lehenga</option>
-    <option value="Croptop Skirt">Croptop Skirt</option>
-    <option value="Blouse">Blouse</option>
-    <option value="Ready to Wear Saree">Ready to Wear Saree</option>
-    <option value="Suit">Suit</option>
-    <option value="Croptop Palazzo">Croptop Palazzo</option>
-    <option value="Sharara">Sharara</option>
-    <option value="Gown">Gown</option>
-    <option value="Saree Pleating">Saree Pleating</option>
-    <option value="Indowestern">Indowestern</option>
-    <option value="Other">Other (custom)</option>
-  </select>
-</div>
+          <label for="billNumber">Bill Number *</label>
+          <input id="billNumber" required />
+        </div>
+
+        <div>
+          <label for="itemName">Item Name *</label>
+          <select id="itemName" required>
+            <option value="">Select item</option>
+            <option value="Lehenga">Lehenga</option>
+            <option value="Croptop Skirt">Croptop Skirt</option>
+            <option value="Blouse">Blouse</option>
+            <option value="Ready to Wear Saree">Ready to Wear Saree</option>
+            <option value="Suit">Suit</option>
+            <option value="Croptop Palazzo">Croptop Palazzo</option>
+            <option value="Sharara">Sharara</option>
+            <option value="Gown">Gown</option>
+            <option value="Saree Pleating">Saree Pleating</option>
+            <option value="Indowestern">Indowestern</option>
+          </select>
+        </div>
+
         <div>
           <label for="tailorSelect">Tailor Name *</label>
           <select id="tailorSelect" required>
             <option value="">Select</option>
-            <option value="FAISAL">FAISAL</option>
+            <option value="Faisal">Faisal</option>
             <option value="SALMAN">SALMAN</option>
-            <option value="ALOK">ALOK</option>
+            <option value="Rahul">Rahul</option>
+            <option value="Imran">Imran</option>
           </select>
         </div>
+
         <div>
           <label for="status">Work Status *</label>
           <select id="status" required class="status-select">
@@ -126,9 +178,18 @@
           </select>
         </div>
 
-        <div><label for="dateAssigned">Date Assigned *</label><input type="date" id="dateAssigned" required /></div>
-        <div><label for="dateDelivery">Date of Delivery *</label><input type="date" id="dateDelivery" required /></div>
-        <div><label for="timeDelivery">Time of Delivery</label><input type="time" id="timeDelivery" /></div>
+        <div>
+          <label for="dateAssigned">Date Assigned *</label>
+          <input type="date" id="dateAssigned" required />
+        </div>
+        <div>
+          <label for="dateDelivery">Date of Delivery *</label>
+          <input type="date" id="dateDelivery" required />
+        </div>
+        <div>
+          <label for="timeDelivery">Time of Delivery</label>
+          <input type="time" id="timeDelivery" />
+        </div>
         <div>
           <label for="packedFlag">Packed</label>
           <div style="display:flex;align-items:center;gap:.4rem;margin-top:.3rem;">
@@ -141,7 +202,7 @@
           <label for="imageInput">Item Image (camera / gallery)</label>
           <input type="file" id="imageInput" accept="image/*" capture="environment" />
           <small style="display:block;margin-top:.25rem;color:#6b7280;">
-            Images upload via <b>/upload</b> (multipart/form-data). Only the final HTTPS URL is saved.
+            Image is compressed before upload. Backend returns full image URL + thumbnail URL.
           </small>
           <div style="margin-top:.4rem;">
             <div class="thumb-wrapper" id="imagePreview" title="Click to preview full screen"><span>Preview</span></div>
@@ -164,24 +225,23 @@
     </form>
   </section>
 
-  
-  <section class="card" id="filterCard">
-    <div class="card-title" style="margin-bottom:0.9rem;">Search &amp; Filters</div>
-    <div class="form-grid">
+  <section class="card">
+    <div class="card-title">Search & Filters</div>
+    <div class="filter-grid">
       <div>
         <label for="filterBill">Bill Number</label>
-        <input id="filterBill" type="text" placeholder="e.g. Demo6" />
+        <input id="filterBill" placeholder="Search bill no." />
       </div>
       <div>
         <label for="filterTailor">Tailor Name</label>
-        <select id="filterTailor" class="status-select">
-          <option value="ALL">All</option>
+        <select id="filterTailor">
+          <option value="">All Tailors</option>
         </select>
       </div>
       <div>
         <label for="filterStatus">Status</label>
-        <select id="filterStatus" class="status-select">
-          <option value="ALL">All</option>
+        <select id="filterStatus">
+          <option value="">All Status</option>
           <option value="PENDING">Pending</option>
           <option value="IN_PROGRESS">In Progress</option>
           <option value="DONE">Done</option>
@@ -189,21 +249,20 @@
       </div>
       <div>
         <label for="filterDateAssigned">Date Assigned</label>
-        <input id="filterDateAssigned" type="date" />
+        <input type="date" id="filterDateAssigned" />
       </div>
       <div>
         <label for="filterDateDelivery">Date of Delivery</label>
-        <input id="filterDateDelivery" type="date" />
+        <input type="date" id="filterDateDelivery" />
       </div>
-      <div style="display:flex;align-items:flex-end;gap:.6rem;flex-wrap:wrap;">
-        <button class="btn btn-primary btn-sm" type="button" id="filterApplyBtn">Search</button>
-        <button class="btn btn-secondary btn-sm" type="button" id="filterClearBtn">Clear</button>
-      </div>
+    </div>
+    <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap;">
+      <button class="btn btn-primary btn-sm" id="applyFiltersBtn" type="button">Search</button>
+      <button class="btn btn-secondary btn-sm" id="clearFiltersBtn" type="button">Clear Filters</button>
     </div>
   </section>
 
-
-<section class="card">
+  <section class="card">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;margin-bottom:.5rem;flex-wrap:wrap;">
       <div class="card-title" style="margin-bottom:0;">All Alteration Work</div>
       <small id="summaryText" style="color:#6b7280;"></small>
@@ -212,9 +271,16 @@
       <table>
         <thead>
           <tr>
-            <th>Image</th><th>Bill Number</th><th>Tailor Name</th><th>Item Name</th>
-            <th>Date Assigned</th><th>Date Delivery</th><th>Time Delivery</th>
-            <th>Status</th><th>Packed</th><th>Actions</th>
+            <th>Image</th>
+            <th>Bill Number</th>
+            <th>Tailor Name</th>
+            <th>Item Name</th>
+            <th>Date Assigned</th>
+            <th>Date Delivery</th>
+            <th>Time Delivery</th>
+            <th>Status</th>
+            <th>Packed</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="workTableBody"></tbody>
@@ -234,17 +300,18 @@
 <script>
   const API_BASE = "https://chitrali-alteration-api.onrender.com";
 
-  const MAX_FILE_MB = 12;
+  const MAX_FILE_MB = 20;
   const MAX_FILE_BYTES = MAX_FILE_MB * 1024 * 1024;
 
   let workItems = [];
+  let filteredWorkItems = [];
   let editingId = null;
 
-  // ✅ ONLY https Cloudinary URL gets saved/sent.
   let uploadedImageUrl = null;
+  let uploadedThumbUrl = null;
 
-  // ✅ ONLY for preview; never sent/saved.
   let previewObjectUrl = null;
+  let compressedImageFile = null;
 
   const addNewWorkBtn = document.getElementById("addNewWorkBtn");
   const formCard = document.getElementById("formCard");
@@ -268,48 +335,16 @@
   const formCancelBtn = document.getElementById("formCancelBtn");
   const saveError = document.getElementById("saveError");
 
-  const summaryText = document.getElementById("summaryText");
-  const workTableBody = document.getElementById("workTableBody");
-
-  // --- Search & Filters ---
   const filterBill = document.getElementById("filterBill");
   const filterTailor = document.getElementById("filterTailor");
   const filterStatus = document.getElementById("filterStatus");
   const filterDateAssigned = document.getElementById("filterDateAssigned");
   const filterDateDelivery = document.getElementById("filterDateDelivery");
-  const filterApplyBtn = document.getElementById("filterApplyBtn");
-  const filterClearBtn = document.getElementById("filterClearBtn");
+  const applyFiltersBtn = document.getElementById("applyFiltersBtn");
+  const clearFiltersBtn = document.getElementById("clearFiltersBtn");
 
-  // null = no active filters
-  let filteredItems = null;
-
-  function populateTailorFilterOptions() {
-    if (!filterTailor) return;
-    const prev = filterTailor.value || "ALL";
-    const unique = Array.from(new Set((workItems || []).map(w => (w.tailor_name || "").trim()).filter(Boolean)));
-    unique.sort((a,b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
-
-    // Rebuild options
-    filterTailor.innerHTML = "";
-    const optAll = document.createElement("option");
-    optAll.value = "ALL";
-    optAll.textContent = "All";
-    filterTailor.appendChild(optAll);
-
-    unique.forEach(name => {
-      const opt = document.createElement("option");
-      opt.value = name;
-      opt.textContent = name;
-      filterTailor.appendChild(opt);
-    });
-
-    // Restore previous selection if still available
-    const hasPrev = Array.from(filterTailor.options).some(o => o.value === prev);
-    filterTailor.value = hasPrev ? prev : "ALL";
-  }
-
-
-
+  const summaryText = document.getElementById("summaryText");
+  const workTableBody = document.getElementById("workTableBody");
 
   const imageModal = document.getElementById("imageModal");
   const imageModalImg = document.getElementById("imageModalImg");
@@ -329,42 +364,44 @@
   imageModalClose.addEventListener("click", closeImageModal);
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeImageModal(); });
 
-  function statusLabel(s){ return s==="IN_PROGRESS"?"In Progress":s==="DONE"?"Done":"Pending"; }
+  function statusLabel(s){
+    return s === "IN_PROGRESS" ? "In Progress" : s === "DONE" ? "Done" : "Pending";
+  }
   function statusTint(s){
-    if(s==="DONE") return "rgba(34, 197, 94, 0.18)";
-    if(s==="IN_PROGRESS") return "rgba(234, 179, 8, 0.18)";
+    if (s === "DONE") return "rgba(34, 197, 94, 0.18)";
+    if (s === "IN_PROGRESS") return "rgba(234, 179, 8, 0.18)";
     return "rgba(148, 163, 184, 0.15)";
   }
   function formatDate(d){
-    if(!d) return "-";
+    if (!d) return "-";
     const dt = new Date(d);
     return isNaN(dt) ? d : dt.toLocaleDateString("en-IN");
   }
   function formatTime(t){ return t || "-"; }
   function fmtBytes(n){
     if (!Number.isFinite(n)) return "";
-    const kb = n/1024;
+    const kb = n / 1024;
     if (kb < 1024) return `${Math.round(kb)} KB`;
-    return `${(kb/1024).toFixed(2)} MB`;
+    return `${(kb / 1024).toFixed(2)} MB`;
   }
 
-  function assertNoInlineImage(url) {
+  function assertSafeUrl(url) {
     if (!url) return;
     const s = String(url);
-    if (s.startsWith("data:image/")) {
-      throw new Error("BUG: base64 image detected. Upload must go through /upload, and only https URL can be sent to /alterations.");
-    }
-    if (s.startsWith("blob:")) {
-      throw new Error("BUG: blob preview URL detected. Only https URL can be sent to /alterations.");
-    }
+    if (s.startsWith("data:image/")) throw new Error("Base64 image detected. Upload must go through /upload.");
+    if (s.startsWith("blob:")) throw new Error("Preview blob URL detected. Only backend image URL can be saved.");
   }
 
   async function apiJson(path, opts = {}) {
     const headers = Object.assign({ "Accept": "application/json" }, opts.headers || {});
     if (opts.body && !(opts.body instanceof FormData)) headers["Content-Type"] = "application/json";
+
     const res = await fetch(API_BASE + path, { ...opts, headers });
     const text = await res.text();
-    const data = text ? (() => { try { return JSON.parse(text); } catch { return text; } })() : null;
+
+    let data = null;
+    try { data = text ? JSON.parse(text) : null; } catch { data = text; }
+
     if (!res.ok) {
       const msg = (data && data.error) ? data.error : "Request failed";
       throw new Error(msg);
@@ -372,26 +409,157 @@
     return data;
   }
 
-  async function loadWorkAll() {
-    workItems = await apiJson("/alterations");
-    populateTailorFilterOptions();
-    // keep current filters (if any) after refresh
-    if (filteredItems !== null) applyFilters();
-    else renderTable();
+  function cleanupPreviewUrl() {
+    if (previewObjectUrl) {
+      try { URL.revokeObjectURL(previewObjectUrl); } catch {}
+      previewObjectUrl = null;
+    }
   }
 
-  function renderSummary(){
+  async function compressImage(file, options = {}) {
+    const {
+      maxWidth = 1280,
+      maxHeight = 1280,
+      quality = 0.70,
+      mimeType = "image/jpeg"
+    } = options;
+
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      const img = new Image();
+
+      reader.onload = e => { img.src = e.target.result; };
+
+      img.onload = () => {
+        let { width, height } = img;
+        const ratio = Math.min(maxWidth / width, maxHeight / height, 1);
+        width = Math.round(width * ratio);
+        height = Math.round(height * ratio);
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(blob => {
+          if (!blob) return reject(new Error("Compression failed"));
+          const compressed = new File(
+            [blob],
+            (file.name || "image").replace(/\.[^/.]+$/, "") + ".jpg",
+            { type: mimeType }
+          );
+          resolve(compressed);
+        }, mimeType, quality);
+      };
+
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function applyStatusTint(selectEl) {
+    selectEl.style.background = statusTint(selectEl.value);
+  }
+
+  async function loadWorkAll() {
+    workItems = await apiJson("/alterations");
+    populateTailorFilter();
+    applyFilters();
+  }
+
+  function populateTailorFilter() {
+    const current = filterTailor.value || "";
+    const tailors = [...new Set(workItems.map(w => w.tailor_name).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+
+    filterTailor.innerHTML = `<option value="">All Tailors</option>`;
+    tailors.forEach(name => {
+      const opt = document.createElement("option");
+      opt.value = name;
+      opt.textContent = name;
+      filterTailor.appendChild(opt);
+    });
+
+    if (tailors.includes(current)) filterTailor.value = current;
+  }
+
+  function applyFilters() {
+    const bill = filterBill.value.trim().toLowerCase();
+    const tailor = filterTailor.value;
+    const status = filterStatus.value;
+    const assigned = filterDateAssigned.value;
+    const delivery = filterDateDelivery.value;
+
+    filteredWorkItems = workItems.filter(w => {
+      if (bill && !String(w.bill_number || "").toLowerCase().includes(bill)) return false;
+      if (tailor && String(w.tailor_name || "") !== tailor) return false;
+      if (status && String(w.status || "") !== status) return false;
+      const wAssigned = w.date_assigned ? String(w.date_assigned).slice(0, 10) : "";
+      const wDelivery = w.date_delivery ? String(w.date_delivery).slice(0, 10) : "";
+      if (assigned && wAssigned !== assigned) return false;
+      if (delivery && wDelivery !== delivery) return false;
+      return true;
+    });
+
+    renderTable();
+  }
+
+  function clearFilters() {
+    filterBill.value = "";
+    filterTailor.value = "";
+    filterStatus.value = "";
+    filterDateAssigned.value = "";
+    filterDateDelivery.value = "";
+    applyFilters();
+  }
+
+  function renderSummary() {
     const total = workItems.length;
-    const list = filteredItems ?? workItems;
-    const showing = list.length;
-    const open = list.filter(w => w.status !== "DONE").length;
+    const showing = filteredWorkItems.length;
+    const open = filteredWorkItems.filter(w => w.status !== "DONE").length;
     summaryText.textContent = `Total: ${total} | Showing: ${showing} | Open: ${open}`;
   }
 
-  function renderTable(){
-    const list = filteredItems ?? workItems;
+  async function updateAlteration(id, patch) {
+    const existing = workItems.find(x => x.id === id);
+    if (!existing) throw new Error("Record not found");
+
+    const payload = {
+      billNumber: existing.bill_number,
+      tailorName: existing.tailor_name,
+      itemName: existing.item_name,
+      dateAssigned: existing.date_assigned ? String(existing.date_assigned).slice(0, 10) : null,
+      dateDelivery: existing.date_delivery ? String(existing.date_delivery).slice(0, 10) : null,
+      timeDelivery: existing.time_delivery,
+      status: existing.status || "PENDING",
+      packed: !!existing.packed,
+      imageUrl: existing.image_url || null,
+      thumbUrl: existing.thumb_url || null,
+      notes: existing.notes || null
+    };
+
+    if (patch.status !== undefined) payload.status = patch.status;
+    if (patch.packed !== undefined) payload.packed = patch.packed;
+
+    assertSafeUrl(payload.imageUrl);
+    assertSafeUrl(payload.thumbUrl);
+
+    const updated = await apiJson(`/alterations/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(payload)
+    });
+
+    const idx = workItems.findIndex(x => x.id === id);
+    if (idx !== -1) workItems[idx] = updated;
+    applyFilters();
+    return updated;
+  }
+
+  function renderTable() {
     workTableBody.innerHTML = "";
-    if (!list.length) {
+
+    if (!filteredWorkItems.length) {
       const tr = document.createElement("tr");
       tr.className = "empty-row";
       const td = document.createElement("td");
@@ -403,17 +571,20 @@
       return;
     }
 
-    list.forEach(w => {
+    filteredWorkItems.forEach(w => {
       const tr = document.createElement("tr");
 
       const tdImg = document.createElement("td");
       const wrap = document.createElement("div");
       wrap.className = "thumb-wrapper";
-      if (w.image_url && String(w.image_url).startsWith("http")) {
+      const thumb = w.thumb_url || w.image_url;
+      if (thumb && String(thumb).startsWith("http")) {
         const img = document.createElement("img");
-        img.src = w.image_url;
+        img.src = thumb;
+        img.loading = "lazy";
+        img.decoding = "async";
         img.style.cursor = "pointer";
-        img.addEventListener("click", () => openImageModal(w.image_url));
+        img.addEventListener("click", () => openImageModal(w.image_url || thumb));
         wrap.appendChild(img);
       } else {
         wrap.innerHTML = "No<br/>Image";
@@ -421,9 +592,9 @@
       tdImg.appendChild(wrap);
       tr.appendChild(tdImg);
 
-      const tdBill = document.createElement("td"); tdBill.textContent = w.bill_number; tr.appendChild(tdBill);
-      const tdTailor = document.createElement("td"); tdTailor.textContent = w.tailor_name; tr.appendChild(tdTailor);
-      const tdItem = document.createElement("td"); tdItem.textContent = w.item_name; tr.appendChild(tdItem);
+      const tdBill = document.createElement("td"); tdBill.textContent = w.bill_number || ""; tr.appendChild(tdBill);
+      const tdTailor = document.createElement("td"); tdTailor.textContent = w.tailor_name || ""; tr.appendChild(tdTailor);
+      const tdItem = document.createElement("td"); tdItem.textContent = w.item_name || ""; tr.appendChild(tdItem);
       const tdAssigned = document.createElement("td"); tdAssigned.textContent = formatDate(w.date_assigned); tr.appendChild(tdAssigned);
       const tdDelivery = document.createElement("td"); tdDelivery.textContent = formatDate(w.date_delivery); tr.appendChild(tdDelivery);
       const tdTime = document.createElement("td"); tdTime.textContent = formatTime(w.time_delivery); tr.appendChild(tdTime);
@@ -431,7 +602,7 @@
       const tdStatus = document.createElement("td");
       const sel = document.createElement("select");
       sel.className = "status-select";
-      ["PENDING","IN_PROGRESS","DONE"].forEach(val => {
+      ["PENDING", "IN_PROGRESS", "DONE"].forEach(val => {
         const opt = document.createElement("option");
         opt.value = val;
         opt.textContent = statusLabel(val);
@@ -460,10 +631,7 @@
         try {
           const patch = { packed: chk.checked };
           if (chk.checked) patch.status = "DONE";
-          const updated = await updateAlteration(w.id, patch);
-          w.status = updated.status;
-          w.packed = updated.packed;
-          renderTable();
+          await updateAlteration(w.id, patch);
         } catch (e) {
           alert("Error updating packed: " + e.message);
           chk.checked = !!w.packed;
@@ -486,95 +654,63 @@
     renderSummary();
   }
 
-  
-  function normalizeStr(s){ return (s ?? "").toString().trim().toLowerCase(); }
-
-  function applyFilters(){
-    const billQ = normalizeStr(filterBill?.value);
-    const tailorVal = (filterTailor?.value || "ALL");
-    const tailorQ = (tailorVal === "ALL") ? "" : normalizeStr(tailorVal);
-    const statusQ = (filterStatus?.value || "ALL");
-    const assignedQ = filterDateAssigned?.value || "";
-    const deliveryQ = filterDateDelivery?.value || "";
-
-    const hasAny =
-      billQ || tailorQ || (statusQ && statusQ !== "ALL") || assignedQ || deliveryQ;
-
-    if (!hasAny) {
-      filteredItems = null;
-      renderTable();
-      return;
+  async function uploadImageIfAny() {
+    if (!compressedImageFile && imageInput.files.length === 0) {
+      return { imageUrl: uploadedImageUrl, thumbUrl: uploadedThumbUrl };
     }
 
-    filteredItems = workItems.filter(w => {
-      if (billQ && !normalizeStr(w.bill_number).includes(billQ)) return false;
-      if (tailorQ && normalizeStr(w.tailor_name) !== tailorQ) return false;
-      if (statusQ !== "ALL" && (w.status || "PENDING") !== statusQ) return false;
+    const fileToUpload = compressedImageFile || imageInput.files[0];
+    if (!fileToUpload) {
+      return { imageUrl: uploadedImageUrl, thumbUrl: uploadedThumbUrl };
+    }
 
-      // dates are stored as YYYY-MM-DD; match exact day when filter provided
-      if (assignedQ) {
-        const wa = w.date_assigned ? String(w.date_assigned).slice(0,10) : "";
-        if (wa !== assignedQ) return false;
+    saveBtn.disabled = true;
+    saveBtn.textContent = "Uploading...";
+
+    try {
+      const fd = new FormData();
+      fd.append("image", fileToUpload);
+
+      const res = await fetch(API_BASE + "/upload", {
+        method: "POST",
+        body: fd
+      });
+
+      const text = await res.text();
+      let data = null;
+      try { data = text ? JSON.parse(text) : null; } catch { data = null; }
+
+      if (!res.ok) {
+        throw new Error((data && data.error) || "Image upload failed");
       }
-      if (deliveryQ) {
-        const wd = w.date_delivery ? String(w.date_delivery).slice(0,10) : "";
-        if (wd !== deliveryQ) return false;
+
+      if (!data || !data.imageUrl || !data.thumbUrl) {
+        throw new Error("Upload did not return imageUrl/thumbUrl");
       }
-      return true;
-    });
 
-    renderTable();
-  }
+      assertSafeUrl(data.imageUrl);
+      assertSafeUrl(data.thumbUrl);
 
-  function clearFilters(){
-    if (filterBill) filterBill.value = "";
-    if (filterTailor) filterTailor.value = "ALL";
-    if (filterStatus) filterStatus.value = "ALL";
-    if (filterDateAssigned) filterDateAssigned.value = "";
-    if (filterDateDelivery) filterDateDelivery.value = "";
-    filteredItems = null;
-    renderTable();
-  }
+      uploadedImageUrl = data.imageUrl;
+      uploadedThumbUrl = data.thumbUrl;
 
-async function updateAlteration(id, patch) {
-    const existing = workItems.find(x => x.id === id);
-    if (!existing) throw new Error("Record not found");
-
-    const payload = {
-      billNumber: existing.bill_number,
-      tailorName: existing.tailor_name,
-      itemName: existing.item_name,
-      dateAssigned: existing.date_assigned,
-      dateDelivery: existing.date_delivery,
-      timeDelivery: existing.time_delivery,
-      status: existing.status || "PENDING",
-      packed: !!existing.packed,
-      imageUrl: (existing.image_url && String(existing.image_url).startsWith("http")) ? existing.image_url : null
-    };
-
-    if (patch.status !== undefined) payload.status = patch.status;
-    if (patch.packed !== undefined) payload.packed = patch.packed;
-
-    assertNoInlineImage(payload.imageUrl);
-
-    const updated = await apiJson(`/alterations/${id}`, { method: "PUT", body: JSON.stringify(payload) });
-    const idx = workItems.findIndex(x => x.id === id);
-    if (idx !== -1) workItems[idx] = updated;
-    return updated;
-  }
-
-  function cleanupPreviewUrl(){
-    if (previewObjectUrl) {
-      URL.revokeObjectURL(previewObjectUrl);
-      previewObjectUrl = null;
+      return {
+        imageUrl: uploadedImageUrl,
+        thumbUrl: uploadedThumbUrl
+      };
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = editingId ? "Update Work" : "Add Work";
     }
   }
 
-  function resetForm(){
+  function resetForm() {
     workForm.reset();
     workIdInput.value = "";
     editingId = null;
     uploadedImageUrl = null;
+    uploadedThumbUrl = null;
+    compressedImageFile = null;
 
     cleanupPreviewUrl();
 
@@ -590,26 +726,32 @@ async function updateAlteration(id, patch) {
     applyStatusTint(statusInput);
   }
 
-  function loadForEdit(w){
+  function loadForEdit(w) {
     editingId = w.id;
     workIdInput.value = w.id;
     billNumberInput.value = w.bill_number || "";
     tailorSelect.value = w.tailor_name || "";
     itemNameInput.value = w.item_name || "";
-    dateAssignedInput.value = w.date_assigned ? String(w.date_assigned).slice(0,10) : "";
-    dateDeliveryInput.value = w.date_delivery ? String(w.date_delivery).slice(0,10) : "";
+    dateAssignedInput.value = w.date_assigned ? String(w.date_assigned).slice(0, 10) : "";
+    dateDeliveryInput.value = w.date_delivery ? String(w.date_delivery).slice(0, 10) : "";
     timeDeliveryInput.value = w.time_delivery || "";
     statusInput.value = w.status || "PENDING";
     packedFlagInput.checked = !!w.packed;
     notesInput.value = w.notes || "";
 
     uploadedImageUrl = (w.image_url && String(w.image_url).startsWith("http")) ? w.image_url : null;
+    uploadedThumbUrl = (w.thumb_url && String(w.thumb_url).startsWith("http")) ? w.thumb_url : null;
+    compressedImageFile = null;
 
     cleanupPreviewUrl();
-    if (uploadedImageUrl) {
+
+    const previewUrl = uploadedThumbUrl || uploadedImageUrl;
+    if (previewUrl) {
       imagePreview.innerHTML = "";
       const img = document.createElement("img");
-      img.src = uploadedImageUrl;
+      img.src = previewUrl;
+      img.loading = "lazy";
+      img.decoding = "async";
       imagePreview.appendChild(img);
     } else {
       imagePreview.innerHTML = "<span>Preview</span>";
@@ -622,38 +764,7 @@ async function updateAlteration(id, patch) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  async function uploadImageIfAny() {
-    if (imageInput.files.length === 0) return uploadedImageUrl;
-
-    const file = imageInput.files[0];
-    if (file.size > MAX_FILE_BYTES) {
-      throw new Error(`Image too large: ${fmtBytes(file.size)}. Please choose a file under ${MAX_FILE_MB} MB.`);
-    }
-
-    saveBtn.disabled = true;
-    saveBtn.textContent = "Uploading…";
-
-    try {
-      const fd = new FormData();
-      fd.append("image", file);
-
-      const res = await fetch(API_BASE + "/upload", { method: "POST", body: fd });
-      const text = await res.text();
-      let data = null;
-      try { data = text ? JSON.parse(text) : null; } catch { data = null; }
-
-      if (!res.ok) throw new Error((data && data.error) ? data.error : "Image upload failed");
-      if (!data || !data.imageUrl || !String(data.imageUrl).startsWith("http")) throw new Error("Upload did not return https imageUrl");
-
-      uploadedImageUrl = data.imageUrl;
-      return uploadedImageUrl;
-    } finally {
-      saveBtn.disabled = false;
-      saveBtn.textContent = editingId ? "Update Work" : "Add Work";
-    }
-  }
-
-  async function saveWork(e){
+  async function saveWork(e) {
     e.preventDefault();
     saveError.textContent = "";
 
@@ -670,8 +781,7 @@ async function updateAlteration(id, patch) {
     applyStatusTint(statusInput);
 
     try {
-      const imageUrl = await uploadImageIfAny();
-      assertNoInlineImage(imageUrl);
+      const uploadResult = await uploadImageIfAny();
 
       const payload = {
         billNumber: bill,
@@ -682,14 +792,21 @@ async function updateAlteration(id, patch) {
         timeDelivery: timeDeliveryInput.value || null,
         status: statusInput.value || "PENDING",
         packed: packedFlagInput.checked,
-        imageUrl: imageUrl || null
+        imageUrl: uploadResult.imageUrl || null,
+        thumbUrl: uploadResult.thumbUrl || null,
+        notes: notesInput.value.trim() || null
       };
 
-      assertNoInlineImage(payload.imageUrl);
+      assertSafeUrl(payload.imageUrl);
+      assertSafeUrl(payload.thumbUrl);
 
       const path = editingId ? `/alterations/${editingId}` : "/alterations";
       const method = editingId ? "PUT" : "POST";
-      await apiJson(path, { method, body: JSON.stringify(payload) });
+
+      await apiJson(path, {
+        method,
+        body: JSON.stringify(payload)
+      });
 
       await loadWorkAll();
       resetForm();
@@ -697,21 +814,6 @@ async function updateAlteration(id, patch) {
       saveError.textContent = err.message || "Request failed";
     }
   }
-
-  function applyStatusTint(selectEl){ selectEl.style.background = statusTint(selectEl.value); }
-
-
-  // Filter listeners
-  if (filterApplyBtn) filterApplyBtn.addEventListener("click", applyFilters);
-  if (filterClearBtn) filterClearBtn.addEventListener("click", clearFilters);
-
-  // Apply filters on Enter in bill/tailor inputs for quick UX
-  [filterBill, filterTailor].forEach(el => {
-    if (!el) return;
-    el.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") { e.preventDefault(); applyFilters(); }
-    });
-  });
 
   addNewWorkBtn.addEventListener("click", () => {
     window.scrollTo({ top: formCard.offsetTop - 20, behavior: "smooth" });
@@ -724,12 +826,13 @@ async function updateAlteration(id, patch) {
     applyStatusTint(statusInput);
   });
 
-  imageInput.addEventListener("change", () => {
+  imageInput.addEventListener("change", async () => {
     const file = imageInput.files[0];
     fileInfo.textContent = "";
 
-    // Selecting a new file means we MUST re-upload to get a new https URL
     uploadedImageUrl = null;
+    uploadedThumbUrl = null;
+    compressedImageFile = null;
 
     cleanupPreviewUrl();
 
@@ -738,34 +841,59 @@ async function updateAlteration(id, patch) {
       return;
     }
 
-    previewObjectUrl = URL.createObjectURL(file);
+    if (file.size > MAX_FILE_BYTES) {
+      imagePreview.innerHTML = "<span>Preview</span>";
+      fileInfo.textContent = `Selected: ${fmtBytes(file.size)} (Too large). Please choose < ${MAX_FILE_MB} MB.`;
+      return;
+    }
 
+    previewObjectUrl = URL.createObjectURL(file);
     imagePreview.innerHTML = "";
     const img = document.createElement("img");
     img.src = previewObjectUrl;
     imagePreview.appendChild(img);
 
-    if (file.size > MAX_FILE_BYTES) {
-      fileInfo.textContent = `Selected: ${fmtBytes(file.size)} (Too large). Please choose < ${MAX_FILE_MB} MB.`;
-    } else {
-      fileInfo.textContent = `Selected: ${fmtBytes(file.size)} (will upload via /upload)`;
+    try {
+      compressedImageFile = await compressImage(file, {
+        maxWidth: 1280,
+        maxHeight: 1280,
+        quality: 0.70
+      });
+
+      fileInfo.textContent = `Original: ${fmtBytes(file.size)} → Compressed: ${fmtBytes(compressedImageFile.size)}`;
+    } catch (err) {
+      fileInfo.textContent = "Image compression failed.";
+      console.error(err);
     }
   });
 
   imagePreview.addEventListener("click", () => {
-    const img = imagePreview.querySelector("img");
-    if (img && img.src) openImageModal(img.src);
-    else if (uploadedImageUrl) openImageModal(uploadedImageUrl);
+    if (uploadedImageUrl) openImageModal(uploadedImageUrl);
+    else {
+      const img = imagePreview.querySelector("img");
+      if (img && img.src) openImageModal(img.src);
+    }
   });
+
+  applyFiltersBtn.addEventListener("click", applyFilters);
+  clearFiltersBtn.addEventListener("click", clearFilters);
+
+  filterBill.addEventListener("keydown", e => { if (e.key === "Enter") applyFilters(); });
+  filterTailor.addEventListener("change", applyFilters);
+  filterStatus.addEventListener("change", applyFilters);
+  filterDateAssigned.addEventListener("change", applyFilters);
+  filterDateDelivery.addEventListener("change", applyFilters);
 
   workForm.addEventListener("submit", saveWork);
   formCancelBtn.addEventListener("click", resetForm);
 
-  (async function init(){
+  (async function init() {
     resetForm();
     try {
-      await apiJson("/health");
-      await loadWorkAll();
+      await Promise.allSettled([
+        apiJson("/health"),
+        loadWorkAll()
+      ]);
     } catch (e) {
       summaryText.textContent = "Backend not reachable. Check API_BASE / Render status.";
       console.error(e);
@@ -774,6 +902,3 @@ async function updateAlteration(id, patch) {
 </script>
 </body>
 </html>
-
-
-
