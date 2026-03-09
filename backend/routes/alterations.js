@@ -217,4 +217,36 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.post("/bulk-delete", async (req, res) => {
+  try {
+    const role = req.headers["x-user-role"];
+
+    if (role !== "admin") {
+      return res.status(403).json({ error: "Only admin can bulk delete entries" });
+    }
+
+    const ids = Array.isArray(req.body?.ids)
+      ? req.body.ids.map(x => Number(x)).filter(Number.isInteger)
+      : [];
+
+    if (!ids.length) {
+      return res.status(400).json({ error: "No valid ids provided" });
+    }
+
+    const result = await query(
+      "DELETE FROM alterations WHERE id = ANY($1::int[]) RETURNING id",
+      [ids]
+    );
+
+    return res.json({
+      success: true,
+      deletedCount: result.rows.length,
+      deletedIds: result.rows.map(r => r.id)
+    });
+  } catch (err) {
+    console.error("POST /alterations/bulk-delete error:", err);
+    return res.status(500).json({ error: "Database error" });
+  }
+});
+
 export default router;
