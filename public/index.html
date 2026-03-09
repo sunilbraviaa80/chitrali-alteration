@@ -16,40 +16,90 @@
     .brand-title { font-size: 1.15rem; font-weight: 600; color: #111827; line-height: 1.2; }
     .brand-subtitle { font-size: 0.78rem; color: #6b7280; line-height: 1.2; }
     .header-actions { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: flex-end; }
-    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 0.45rem 1.1rem; border-radius: 999px; border: none; font-size: 0.9rem; cursor: pointer; white-space: nowrap; transition: box-shadow 0.15s, transform 0.05s, background 0.15s, color 0.15s; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.45rem 1.1rem; border-radius: 999px; border: none;
+      font-size: 0.9rem; cursor: pointer; white-space: nowrap;
+      transition: box-shadow 0.15s, transform 0.05s, background 0.15s, color 0.15s;
+    }
     .btn-primary { background: #2563eb; color: #ffffff; }
     .btn-primary:hover { box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35); transform: translateY(-1px); }
     .btn-secondary { background: #e5e7eb; color: #111827; }
     .btn-secondary:hover { background: #d1d5db; }
     .btn-sm { padding: 0.25rem 0.7rem; font-size: 0.8rem; }
-    .btn-link { background: transparent; color: #2563eb; border: none; padding: 0; }
-    .card { background: #ffffff; border-radius: 0.75rem; padding: 1.25rem 1.5rem; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06); margin-bottom: 1.1rem; }
+    .btn-link { background: transparent; color: #2563eb; border: none; padding: 0; margin-right: 0.65rem; }
+
+    .card {
+      background: #ffffff; border-radius: 0.75rem; padding: 1.25rem 1.5rem;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06); margin-bottom: 1.1rem;
+    }
     .card-title { font-size: 0.98rem; font-weight: 600; margin-bottom: 0.9rem; }
+
     label { font-size: 0.8rem; color: #4b5563; display: block; margin-bottom: 0.3rem; }
-    input[type="text"], input[type="date"], input[type="time"], select { width: 100%; padding: 0.45rem 0.6rem; border-radius: 0.5rem; border: 1px solid #d1d5db; font-size: 0.85rem; background: #f9fafb; outline: none; }
-    input:focus, select:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12); }
+    input[type="text"], input[type="date"], input[type="time"], select {
+      width: 100%; padding: 0.45rem 0.6rem; border-radius: 0.5rem;
+      border: 1px solid #d1d5db; font-size: 0.85rem; background: #f9fafb; outline: none;
+    }
+    input:focus, select:focus {
+      border-color: #2563eb; background: #ffffff;
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12);
+    }
     input[type="file"] { font-size: 0.8rem; }
-    textarea { width: 100%; min-height: 80px; resize: vertical; border-radius: 0.5rem; border: 1px solid #d1d5db; padding: 0.45rem 0.6rem; font-size: 0.85rem; background: #f9fafb; outline: none; }
-    textarea:focus { border-color: #2563eb; background: #ffffff; box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12); }
-    .form-grid, .filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); column-gap: 1.25rem; row-gap: 1.1rem; }
+    textarea {
+      width: 100%; min-height: 80px; resize: vertical; border-radius: 0.5rem;
+      border: 1px solid #d1d5db; padding: 0.45rem 0.6rem; font-size: 0.85rem;
+      background: #f9fafb; outline: none;
+    }
+    textarea:focus {
+      border-color: #2563eb; background: #ffffff;
+      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.12);
+    }
+
+    .form-grid, .filter-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      column-gap: 1.25rem; row-gap: 1.1rem;
+    }
     .full-span { grid-column: 1 / -1; }
     .section-break { margin-top: 0.5rem; padding-top: 0.6rem; border-top: 1px dashed #e5e7eb; }
+
     table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
     thead { background: #f9fafb; }
     th, td { padding: 0.55rem 0.6rem; border-bottom: 1px solid #e5e7eb; text-align: left; vertical-align: middle; }
     th { font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.03em; }
     tbody tr:hover { background: #f3f4ff; }
     .empty-row td { text-align: center; color: #9ca3af; padding: 1rem 0.5rem; font-size: 0.85rem; }
-    .thumb-wrapper { width: 56px; height: 56px; border-radius: 0.6rem; background: #f3f4f6; border: 1px solid #e5e7eb; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #9ca3af; }
+
+    .thumb-wrapper {
+      width: 56px; height: 56px; border-radius: 0.6rem;
+      background: #f3f4f6; border: 1px solid #e5e7eb; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; color: #9ca3af;
+    }
     .thumb-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .badge { display: inline-block; padding: 0.12rem 0.55rem; border-radius: 999px; font-size: 0.72rem; background: #e5e7eb; color: #374151; margin-right: 0.4rem; }
-    .status-select { font-size: .78rem; border-radius: 999px; padding: .28rem .55rem; border: 1px solid #e5e7eb; background: #fff; }
+    .badge {
+      display: inline-block; padding: 0.12rem 0.55rem; border-radius: 999px;
+      font-size: 0.72rem; background: #e5e7eb; color: #374151; margin-right: 0.4rem;
+    }
+    .status-select {
+      font-size: .78rem; border-radius: 999px; padding: .28rem .55rem;
+      border: 1px solid #e5e7eb; background: #fff;
+    }
+
     .image-modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 9999; }
     .image-modal.visible { display: flex; }
     .image-modal-backdrop { position: absolute; inset: 0; background: rgba(15, 23, 42, 0.85); }
-    .image-modal-inner { position: relative; max-width: 95vw; max-height: 90vh; z-index: 1; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); border-radius: 0.75rem; overflow: hidden; background: #000; }
+    .image-modal-inner {
+      position: relative; max-width: 95vw; max-height: 90vh; z-index: 1;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      border-radius: 0.75rem; overflow: hidden; background: #000;
+    }
     .image-modal-inner img { display: block; max-width: 100%; max-height: 90vh; object-fit: contain; }
-    .image-modal-close { position: absolute; top: 0.3rem; right: 0.8rem; color: #f9fafb; font-size: 1.6rem; cursor: pointer; z-index: 2; }
+    .image-modal-close {
+      position: absolute; top: 0.3rem; right: 0.8rem; color: #f9fafb;
+      font-size: 1.6rem; cursor: pointer; z-index: 2;
+    }
+
     @media (max-width: 640px) {
       body { font-size: 14px; }
       .page { padding: 1rem 0.7rem 2rem; }
@@ -59,16 +109,25 @@
       .brand-text { width: 100%; align-items: center; text-align: center; }
       .header-actions { width: 100%; justify-content: flex-start; }
       .form-grid, .filter-grid { grid-template-columns: 1fr; }
-      th:nth-child(5), td:nth-child(5), th:nth-child(7), td:nth-child(7) { display: none; }
+      th:nth-child(5), td:nth-child(5),
+      th:nth-child(7), td:nth-child(7) { display: none; }
     }
   </style>
 </head>
 <body>
 <div class="page">
   <header>
-    <div class="brand-left"><img src="chitrali-logo.png" alt="Chitrali" class="brand-logo" /></div>
-    <div class="brand-text"><div class="brand-title">Alteration Tracker</div><div class="brand-subtitle">Chitrali Fashion</div></div>
-    <div class="header-actions"><span class="badge">Admin</span><button class="btn btn-primary" id="addNewWorkBtn">Add New Work</button></div>
+    <div class="brand-left">
+      <img src="chitrali-logo.png" alt="Chitrali" class="brand-logo" />
+    </div>
+    <div class="brand-text">
+      <div class="brand-title">Alteration Tracker</div>
+      <div class="brand-subtitle">Chitrali Fashion</div>
+    </div>
+    <div class="header-actions">
+      <span class="badge">Admin</span>
+      <button class="btn btn-primary" id="addNewWorkBtn">Add New Work</button>
+    </div>
   </header>
 
   <section class="card" id="formCard">
@@ -76,33 +135,94 @@
     <form id="workForm">
       <input type="hidden" id="workId" />
       <div class="form-grid">
-        <div><label for="billNumber">Bill Number *</label><input id="billNumber" required /></div>
-        <div><label for="itemName">Item Name *</label><select id="itemName" required>
-          <option value="">Select item</option><option value="Lehenga">Lehenga</option><option value="Croptop Skirt">Croptop Skirt</option><option value="Blouse">Blouse</option><option value="Ready to Wear Saree">Ready to Wear Saree</option><option value="Suit">Suit</option><option value="Croptop Palazzo">Croptop Palazzo</option><option value="Sharara">Sharara</option><option value="Gown">Gown</option><option value="Saree Pleating">Saree Pleating</option><option value="Indowestern">Indowestern</option>
-        </select></div>
-        <div><label for="tailorSelect">Tailor Name *</label><select id="tailorSelect" required>
-          <option value="">Select</option><option value="Faisal">Faisal</option><option value="SALMAN">SALMAN</option><option value="Rahul">Rahul</option><option value="Imran">Imran</option>
-        </select></div>
-        <div><label for="status">Work Status *</label><select id="status" required class="status-select">
-          <option value="PENDING">Pending</option><option value="IN_PROGRESS">In Progress</option><option value="DONE">Done</option>
-        </select></div>
-        <div><label for="dateAssigned">Date Assigned *</label><input type="date" id="dateAssigned" required /></div>
-        <div><label for="dateDelivery">Date of Delivery *</label><input type="date" id="dateDelivery" required /></div>
-        <div><label for="timeDelivery">Time of Delivery</label><input type="time" id="timeDelivery" /></div>
-        <div><label for="packedFlag">Packed</label><div style="display:flex;align-items:center;gap:.4rem;margin-top:.3rem;"><input type="checkbox" id="packedFlag" /><span style="font-size:.8rem;color:#4b5563;">Mark as packed (auto sets status = Done)</span></div></div>
+        <div>
+          <label for="billNumber">Bill Number *</label>
+          <input id="billNumber" required />
+        </div>
+
+        <div>
+          <label for="itemName">Item Name *</label>
+          <select id="itemName" required>
+            <option value="">Select item</option>
+            <option value="Lehenga">Lehenga</option>
+            <option value="Croptop Skirt">Croptop Skirt</option>
+            <option value="Blouse">Blouse</option>
+            <option value="Ready to Wear Saree">Ready to Wear Saree</option>
+            <option value="Suit">Suit</option>
+            <option value="Croptop Palazzo">Croptop Palazzo</option>
+            <option value="Sharara">Sharara</option>
+            <option value="Gown">Gown</option>
+            <option value="Saree Pleating">Saree Pleating</option>
+            <option value="Indowestern">Indowestern</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="tailorSelect">Tailor Name *</label>
+          <select id="tailorSelect" required>
+            <option value="">Select</option>
+            <option value="Faisal">Faisal</option>
+            <option value="SALMAN">SALMAN</option>
+            <option value="Rahul">Rahul</option>
+            <option value="Imran">Imran</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="status">Work Status *</label>
+          <select id="status" required class="status-select">
+            <option value="PENDING">Pending</option>
+            <option value="IN_PROGRESS">In Progress</option>
+            <option value="DONE">Done</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="dateAssigned">Date Assigned *</label>
+          <input type="date" id="dateAssigned" required />
+        </div>
+
+        <div>
+          <label for="dateDelivery">Date of Delivery *</label>
+          <input type="date" id="dateDelivery" required />
+        </div>
+
+        <div>
+          <label for="timeDelivery">Time of Delivery</label>
+          <input type="time" id="timeDelivery" />
+        </div>
+
+        <div>
+          <label for="packedFlag">Packed</label>
+          <div style="display:flex;align-items:center;gap:.4rem;margin-top:.3rem;">
+            <input type="checkbox" id="packedFlag" />
+            <span style="font-size:.8rem;color:#4b5563;">Mark as packed (auto sets status = Done)</span>
+          </div>
+        </div>
+
         <div class="full-span section-break">
           <label for="imageInput">Item Image (camera / gallery)</label>
           <input type="file" id="imageInput" accept="image/*" capture="environment" />
-          <small style="display:block;margin-top:.25rem;color:#6b7280;">Image is compressed before upload. Backend returns full image URL + thumbnail URL.</small>
-          <div style="margin-top:.4rem;"><div class="thumb-wrapper" id="imagePreview" title="Click to preview full screen"><span>Preview</span></div></div>
+          <small style="display:block;margin-top:.25rem;color:#6b7280;">
+            Image is compressed before upload. Backend returns full image URL + thumbnail URL.
+          </small>
+          <div style="margin-top:.4rem;">
+            <div class="thumb-wrapper" id="imagePreview" title="Click to preview full screen"><span>Preview</span></div>
+          </div>
           <small id="fileInfo" style="display:block;margin-top:.35rem;color:#6b7280;"></small>
         </div>
-        <div class="full-span"><label for="notes">Notes / Measurements</label><textarea id="notes" placeholder="Shorten length, adjust waist, etc."></textarea></div>
+
+        <div class="full-span">
+          <label for="notes">Notes / Measurements</label>
+          <textarea id="notes" placeholder="Shorten length, adjust waist, etc."></textarea>
+        </div>
       </div>
+
       <div style="margin-top:1.1rem;display:flex;gap:.6rem;flex-wrap:wrap;">
         <button class="btn btn-primary" type="submit" id="saveBtn">Add Work</button>
         <button class="btn btn-secondary" type="button" id="formCancelBtn">Clear</button>
       </div>
+
       <div id="saveError" style="color:#b91c1c;margin-top:.6rem;font-size:.85rem;"></div>
     </form>
   </section>
@@ -110,11 +230,33 @@
   <section class="card">
     <div class="card-title">Search & Filters</div>
     <div class="filter-grid">
-      <div><label for="filterBill">Bill Number</label><input id="filterBill" placeholder="Search bill no." /></div>
-      <div><label for="filterTailor">Tailor Name</label><select id="filterTailor"><option value="">All Tailors</option></select></div>
-      <div><label for="filterStatus">Status</label><select id="filterStatus"><option value="">All Status</option><option value="PENDING">Pending</option><option value="IN_PROGRESS">In Progress</option><option value="DONE">Done</option></select></div>
-      <div><label for="filterDateAssigned">Date Assigned</label><input type="date" id="filterDateAssigned" /></div>
-      <div><label for="filterDateDelivery">Date of Delivery</label><input type="date" id="filterDateDelivery" /></div>
+      <div>
+        <label for="filterBill">Bill Number</label>
+        <input id="filterBill" placeholder="Search bill no." />
+      </div>
+      <div>
+        <label for="filterTailor">Tailor Name</label>
+        <select id="filterTailor">
+          <option value="">All Tailors</option>
+        </select>
+      </div>
+      <div>
+        <label for="filterStatus">Status</label>
+        <select id="filterStatus">
+          <option value="">All Status</option>
+          <option value="PENDING">Pending</option>
+          <option value="IN_PROGRESS">In Progress</option>
+          <option value="DONE">Done</option>
+        </select>
+      </div>
+      <div>
+        <label for="filterDateAssigned">Date Assigned</label>
+        <input type="date" id="filterDateAssigned" />
+      </div>
+      <div>
+        <label for="filterDateDelivery">Date of Delivery</label>
+        <input type="date" id="filterDateDelivery" />
+      </div>
     </div>
     <div style="margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap;">
       <button class="btn btn-primary btn-sm" id="applyFiltersBtn" type="button">Search</button>
@@ -129,7 +271,20 @@
     </div>
     <div style="overflow-x:auto;">
       <table>
-        <thead><tr><th>Image</th><th>Bill Number</th><th>Tailor Name</th><th>Item Name</th><th>Date Assigned</th><th>Date Delivery</th><th>Time Delivery</th><th>Status</th><th>Packed</th><th>Actions</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Bill Number</th>
+            <th>Tailor Name</th>
+            <th>Item Name</th>
+            <th>Date Assigned</th>
+            <th>Date Delivery</th>
+            <th>Time Delivery</th>
+            <th>Status</th>
+            <th>Packed</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
         <tbody id="workTableBody"></tbody>
       </table>
     </div>
@@ -149,11 +304,15 @@
 
 <div id="imageModal" class="image-modal">
   <div class="image-modal-backdrop"></div>
-  <div class="image-modal-inner"><span class="image-modal-close" id="imageModalClose">&times;</span><img id="imageModalImg" src="" alt="Item image" /></div>
+  <div class="image-modal-inner">
+    <span class="image-modal-close" id="imageModalClose">&times;</span>
+    <img id="imageModalImg" src="" alt="Item image" />
+  </div>
 </div>
 
 <script>
   const API_BASE = "https://chitrali-alteration-api.onrender.com";
+  const IS_ADMIN = true;
   const MAX_FILE_MB = 20;
   const MAX_FILE_BYTES = MAX_FILE_MB * 1024 * 1024;
   const PAGE_SIZE = 25;
@@ -206,59 +365,132 @@
   const imageModalClose = document.getElementById("imageModalClose");
   const imageModalBackdrop = imageModal.querySelector(".image-modal-backdrop");
 
-  function openImageModal(src) { if (!src) return; imageModalImg.src = src; imageModal.classList.add("visible"); }
-  function closeImageModal() { imageModal.classList.remove("visible"); imageModalImg.src = ""; }
+  function openImageModal(src) {
+    if (!src) return;
+    imageModalImg.src = src;
+    imageModal.classList.add("visible");
+  }
+
+  function closeImageModal() {
+    imageModal.classList.remove("visible");
+    imageModalImg.src = "";
+  }
+
   imageModalBackdrop.addEventListener("click", closeImageModal);
   imageModalClose.addEventListener("click", closeImageModal);
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeImageModal(); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeImageModal();
+  });
 
-  function statusLabel(s){ return s === "IN_PROGRESS" ? "In Progress" : s === "DONE" ? "Done" : "Pending"; }
-  function statusTint(s){ if (s === "DONE") return "rgba(34, 197, 94, 0.18)"; if (s === "IN_PROGRESS") return "rgba(234, 179, 8, 0.18)"; return "rgba(148, 163, 184, 0.15)"; }
-  function formatDate(d){ if (!d) return "-"; const dt = new Date(d); return isNaN(dt) ? d : dt.toLocaleDateString("en-IN"); }
-  function formatTime(t){ return t || "-"; }
-  function fmtBytes(n){ if (!Number.isFinite(n)) return ""; const kb = n / 1024; if (kb < 1024) return `${Math.round(kb)} KB`; return `${(kb / 1024).toFixed(2)} MB`; }
-  function assertSafeUrl(url) { if (!url) return; const s = String(url); if (s.startsWith("data:image/")) throw new Error("Base64 image detected. Upload must go through /upload."); if (s.startsWith("blob:")) throw new Error("Preview blob URL detected. Only backend image URL can be saved."); }
+  function statusLabel(s) {
+    return s === "IN_PROGRESS" ? "In Progress" : s === "DONE" ? "Done" : "Pending";
+  }
+
+  function statusTint(s) {
+    if (s === "DONE") return "rgba(34, 197, 94, 0.18)";
+    if (s === "IN_PROGRESS") return "rgba(234, 179, 8, 0.18)";
+    return "rgba(148, 163, 184, 0.15)";
+  }
+
+  function formatDate(d) {
+    if (!d) return "-";
+    const dt = new Date(d);
+    return isNaN(dt) ? d : dt.toLocaleDateString("en-IN");
+  }
+
+  function formatTime(t) {
+    return t || "-";
+  }
+
+  function fmtBytes(n) {
+    if (!Number.isFinite(n)) return "";
+    const kb = n / 1024;
+    if (kb < 1024) return `${Math.round(kb)} KB`;
+    return `${(kb / 1024).toFixed(2)} MB`;
+  }
+
+  function assertSafeUrl(url) {
+    if (!url) return;
+    const s = String(url);
+    if (s.startsWith("data:image/")) throw new Error("Base64 image detected. Upload must go through /upload.");
+    if (s.startsWith("blob:")) throw new Error("Preview blob URL detected. Only backend image URL can be saved.");
+  }
 
   async function apiJson(path, opts = {}) {
     const headers = Object.assign({ "Accept": "application/json" }, opts.headers || {});
-    if (opts.body && !(opts.body instanceof FormData)) headers["Content-Type"] = "application/json";
+    if (opts.body && !(opts.body instanceof FormData)) {
+      headers["Content-Type"] = "application/json";
+    }
+
     const res = await fetch(API_BASE + path, { ...opts, headers });
     const text = await res.text();
+
     let data = null;
-    try { data = text ? JSON.parse(text) : null; } catch { data = text; }
-    if (!res.ok) throw new Error((data && data.error) ? data.error : "Request failed");
+    try {
+      data = text ? JSON.parse(text) : null;
+    } catch {
+      data = text;
+    }
+
+    if (!res.ok) {
+      throw new Error((data && data.error) ? data.error : "Request failed");
+    }
     return data;
   }
 
-  function cleanupPreviewUrl() { if (previewObjectUrl) { try { URL.revokeObjectURL(previewObjectUrl); } catch {} previewObjectUrl = null; } }
+  function cleanupPreviewUrl() {
+    if (previewObjectUrl) {
+      try { URL.revokeObjectURL(previewObjectUrl); } catch {}
+      previewObjectUrl = null;
+    }
+  }
 
   async function compressImage(file, options = {}) {
-    const { maxWidth = 1280, maxHeight = 1280, quality = 0.70, mimeType = "image/jpeg" } = options;
+    const {
+      maxWidth = 1280,
+      maxHeight = 1280,
+      quality = 0.70,
+      mimeType = "image/jpeg"
+    } = options;
+
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       const img = new Image();
+
       reader.onload = e => { img.src = e.target.result; };
+
       img.onload = () => {
         let { width, height } = img;
         const ratio = Math.min(maxWidth / width, maxHeight / height, 1);
         width = Math.round(width * ratio);
         height = Math.round(height * ratio);
+
         const canvas = document.createElement("canvas");
-        canvas.width = width; canvas.height = height;
+        canvas.width = width;
+        canvas.height = height;
+
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, width, height);
+
         canvas.toBlob(blob => {
           if (!blob) return reject(new Error("Compression failed"));
-          const compressed = new File([blob], (file.name || "image").replace(/\.[^/.]+$/, "") + ".jpg", { type: mimeType });
+          const compressed = new File(
+            [blob],
+            (file.name || "image").replace(/\.[^/.]+$/, "") + ".jpg",
+            { type: mimeType }
+          );
           resolve(compressed);
         }, mimeType, quality);
       };
+
       reader.onerror = reject;
       reader.readAsDataURL(file);
     });
   }
 
-  function applyStatusTint(selectEl) { selectEl.style.background = statusTint(selectEl.value); }
+  function applyStatusTint(selectEl) {
+    selectEl.style.background = statusTint(selectEl.value);
+  }
 
   function setLazyImage(imgEl, url) {
     imgEl.loading = "lazy";
@@ -267,6 +499,7 @@
     const placeholder = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
     imgEl.src = placeholder;
     imgEl.dataset.src = url;
+
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -275,21 +508,29 @@
         }
       });
     }, { rootMargin: "200px" });
+
     observer.observe(imgEl);
   }
 
   async function loadWorkAll(page = 1) {
     currentPage = page;
-    const qs = new URLSearchParams({ page: String(currentPage), limit: String(PAGE_SIZE) });
+
+    const qs = new URLSearchParams({
+      page: String(currentPage),
+      limit: String(PAGE_SIZE)
+    });
+
     if (filterBill.value.trim()) qs.set("bill", filterBill.value.trim());
     if (filterTailor.value.trim()) qs.set("tailor", filterTailor.value.trim());
     if (filterStatus.value.trim()) qs.set("status", filterStatus.value.trim());
     if (filterDateAssigned.value) qs.set("dateAssigned", filterDateAssigned.value);
     if (filterDateDelivery.value) qs.set("dateDelivery", filterDateDelivery.value);
+
     const data = await apiJson(`/alterations?${qs.toString()}`);
     workItems = data.rows || [];
     totalRows = data.pagination?.total || 0;
     totalPages = data.pagination?.totalPages || 1;
+
     populateTailorFilter();
     renderTable();
     renderPagination();
@@ -297,27 +538,45 @@
 
   function populateTailorFilter() {
     const current = filterTailor.value || "";
-    const tailors = [...new Set(workItems.map(w => w.tailor_name).filter(Boolean))].sort((a, b) => a.localeCompare(b));
-    const existingOptions = Array.from(filterTailor.options).map(opt => opt.value);
+    const tailors = [...new Set(workItems.map(w => w.tailor_name).filter(Boolean))]
+      .sort((a, b) => a.localeCompare(b));
+
+    filterTailor.innerHTML = '<option value="">All Tailors</option>';
     tailors.forEach(name => {
-      if (!existingOptions.includes(name)) {
-        const opt = document.createElement("option");
-        opt.value = name;
-        opt.textContent = name;
-        filterTailor.appendChild(opt);
-      }
+      const opt = document.createElement("option");
+      opt.value = name;
+      opt.textContent = name;
+      filterTailor.appendChild(opt);
     });
+
     if (current) filterTailor.value = current;
   }
 
-  function applyFilters() { loadWorkAll(1); }
-  function clearFilters() { filterBill.value = ""; filterTailor.value = ""; filterStatus.value = ""; filterDateAssigned.value = ""; filterDateDelivery.value = ""; loadWorkAll(1); }
-  function renderSummary() { const openOnPage = workItems.filter(w => w.status !== "DONE").length; summaryText.textContent = `Page Rows: ${workItems.length} | Total: ${totalRows} | Open on Page: ${openOnPage}`; }
+  function applyFilters() {
+    loadWorkAll(1);
+  }
+
+  function clearFilters() {
+    filterBill.value = "";
+    filterTailor.value = "";
+    filterStatus.value = "";
+    filterDateAssigned.value = "";
+    filterDateDelivery.value = "";
+    loadWorkAll(1);
+  }
+
+  function renderSummary() {
+    const openOnPage = workItems.filter(w => w.status !== "DONE").length;
+    summaryText.textContent = `Page Rows: ${workItems.length} | Total: ${totalRows} | Open on Page: ${openOnPage}`;
+  }
+
   function renderPagination() {
     const start = totalRows === 0 ? 0 : ((currentPage - 1) * PAGE_SIZE) + 1;
     const end = Math.min(currentPage * PAGE_SIZE, totalRows);
+
     paginationInfo.textContent = `Showing ${start}-${end} of ${totalRows}`;
     pageIndicator.textContent = `Page ${currentPage} of ${totalPages || 1}`;
+
     prevPageBtn.disabled = currentPage <= 1;
     nextPageBtn.disabled = currentPage >= totalPages;
   }
@@ -325,6 +584,7 @@
   async function updateAlteration(id, patch) {
     const existing = workItems.find(x => x.id === id);
     if (!existing) throw new Error("Record not found");
+
     const payload = {
       billNumber: existing.bill_number,
       tailorName: existing.tailor_name,
@@ -338,19 +598,48 @@
       thumbUrl: existing.thumb_url || null,
       notes: existing.notes || null
     };
+
     if (patch.status !== undefined) payload.status = patch.status;
     if (patch.packed !== undefined) payload.packed = patch.packed;
+
     assertSafeUrl(payload.imageUrl);
     assertSafeUrl(payload.thumbUrl);
-    const updated = await apiJson(`/alterations/${id}`, { method: "PUT", body: JSON.stringify(payload) });
+
+    const updated = await apiJson(`/alterations/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(payload)
+    });
+
     const idx = workItems.findIndex(x => x.id === id);
     if (idx !== -1) workItems[idx] = updated;
     renderTable();
     return updated;
   }
 
+  async function deleteAlteration(id) {
+    const ok = window.confirm("Are you sure you want to delete this alteration entry?");
+    if (!ok) return;
+
+    try {
+      await apiJson(`/alterations/${id}`, { method: "DELETE" });
+
+      if (workItems.length === 1 && currentPage > 1) {
+        await loadWorkAll(currentPage - 1);
+      } else {
+        await loadWorkAll(currentPage);
+      }
+
+      if (editingId && String(editingId) === String(id)) {
+        resetForm();
+      }
+    } catch (err) {
+      alert(err.message || "Delete failed");
+    }
+  }
+
   function renderTable() {
     workTableBody.innerHTML = "";
+
     if (!workItems.length) {
       const tr = document.createElement("tr");
       tr.className = "empty-row";
@@ -365,10 +654,12 @@
 
     workItems.forEach(w => {
       const tr = document.createElement("tr");
+
       const tdImg = document.createElement("td");
       const wrap = document.createElement("div");
       wrap.className = "thumb-wrapper";
       const thumb = w.thumb_url || w.image_url;
+
       if (thumb && String(thumb).startsWith("http")) {
         const img = document.createElement("img");
         setLazyImage(img, thumb);
@@ -378,25 +669,48 @@
       } else {
         wrap.innerHTML = "No<br/>Image";
       }
+
       tdImg.appendChild(wrap);
       tr.appendChild(tdImg);
 
-      const tdBill = document.createElement("td"); tdBill.textContent = w.bill_number || ""; tr.appendChild(tdBill);
-      const tdTailor = document.createElement("td"); tdTailor.textContent = w.tailor_name || ""; tr.appendChild(tdTailor);
-      const tdItem = document.createElement("td"); tdItem.textContent = w.item_name || ""; tr.appendChild(tdItem);
-      const tdAssigned = document.createElement("td"); tdAssigned.textContent = formatDate(w.date_assigned); tr.appendChild(tdAssigned);
-      const tdDelivery = document.createElement("td"); tdDelivery.textContent = formatDate(w.date_delivery); tr.appendChild(tdDelivery);
-      const tdTime = document.createElement("td"); tdTime.textContent = formatTime(w.time_delivery); tr.appendChild(tdTime);
+      const tdBill = document.createElement("td");
+      tdBill.textContent = w.bill_number || "";
+      tr.appendChild(tdBill);
+
+      const tdTailor = document.createElement("td");
+      tdTailor.textContent = w.tailor_name || "";
+      tr.appendChild(tdTailor);
+
+      const tdItem = document.createElement("td");
+      tdItem.textContent = w.item_name || "";
+      tr.appendChild(tdItem);
+
+      const tdAssigned = document.createElement("td");
+      tdAssigned.textContent = formatDate(w.date_assigned);
+      tr.appendChild(tdAssigned);
+
+      const tdDelivery = document.createElement("td");
+      tdDelivery.textContent = formatDate(w.date_delivery);
+      tr.appendChild(tdDelivery);
+
+      const tdTime = document.createElement("td");
+      tdTime.textContent = formatTime(w.time_delivery);
+      tr.appendChild(tdTime);
 
       const tdStatus = document.createElement("td");
       const sel = document.createElement("select");
       sel.className = "status-select";
+
       ["PENDING", "IN_PROGRESS", "DONE"].forEach(val => {
         const opt = document.createElement("option");
-        opt.value = val; opt.textContent = statusLabel(val); sel.appendChild(opt);
+        opt.value = val;
+        opt.textContent = statusLabel(val);
+        sel.appendChild(opt);
       });
+
       sel.value = w.status || "PENDING";
       sel.style.background = statusTint(sel.value);
+
       sel.onchange = async () => {
         try {
           const updated = await updateAlteration(w.id, { status: sel.value });
@@ -407,12 +721,15 @@
           sel.style.background = statusTint(sel.value);
         }
       };
+
       tdStatus.appendChild(sel);
       tr.appendChild(tdStatus);
 
       const tdPacked = document.createElement("td");
       const chk = document.createElement("input");
-      chk.type = "checkbox"; chk.checked = !!w.packed;
+      chk.type = "checkbox";
+      chk.checked = !!w.packed;
+
       chk.onchange = async () => {
         try {
           const patch = { packed: chk.checked };
@@ -423,50 +740,93 @@
           chk.checked = !!w.packed;
         }
       };
+
       tdPacked.appendChild(chk);
       tr.appendChild(tdPacked);
 
       const tdActions = document.createElement("td");
+
       const editBtn = document.createElement("button");
       editBtn.className = "btn btn-link btn-sm";
       editBtn.textContent = "Edit";
       editBtn.onclick = () => loadForEdit(w);
       tdActions.appendChild(editBtn);
-      tr.appendChild(tdActions);
 
+      if (IS_ADMIN) {
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "btn btn-link btn-sm";
+        deleteBtn.textContent = "Delete";
+        deleteBtn.style.color = "#dc2626";
+        deleteBtn.onclick = () => deleteAlteration(w.id);
+        tdActions.appendChild(deleteBtn);
+      }
+
+      tr.appendChild(tdActions);
       workTableBody.appendChild(tr);
     });
+
     renderSummary();
   }
 
   async function uploadImageIfAny() {
-    if (!compressedImageFile && imageInput.files.length === 0) return { imageUrl: uploadedImageUrl, thumbUrl: uploadedThumbUrl };
+    if (!compressedImageFile && imageInput.files.length === 0) {
+      return { imageUrl: uploadedImageUrl, thumbUrl: uploadedThumbUrl };
+    }
+
     const fileToUpload = compressedImageFile || imageInput.files[0];
-    if (!fileToUpload) return { imageUrl: uploadedImageUrl, thumbUrl: uploadedThumbUrl };
-    saveBtn.disabled = true; saveBtn.textContent = "Uploading...";
+    if (!fileToUpload) {
+      return { imageUrl: uploadedImageUrl, thumbUrl: uploadedThumbUrl };
+    }
+
+    saveBtn.disabled = true;
+    saveBtn.textContent = "Uploading...";
+
     try {
       const fd = new FormData();
       fd.append("image", fileToUpload);
-      const res = await fetch(API_BASE + "/upload", { method: "POST", body: fd });
+
+      const res = await fetch(API_BASE + "/upload", {
+        method: "POST",
+        body: fd
+      });
+
       const text = await res.text();
       let data = null;
       try { data = text ? JSON.parse(text) : null; } catch { data = null; }
+
       if (!res.ok) throw new Error((data && data.error) || "Image upload failed");
       if (!data || !data.imageUrl || !data.thumbUrl) throw new Error("Upload did not return imageUrl/thumbUrl");
-      assertSafeUrl(data.imageUrl); assertSafeUrl(data.thumbUrl);
-      uploadedImageUrl = data.imageUrl; uploadedThumbUrl = data.thumbUrl;
+
+      assertSafeUrl(data.imageUrl);
+      assertSafeUrl(data.thumbUrl);
+
+      uploadedImageUrl = data.imageUrl;
+      uploadedThumbUrl = data.thumbUrl;
+
       return { imageUrl: uploadedImageUrl, thumbUrl: uploadedThumbUrl };
     } finally {
-      saveBtn.disabled = false; saveBtn.textContent = editingId ? "Update Work" : "Add Work";
+      saveBtn.disabled = false;
+      saveBtn.textContent = editingId ? "Update Work" : "Add Work";
     }
   }
 
   function resetForm() {
-    workForm.reset(); workIdInput.value = ""; editingId = null; uploadedImageUrl = null; uploadedThumbUrl = null; compressedImageFile = null;
+    workForm.reset();
+    workIdInput.value = "";
+    editingId = null;
+    uploadedImageUrl = null;
+    uploadedThumbUrl = null;
+    compressedImageFile = null;
+
     cleanupPreviewUrl();
+
     formTitle.textContent = "Add New Alteration Work";
-    saveBtn.textContent = "Add Work"; saveBtn.disabled = false;
-    imagePreview.innerHTML = "<span>Preview</span>"; imageInput.value = ""; fileInfo.textContent = ""; saveError.textContent = "";
+    saveBtn.textContent = "Add Work";
+    saveBtn.disabled = false;
+    imagePreview.innerHTML = "<span>Preview</span>";
+    imageInput.value = "";
+    fileInfo.textContent = "";
+    saveError.textContent = "";
     applyStatusTint(statusInput);
   }
 
@@ -485,6 +845,7 @@
     uploadedImageUrl = (w.image_url && String(w.image_url).startsWith("http")) ? w.image_url : null;
     uploadedThumbUrl = (w.thumb_url && String(w.thumb_url).startsWith("http")) ? w.thumb_url : null;
     compressedImageFile = null;
+
     cleanupPreviewUrl();
 
     const previewUrl = uploadedThumbUrl || uploadedImageUrl;
@@ -507,18 +868,22 @@
   async function saveWork(e) {
     e.preventDefault();
     saveError.textContent = "";
+
     const bill = billNumberInput.value.trim();
     const tailor = tailorSelect.value;
     const item = itemNameInput.value.trim();
+
     if (!bill || !tailor || !item) {
       saveError.textContent = "Bill number, tailor name and item name are required.";
       return;
     }
+
     if (packedFlagInput.checked) statusInput.value = "DONE";
     applyStatusTint(statusInput);
 
     try {
       const uploadResult = await uploadImageIfAny();
+
       const payload = {
         billNumber: bill,
         tailorName: tailor,
@@ -532,10 +897,18 @@
         thumbUrl: uploadResult.thumbUrl || null,
         notes: notesInput.value.trim() || null
       };
-      assertSafeUrl(payload.imageUrl); assertSafeUrl(payload.thumbUrl);
+
+      assertSafeUrl(payload.imageUrl);
+      assertSafeUrl(payload.thumbUrl);
+
       const path = editingId ? `/alterations/${editingId}` : "/alterations";
       const method = editingId ? "PUT" : "POST";
-      await apiJson(path, { method, body: JSON.stringify(payload) });
+
+      await apiJson(path, {
+        method,
+        body: JSON.stringify(payload)
+      });
+
       await loadWorkAll(1);
       resetForm();
     } catch (err) {
@@ -543,27 +916,48 @@
     }
   }
 
-  addNewWorkBtn.addEventListener("click", () => window.scrollTo({ top: formCard.offsetTop - 20, behavior: "smooth" }));
+  addNewWorkBtn.addEventListener("click", () => {
+    window.scrollTo({ top: formCard.offsetTop - 20, behavior: "smooth" });
+  });
+
   statusInput.addEventListener("change", () => applyStatusTint(statusInput));
-  packedFlagInput.addEventListener("change", () => { if (packedFlagInput.checked) statusInput.value = "DONE"; applyStatusTint(statusInput); });
+
+  packedFlagInput.addEventListener("change", () => {
+    if (packedFlagInput.checked) statusInput.value = "DONE";
+    applyStatusTint(statusInput);
+  });
 
   imageInput.addEventListener("change", async () => {
     const file = imageInput.files[0];
     fileInfo.textContent = "";
-    uploadedImageUrl = null; uploadedThumbUrl = null; compressedImageFile = null; cleanupPreviewUrl();
-    if (!file) { imagePreview.innerHTML = "<span>Preview</span>"; return; }
+    uploadedImageUrl = null;
+    uploadedThumbUrl = null;
+    compressedImageFile = null;
+    cleanupPreviewUrl();
+
+    if (!file) {
+      imagePreview.innerHTML = "<span>Preview</span>";
+      return;
+    }
+
     if (file.size > MAX_FILE_BYTES) {
       imagePreview.innerHTML = "<span>Preview</span>";
       fileInfo.textContent = `Selected: ${fmtBytes(file.size)} (Too large). Please choose < ${MAX_FILE_MB} MB.`;
       return;
     }
+
     previewObjectUrl = URL.createObjectURL(file);
     imagePreview.innerHTML = "";
     const img = document.createElement("img");
     img.src = previewObjectUrl;
     imagePreview.appendChild(img);
+
     try {
-      compressedImageFile = await compressImage(file, { maxWidth: 1280, maxHeight: 1280, quality: 0.70 });
+      compressedImageFile = await compressImage(file, {
+        maxWidth: 1280,
+        maxHeight: 1280,
+        quality: 0.70
+      });
       fileInfo.textContent = `Original: ${fmtBytes(file.size)} → Compressed: ${fmtBytes(compressedImageFile.size)}`;
     } catch (err) {
       fileInfo.textContent = "Image compression failed.";
@@ -572,8 +966,9 @@
   });
 
   imagePreview.addEventListener("click", () => {
-    if (uploadedImageUrl) openImageModal(uploadedImageUrl);
-    else {
+    if (uploadedImageUrl) {
+      openImageModal(uploadedImageUrl);
+    } else {
       const img = imagePreview.querySelector("img");
       if (img && img.src) openImageModal(img.src);
     }
@@ -587,8 +982,13 @@
   filterDateAssigned.addEventListener("change", applyFilters);
   filterDateDelivery.addEventListener("change", applyFilters);
 
-  prevPageBtn.addEventListener("click", () => { if (currentPage > 1) loadWorkAll(currentPage - 1); });
-  nextPageBtn.addEventListener("click", () => { if (currentPage < totalPages) loadWorkAll(currentPage + 1); });
+  prevPageBtn.addEventListener("click", () => {
+    if (currentPage > 1) loadWorkAll(currentPage - 1);
+  });
+
+  nextPageBtn.addEventListener("click", () => {
+    if (currentPage < totalPages) loadWorkAll(currentPage + 1);
+  });
 
   workForm.addEventListener("submit", saveWork);
   formCancelBtn.addEventListener("click", resetForm);
@@ -596,7 +996,10 @@
   (async function init() {
     resetForm();
     try {
-      await Promise.allSettled([apiJson("/health"), loadWorkAll(1)]);
+      await Promise.allSettled([
+        apiJson("/health"),
+        loadWorkAll(1)
+      ]);
     } catch (e) {
       summaryText.textContent = "Backend not reachable. Check API_BASE / Render status.";
       console.error(e);
