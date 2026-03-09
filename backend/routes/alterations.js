@@ -195,10 +195,21 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    const result = await query("DELETE FROM alterations WHERE id = $1 RETURNING id", [req.params.id]);
+    const role = req.headers["x-user-role"];
+
+    if (role !== "admin") {
+      return res.status(403).json({ error: "Only admin can delete entries" });
+    }
+
+    const result = await query(
+      "DELETE FROM alterations WHERE id = $1 RETURNING id",
+      [req.params.id]
+    );
+
     if (!result.rows.length) {
       return res.status(404).json({ error: "Record not found" });
     }
+
     return res.json({ success: true, id: result.rows[0].id });
   } catch (err) {
     console.error("DELETE /alterations/:id error:", err);
