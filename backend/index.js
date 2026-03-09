@@ -5,19 +5,17 @@ import uploadRouter from "./routes/upload.js";
 
 const app = express();
 
-app.use(cors({
+const corsOptions = {
   origin: [
     "https://chitrali-alteration-1.onrender.com",
-    "https://chitrali-alteration.onrender.com",
-    "http://localhost:3000",
-    "http://127.0.0.1:5500",
-    "http://localhost:5500"
+    "https://chitrali-alteration.onrender.com"
   ],
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-}));
+  allowedHeaders: ["Content-Type", "Accept", "x-user-role"]
+};
 
-app.options("*", cors());
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
@@ -29,5 +27,16 @@ app.get("/health", (req, res) => {
 app.use("/upload", uploadRouter);
 app.use("/alterations", alterationsRouter);
 
+app.use((err, req, res, next) => {
+  if (err?.type === "entity.too.large") {
+    return res.status(413).json({
+      error: "Payload too large. Please upload the image via /upload (multipart/form-data).",
+    });
+  }
+  next(err);
+});
+
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => console.log(`API running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`API listening on port ${PORT}`);
+});
